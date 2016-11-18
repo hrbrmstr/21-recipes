@@ -8,8 +8,6 @@ bookdown::gitbook:
         <li><a href="./">A Minimal Bookdown Book</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-bookdown::html_chapters:
-  css: [style.css, toc.css]
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
