@@ -3,10 +3,6 @@ title: "A Minimal Bookdown Book"
 author: "Sean Kross"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output:
- bookdown::html_chapters:
-   includes:
-     in_header: style.css
 documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike
