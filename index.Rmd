@@ -8,7 +8,7 @@ bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: seankross/bookdown-start
-url: 'https\://github.com/seankross/bookdown-start'
+url: 'http\://seankross.com/bookdown-start/'
 description: "Everything you need (and nothing more) to start a bookdown book."
 ---
 
