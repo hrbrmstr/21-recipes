@@ -1,0 +1,29 @@
+# Harvesting Friends and Followers
+
+## Problem
+
+You want to harvest all of the friends or followers for a particular user.
+
+## Solution
+
+Use `rtweet::get_followers()` or `rtweet::get_friends()`.
+
+## Discussion
+
+The aforementioned `rtweet` functions give us all the data we need and handle pagination and rate-limits.
+
+Let's see who [Brooke Anderson](https://twitter.com/gbwanderson) follows and who follows her. She's an _incredibly talented_ data scientist, weather expert and educator. We'll pull her followers and friends and work with her data a bit more in future recipes.
+
+```{r 13_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(tidyverse)
+```
+```{r 13_friends, message=FALSE, warning=FALSE, cache=TRUE}
+(brooke_followers <- rtweet::get_followers("gbwanderson"))
+
+(brooke_friends <- rtweet::get_friends("gbwanderson"))
+```
+
+## See Also
+
+- [Official Twitter API documentation](https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/overview) on friends and followers.

@@ -1,0 +1,49 @@
+# Extracting a Retweet’s Origins
+
+## Problem
+
+You want to extract the originating source from a retweet.
+
+## Solution
+
+If the tweet’s `retweet_count` field is greater than `0`, extract name out of the tweet’s user field; also parse the text of the tweet with a regular expression.
+
+## Discussion
+
+Twitter is _pretty darn good_ about <strike>weaponizing</strike>utilizing the data on its platform. There aren't many cases nowadays when you need to parse `RT` or `via` in hand-crafted retweets, but it's good to have the tools in your aresenal when needed. We can pick out all the retweets from `#rstats` (warning: it's a retweet-heavy hashtag) and who they refer to using the `retweet_count` but also looking for a special [regular expression](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html) (regex) and extracting data that way.
+
+First, the modern, API-centric way:
+
+```{r 05_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(tidyverse)
+```
+```{r 05_extract_rt, message=FALSE, warning=FALSE, cache=TRUE}
+rstats <- search_tweets("#rstats", n=500)
+
+glimpse(rstats)
+
+filter(rstats, retweet_count > 0) %>% 
+  select(text, mentions_screen_name, retweet_count) %>% 
+  mutate(text = substr(text, 1, 30)) %>% 
+  unnest()
+```
+
+The `text` column was pared down for display brevity. If you run that code snippet you can examine it to see that it identifies the retweets and the first screen name is usually the main reference, but you get all of the screen names from the original tweet for free.
+
+Here's the brute-force way. A regular expression is used that matches the vast majority of retweet formats. The patten looks for them then extracts the first found screen name:
+
+```{r 05_extract_rt_brute, message=FALSE, warning=FALSE, cache=TRUE}
+# regex mod from https://stackoverflow.com/questions/655903/python-regular-expression-for-retweets
+filter(rstats, str_detect(text, "(RT|via)((?:[[:blank:]:]\\W*@\\w+)+)")) %>% 
+  select(text, mentions_screen_name, retweet_count) %>% 
+  mutate(extracted = str_match(text, "(RT|via)((?:[[:blank:]:]\\W*@\\w+)+)")[,3]) %>% 
+  mutate(text = substr(text, 1, 30)) %>% 
+  unnest()
+```
+
+You should try the above snippets for other tags as there will be cases when the regex will pick up retweets Twitter has failed to capture.
+
+## See Also
+
+- Twiter [official documentation](https://developer.twitter.com/en/docs/tweets/post-and-engage/guides/tweet-availability) on what happens to retweets when origin tweets are deleted

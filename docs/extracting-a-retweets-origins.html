@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>21 Recipes for Mining Twitter Data with rtweet</title>
+  <meta name="description" content="An R version of Matthew A. Russell’s Python Book">
+  <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
+
+  <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://seankross.com/books/21-recipes/" />
+  
+  <meta property="og:description" content="An R version of Matthew A. Russell’s Python Book" />
+  <meta name="github-repo" content="seankross/21-recipes" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="21 Recipes for Mining Twitter Data with rtweet" />
+  
+  <meta name="twitter:description" content="An R version of Matthew A. Russell’s Python Book" />
+  
+
+<meta name="author" content="Bob Rudis">
+
+
+<meta name="date" content="2018-01-02">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="searching-for-tweets.html">
+<link rel="next" href="creating-a-graph-of-retweet-relationships.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; }
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource div.sourceLine, .numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; color: initial; }
+}
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.bn { color: #40a070; } /* BaseN */
+code span.fl { color: #40a070; } /* Float */
+code span.ch { color: #4070a0; } /* Char */
+code span.st { color: #4070a0; } /* String */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">21 Recipes for Mining Twitter with rtweet</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html"><i class="fa fa-check"></i><b>1</b> Using OAuth to Access Twitter APIs</a><ul>
+<li class="chapter" data-level="1.1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#problem"><i class="fa fa-check"></i><b>1.1</b> Problem</a></li>
+<li class="chapter" data-level="1.2" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#solution"><i class="fa fa-check"></i><b>1.2</b> Solution</a></li>
+<li class="chapter" data-level="1.3" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#discussion"><i class="fa fa-check"></i><b>1.3</b> Discussion</a></li>
+<li class="chapter" data-level="1.4" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#see-also"><i class="fa fa-check"></i><b>1.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html"><i class="fa fa-check"></i><b>2</b> Looking Up the Trending Topics</a><ul>
+<li class="chapter" data-level="2.1" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#problem-1"><i class="fa fa-check"></i><b>2.1</b> Problem</a></li>
+<li class="chapter" data-level="2.2" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#solution-1"><i class="fa fa-check"></i><b>2.2</b> Solution</a></li>
+<li class="chapter" data-level="2.3" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#discussion-1"><i class="fa fa-check"></i><b>2.3</b> Discussion</a></li>
+<li class="chapter" data-level="2.4" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#see-also-1"><i class="fa fa-check"></i><b>2.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html"><i class="fa fa-check"></i><b>3</b> Extracting Tweet Entities</a><ul>
+<li class="chapter" data-level="3.1" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#problem-2"><i class="fa fa-check"></i><b>3.1</b> Problem</a></li>
+<li class="chapter" data-level="3.2" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#solution-2"><i class="fa fa-check"></i><b>3.2</b> Solution</a></li>
+<li class="chapter" data-level="3.3" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#discussion-2"><i class="fa fa-check"></i><b>3.3</b> Discussion</a></li>
+<li class="chapter" data-level="3.4" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#see-also-2"><i class="fa fa-check"></i><b>3.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html"><i class="fa fa-check"></i><b>4</b> Searching for Tweets</a><ul>
+<li class="chapter" data-level="4.1" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#problem-3"><i class="fa fa-check"></i><b>4.1</b> Problem</a></li>
+<li class="chapter" data-level="4.2" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#solution-3"><i class="fa fa-check"></i><b>4.2</b> Solution</a></li>
+<li class="chapter" data-level="4.3" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#discussion-3"><i class="fa fa-check"></i><b>4.3</b> Discussion</a></li>
+<li class="chapter" data-level="4.4" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#see-also-3"><i class="fa fa-check"></i><b>4.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html"><i class="fa fa-check"></i><b>5</b> Extracting a Retweet’s Origins</a><ul>
+<li class="chapter" data-level="5.1" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#problem-4"><i class="fa fa-check"></i><b>5.1</b> Problem</a></li>
+<li class="chapter" data-level="5.2" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#solution-4"><i class="fa fa-check"></i><b>5.2</b> Solution</a></li>
+<li class="chapter" data-level="5.3" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#discussion-4"><i class="fa fa-check"></i><b>5.3</b> Discussion</a></li>
+<li class="chapter" data-level="5.4" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#see-also-4"><i class="fa fa-check"></i><b>5.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>6</b> Creating a Graph of Retweet Relationships</a><ul>
+<li class="chapter" data-level="6.1" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#problem-5"><i class="fa fa-check"></i><b>6.1</b> Problem</a></li>
+<li class="chapter" data-level="6.2" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#solution-5"><i class="fa fa-check"></i><b>6.2</b> Solution</a></li>
+<li class="chapter" data-level="6.3" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#discussion-5"><i class="fa fa-check"></i><b>6.3</b> Discussion</a></li>
+<li class="chapter" data-level="6.4" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#see-also-5"><i class="fa fa-check"></i><b>6.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>7</b> Visualizing a Graph of Retweet Relationships</a><ul>
+<li class="chapter" data-level="7.1" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#problem-6"><i class="fa fa-check"></i><b>7.1</b> Problem</a></li>
+<li class="chapter" data-level="7.2" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#solution-6"><i class="fa fa-check"></i><b>7.2</b> Solution</a></li>
+<li class="chapter" data-level="7.3" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#see-also-6"><i class="fa fa-check"></i><b>7.3</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html"><i class="fa fa-check"></i><b>8</b> Capturing Tweets in Real-time with the Streaming API</a><ul>
+<li class="chapter" data-level="8.1" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#problem-7"><i class="fa fa-check"></i><b>8.1</b> Problem</a></li>
+<li class="chapter" data-level="8.2" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#solution-7"><i class="fa fa-check"></i><b>8.2</b> Solution</a></li>
+<li class="chapter" data-level="8.3" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#discussion-6"><i class="fa fa-check"></i><b>8.3</b> Discussion</a></li>
+<li class="chapter" data-level="8.4" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#see-also-7"><i class="fa fa-check"></i><b>8.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html"><i class="fa fa-check"></i><b>9</b> Making Robust Twitter Requests</a><ul>
+<li class="chapter" data-level="9.1" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#problem-8"><i class="fa fa-check"></i><b>9.1</b> Problem</a></li>
+<li class="chapter" data-level="9.2" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#solution-8"><i class="fa fa-check"></i><b>9.2</b> Solution</a></li>
+<li class="chapter" data-level="9.3" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#discussion-7"><i class="fa fa-check"></i><b>9.3</b> Discussion</a></li>
+<li class="chapter" data-level="9.4" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#see-also-8"><i class="fa fa-check"></i><b>9.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html"><i class="fa fa-check"></i><b>10</b> Harvesting Tweets</a><ul>
+<li class="chapter" data-level="10.1" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#problem-9"><i class="fa fa-check"></i><b>10.1</b> Problem</a></li>
+<li class="chapter" data-level="10.2" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#solution-9"><i class="fa fa-check"></i><b>10.2</b> Solution</a></li>
+<li class="chapter" data-level="10.3" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#discussion-8"><i class="fa fa-check"></i><b>10.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html"><i class="fa fa-check"></i><b>11</b> Creating a Tag Cloud from Tweet Entities</a><ul>
+<li class="chapter" data-level="11.1" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#problem-10"><i class="fa fa-check"></i><b>11.1</b> Problem</a></li>
+<li class="chapter" data-level="11.2" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#solution-10"><i class="fa fa-check"></i><b>11.2</b> Solution</a></li>
+<li class="chapter" data-level="11.3" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#discussion-9"><i class="fa fa-check"></i><b>11.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html"><i class="fa fa-check"></i><b>12</b> Summarizing Link Targets</a><ul>
+<li class="chapter" data-level="12.1" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#problem-11"><i class="fa fa-check"></i><b>12.1</b> Problem</a></li>
+<li class="chapter" data-level="12.2" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#solution-11"><i class="fa fa-check"></i><b>12.2</b> Solution</a></li>
+<li class="chapter" data-level="12.3" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#discussion-10"><i class="fa fa-check"></i><b>12.3</b> Discussion</a></li>
+<li class="chapter" data-level="12.4" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#see-also-9"><i class="fa fa-check"></i><b>12.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html"><i class="fa fa-check"></i><b>13</b> Harvesting Friends and Followers</a><ul>
+<li class="chapter" data-level="13.1" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#problem-12"><i class="fa fa-check"></i><b>13.1</b> Problem</a></li>
+<li class="chapter" data-level="13.2" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#solution-12"><i class="fa fa-check"></i><b>13.2</b> Solution</a></li>
+<li class="chapter" data-level="13.3" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#discussion-11"><i class="fa fa-check"></i><b>13.3</b> Discussion</a></li>
+<li class="chapter" data-level="13.4" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#see-also-10"><i class="fa fa-check"></i><b>13.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html"><i class="fa fa-check"></i><b>14</b> Performing Setwise Operations on Friendship Data</a><ul>
+<li class="chapter" data-level="14.1" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#problem-13"><i class="fa fa-check"></i><b>14.1</b> Problem</a></li>
+<li class="chapter" data-level="14.2" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#solution-13"><i class="fa fa-check"></i><b>14.2</b> Solution</a></li>
+<li class="chapter" data-level="14.3" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#discussion-12"><i class="fa fa-check"></i><b>14.3</b> Discussion</a></li>
+<li class="chapter" data-level="14.4" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#see-also-11"><i class="fa fa-check"></i><b>14.4</b> See Also</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">21 Recipes for Mining Twitter Data with rtweet</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="extracting-a-retweets-origins" class="section level1">
+<h1><span class="header-section-number">Recipe 5</span> Extracting a Retweet’s Origins</h1>
+<div id="problem-4" class="section level2">
+<h2><span class="header-section-number">5.1</span> Problem</h2>
+<p>You want to extract the originating source from a retweet.</p>
+</div>
+<div id="solution-4" class="section level2">
+<h2><span class="header-section-number">5.2</span> Solution</h2>
+<p>If the tweet’s <code>retweet_count</code> field is greater than <code>0</code>, extract name out of the tweet’s user field; also parse the text of the tweet with a regular expression.</p>
+</div>
+<div id="discussion-4" class="section level2">
+<h2><span class="header-section-number">5.3</span> Discussion</h2>
+<p>Twitter is <em>pretty darn good</em> about <strike>weaponizing</strike>utilizing the data on its platform. There aren’t many cases nowadays when you need to parse <code>RT</code> or <code>via</code> in hand-crafted retweets, but it’s good to have the tools in your aresenal when needed. We can pick out all the retweets from <code>#rstats</code> (warning: it’s a retweet-heavy hashtag) and who they refer to using the <code>retweet_count</code> but also looking for a special <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html">regular expression</a> (regex) and extracting data that way.</p>
+<p>First, the modern, API-centric way:</p>
+<pre class="sourceCode r" id="cb37"><code class="sourceCode r"><div class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
+<div class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</div></code></pre>
+<pre class="sourceCode r" id="cb38"><code class="sourceCode r"><div class="sourceLine" id="cb38-1" data-line-number="1">rstats &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;#rstats&quot;</span>, <span class="dt">n=</span><span class="dv">500</span>)</div>
+<div class="sourceLine" id="cb38-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb38-3" data-line-number="3"><span class="kw">glimpse</span>(rstats)</div></code></pre>
+<pre><code>## Observations: 500
+## Variables: 42
+## $ status_id              &lt;chr&gt; &quot;948262548570177536&quot;, &quot;9482624955583692...
+## $ created_at             &lt;dttm&gt; 2018-01-02 18:39:44, 2018-01-02 18:39:...
+## $ user_id                &lt;chr&gt; &quot;22462234&quot;, &quot;22462234&quot;, &quot;3367336625&quot;, &quot;...
+## $ screen_name            &lt;chr&gt; &quot;bffo&quot;, &quot;bffo&quot;, &quot;HeathrTurnr&quot;, &quot;_RCharl...
+## $ text                   &lt;chr&gt; &quot;RT @sellorm: Introducing the Field Gui...
+## $ source                 &lt;chr&gt; &quot;Twitter for iPhone&quot;, &quot;Twitter for iPho...
+## $ reply_to_status_id     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ reply_to_user_id       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ reply_to_screen_name   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ is_quote               &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALS...
+## $ is_retweet             &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TR...
+## $ favorite_count         &lt;int&gt; 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, ...
+## $ retweet_count          &lt;int&gt; 112, 25, 2, 1, 1, 25, 8, 0, 112, 4, 112...
+## $ hashtags               &lt;list&gt; [&quot;rstats&quot;, &quot;rstats&quot;, &quot;rstats&quot;, &lt;&quot;rstat...
+## $ symbols                &lt;list&gt; [NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ urls_url               &lt;list&gt; [&quot;blog.sellorm.com/2018/01/01/fie\u202...
+## $ urls_t.co              &lt;list&gt; [&quot;https://t.co/Hfrs1fi74u&quot;, NA, NA, NA...
+## $ urls_expanded_url      &lt;list&gt; [&quot;http://blog.sellorm.com/2018/01/01/f...
+## $ media_url              &lt;list&gt; [NA, NA, NA, NA, &quot;http://pbs.twimg.com...
+## $ media_t.co             &lt;list&gt; [NA, NA, NA, NA, &quot;https://t.co/HpqJm7L...
+## $ media_expanded_url     &lt;list&gt; [NA, NA, NA, NA, &quot;https://twitter.com/...
+## $ media_type             &lt;list&gt; [NA, NA, NA, NA, &quot;photo&quot;, NA, NA, &quot;pho...
+## $ ext_media_url          &lt;list&gt; [NA, NA, NA, NA, &quot;http://pbs.twimg.com...
+## $ ext_media_t.co         &lt;list&gt; [NA, NA, NA, NA, &quot;https://t.co/HpqJm7L...
+## $ ext_media_expanded_url &lt;list&gt; [NA, NA, NA, NA, &quot;https://twitter.com/...
+## $ ext_media_type         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ mentions_user_id       &lt;list&gt; [&quot;14351134&quot;, &quot;2167059661&quot;, &lt;&quot;567537377...
+## $ mentions_screen_name   &lt;list&gt; [&quot;sellorm&quot;, &quot;JennyBryan&quot;, &lt;&quot;KKulma&quot;, &quot;...
+## $ lang                   &lt;chr&gt; &quot;en&quot;, &quot;en&quot;, &quot;en&quot;, &quot;en&quot;, &quot;en&quot;, &quot;en&quot;, &quot;en...
+## $ quoted_status_id       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ quoted_text            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ retweet_status_id      &lt;chr&gt; &quot;947909537859809281&quot;, &quot;9479691476058849...
+## $ retweet_text           &lt;chr&gt; &quot;Introducing the Field Guide to the #rs...
+## $ place_url              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ place_name             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ place_full_name        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ place_type             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ country                &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ country_code           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ geo_coords             &lt;list&gt; [&lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA...
+## $ coords_coords          &lt;list&gt; [&lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA...
+## $ bbox_coords            &lt;list&gt; [&lt;NA, NA, NA, NA, NA, NA, NA, NA&gt;, &lt;NA...</code></pre>
+<pre class="sourceCode r" id="cb40"><code class="sourceCode r"><div class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">filter</span>(rstats, retweet_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(text, mentions_screen_name, retweet_count) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">text =</span> <span class="kw">substr</span>(text, <span class="dv">1</span>, <span class="dv">30</span>)) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</div></code></pre>
+<pre><code>## # A tibble: 505 x 3
+##                              text retweet_count mentions_screen_name
+##                             &lt;chr&gt;         &lt;int&gt;                &lt;chr&gt;
+##  1 RT @sellorm: Introducing the F           112              sellorm
+##  2 RT @JennyBryan: This overview             25           JennyBryan
+##  3 RT @KKulma: Help us improve an             2               KKulma
+##  4 RT @KKulma: Help us improve an             2        RLadiesLondon
+##  5 RT @ma_salmon: My first #rstat             1            ma_salmon
+##  6 RT @ma_salmon: My first #rstat             1         Thoughtfulnz
+##  7 My first #rstats post of the y             1         Thoughtfulnz
+##  8 RT @edzerpebesma: New #rspatia            25         edzerpebesma
+##  9 RT @dataandme: R-code to find              8            dataandme
+## 10 RT @dataandme: R-code to find              8              LVaudor
+## # ... with 495 more rows</code></pre>
+<p>The <code>text</code> column was pared down for display brevity. If you run that code snippet you can examine it to see that it identifies the retweets and the first screen name is usually the main reference, but you get all of the screen names from the original tweet for free.</p>
+<p>Here’s the brute-force way. A regular expression is used that matches the vast majority of retweet formats. The patten looks for them then extracts the first found screen name:</p>
+<pre class="sourceCode r" id="cb42"><code class="sourceCode r"><div class="sourceLine" id="cb42-1" data-line-number="1"><span class="co"># regex mod from https://stackoverflow.com/questions/655903/python-regular-expression-for-retweets</span></div>
+<div class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">filter</span>(rstats, <span class="kw">str_detect</span>(text, <span class="st">&quot;(RT|via)((?:[[:blank:]:]</span><span class="ch">\\</span><span class="st">W*@</span><span class="ch">\\</span><span class="st">w+)+)&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(text, mentions_screen_name, retweet_count) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">extracted =</span> <span class="kw">str_match</span>(text, <span class="st">&quot;(RT|via)((?:[[:blank:]:]</span><span class="ch">\\</span><span class="st">W*@</span><span class="ch">\\</span><span class="st">w+)+)&quot;</span>)[,<span class="dv">3</span>]) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb42-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">text =</span> <span class="kw">substr</span>(text, <span class="dv">1</span>, <span class="dv">30</span>)) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb42-6" data-line-number="6"><span class="st">  </span><span class="kw">unnest</span>()</div></code></pre>
+<pre><code>## # A tibble: 445 x 4
+##                                         text retweet_count
+##                                        &lt;chr&gt;         &lt;int&gt;
+##  1            RT @rweekly_org: https://t.co/            23
+##  2            RT @AnalyticsVidhya: What are              4
+##  3 &quot;RT @dataandme: Still a fave \U0001f4fd &quot;             1
+##  4            RT @sellorm: Introducing the F           108
+##  5            RT @rstudio: Word Embeddings w             4
+##  6            RT @sellorm: Introducing the F           108
+##  7            RT @AnalyticsVidhya: What are              4
+##  8            RT @StatGarrett: Thank you @co             3
+##  9            RT @StatGarrett: Thank you @co             3
+## 10            RT @StatGarrett: Thank you @co             3
+## # ... with 435 more rows, and 2 more variables: extracted &lt;chr&gt;,
+## #   mentions_screen_name &lt;chr&gt;</code></pre>
+<p>You should try the above snippets for other tags as there will be cases when the regex will pick up retweets Twitter has failed to capture.</p>
+</div>
+<div id="see-also-4" class="section level2">
+<h2><span class="header-section-number">5.4</span> See Also</h2>
+<ul>
+<li>Twiter <a href="https://developer.twitter.com/en/docs/tweets/post-and-engage/guides/tweet-availability">official documentation</a> on what happens to retweets when origin tweets are deleted</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="searching-for-tweets.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="creating-a-graph-of-retweet-relationships.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

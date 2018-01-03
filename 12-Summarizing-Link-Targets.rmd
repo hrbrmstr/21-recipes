@@ -1,0 +1,45 @@
+# Summarizing Link Targets 
+
+## Problem
+
+You want to summarize the text of a web page that’s indicated by a short URL in a tweet.
+
+## Solution
+
+Extract the text from the web page, and then use a natural language processing (NLP) toolkit to help you extract the most important sentences to create a machine-generated abstract.
+
+## Discussion
+
+R has more than a few NLP tools to work with. We'll work with the `LSAfun` package for this exercise. As the acronym-laden package name implies, it uses  Latent Semantic Analysis (LSA) to determine the most important bits in a set of text.
+
+We'll use tweets by data journalist extraordinaire [Matt Stiles](https://twitter.com/stiles) (@stiles). Matt works for the Los Angeles Times and I learn a _ton_ from him on a daily basis. He's on top of _everything_. Let's summarise some news he shared recently from the New York Times, Reuters, Washington Post, Five Thirty-Eight and his employer. 
+
+We'll limit our exploration to the first three new links we find.
+
+```{r 12_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(LSAfun)
+library(jerichojars) # hrbrmstr/jerichojars
+library(jericho) # hrbrmstr/jericho
+library(tidyverse)
+```
+```{r 12_summarise, message=FALSE, warning=FALSE, cache=TRUE}
+stiles <- get_timeline("stiles")
+
+filter(stiles, str_detect(urls_expanded_url, "nyti|reut|wapo|lat\\.ms|53ei")) %>%  # only get tweets with news links
+  pull(urls_expanded_url) %>% # extract the links
+  flatten_chr() %>% # mush them into a nice character vector
+  head(3) %>% # get the first 3
+  map_chr(~{
+    httr::GET(.x) %>% # get the URL (I'm lazily calling "fair use" here vs check robots.txt since I'm suggesting you do this for your benefit vs profit)
+      httr::content(as="text") %>%  # extract the HTML
+      jericho::html_to_text() %>% # strip away extraneous HTML tags
+      LSAfun::genericSummary(k=3) %>% # summarise!
+      paste0(collapse="\n\n") # easier to see
+  }) %>%
+  walk(cat)
+```
+
+## See Also
+
+As noted, there are other NLP packages. Check out the [CRAN Task View](https://cran.r-project.org/web/views/NaturalLanguageProcessing.html) on NLP for more resources.

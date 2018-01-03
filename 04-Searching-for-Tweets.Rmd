@@ -1,0 +1,42 @@
+# Searching for Tweets
+
+## Problem
+
+You want to collect a sample of tweets from the public timeline for a custom query.
+
+## Solution
+
+Use `rtweet::search_tweets()` and custom [search operators](https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators).
+
+## Discussion
+
+The Twitter API has free and paid tiers. The free tier is what many of us use and there are a number of operators that can be added to a search query to refine the results. We saw one of those in Recipe 3 by using the `#rstats` hashtag in the search query. But there are far more options at our disposal.
+
+We can see all the `#rstats` tweets that aren't retweets:
+
+```{r 04_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(tidyverse)
+```
+```{r 04_nort, message=FALSE, warning=FALSE, cache=TRUE}
+search_tweets("#rstats -filter:retweets") %>%
+  select(text)
+```
+
+or, all the recent tweet-replies sent to `@kearneymw`:
+
+```{r 04_tomike, message=FALSE, warning=FALSE, cache=TRUE}
+search_tweets("to:kearneymw") %>%
+  select(text)
+```
+
+and, even all the `#rstats` tweets that have GitHub links in them (but no `#python` hashtags):
+
+```{r 04_nopy, message=FALSE, warning=FALSE, cache=TRUE}
+search_tweets("#rstats url:github -#python") %>% 
+  select(text)
+```
+
+## See Also
+
+- Twitter standard [search operators](https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators)

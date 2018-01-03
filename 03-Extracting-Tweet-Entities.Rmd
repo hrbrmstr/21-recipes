@@ -1,0 +1,42 @@
+# Extracting Tweet Entities
+
+## Problem
+
+You want to extract tweet entities such as `@mentions`, `#hashtags`, and short URLs from Twitter search results or other batches of tweets.
+
+## Solution
+
+Use `rtweet::search_tweets()` or any of the _timeline_ functions in `rtweet`.
+
+## Discussion
+
+Michael has provided a very powerful search interace for Twitter data mining. `rtweet::search_tweets()` retrieves, parses and extracts an asounding amount of data for you to then use. Let's search Twitter for the `#rstats` hashtag and see what is available:
+
+```{r 03_pkgs, message=FALSE, warning=FALSE, cache=TRUE}
+library(rtweet)
+library(tidyverse)
+```
+```{r 03_search, message=FALSE, warning=FALSE, cache=TRUE}
+(rstats <- search_tweets("#rstats", n=300)) # pull 300 tweets that used the "#rstats" hashtag
+
+glimpse(rstats)
+```
+
+From the output, you can see that all the URLs (short and expanded), status id's, user id's and other hashtags are all available and all in a [tidy](http://r4ds.had.co.nz/tidy-data.html) data frame. 
+
+What are the top 10 (with ties) other hashtags used in conjunction with `#rstats` (for this search group)?
+
+```{r 03_hash, message=FALSE, warning=FALSE, cache=TRUE}
+select(rstats, hashtags) %>% 
+  unnest() %>% 
+  mutate(hashtags = tolower(hashtags)) %>% 
+  count(hashtags, sort=TRUE) %>% 
+  filter(hashtags != "rstats") %>% 
+  top_n(10)
+```
+
+## See Also
+
+- Official Twitter [search API](https://developer.twitter.com/en/docs/tweets/search/guides/build-standard-query) documentation
+- Twitter [entites](https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/entities-object) information
+- The [tidyverse](https://www.tidyverse.org/) introduction.

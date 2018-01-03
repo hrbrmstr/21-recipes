@@ -1,0 +1,60 @@
+# Capturing Tweets in Real-time with the Streaming API
+
+## Problem
+
+You want to capture a stream of public tweets in real-time, optionally filtering by select screen names or keywords in the text of the tweet.
+
+## Solution
+
+Use `rtweet::stream_tweets()`.
+
+## Discussion
+
+Michael has --- once again --- made it way too easy to work with Twitter's API. The `rtweet::stream_tweets()` function has tons of handy options to help capture tweets in real time. The primary `q` parameter is very versatile and has four possible capture modes:
+
+- The default, `q = ""`, returns a small random sample of all publicly available Twitter statuses.
+- To filter by keyword, provide a comma separated character string with the desired phrase(s) and keyword(s).
+- Track users by providing a comma separated list of user IDs or screen names.
+- Use four latitude/longitude bounding box points to stream by geo location. This must be provided via a vector of length 4, e.g., `c(-125, 26, -65, 49)`.
+
+Let's capture one minute of tweets in the good ol' U S of A (this is one of Michael's examples from the manual page for `rtweet::stream_tweets()`.
+
+```{r 08_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(tidyverse)
+```
+```{r 08_usa, message=FALSE, warning=FALSE, cache=TRUE}
+stream_tweets(
+  lookup_coords("usa"), # handy helper function in rtweet
+  verbose = FALSE,
+  timeout = (60 * 1),
+) -> usa
+```
+
+A 60 second stream resulted in well over 1,000 records. 
+
+Where are they tweeting from?
+
+```{r 08_from, message=FALSE, warning=FALSE}
+count(usa, place_full_name, sort=TRUE)
+```
+
+What are they tweeting about?
+
+```{r 08_about, message=FALSE, warning=FALSE}
+unnest(usa, hashtags) %>% 
+  count(hashtags, sort=TRUE) %>% 
+  filter(!is.na(hashtags))
+```
+
+What app are they using?
+
+```{r 08_with, message=FALSE, warning=FALSE}
+count(usa, source, sort=TRUE)
+```
+
+Michael covers the streaming topic in-depth in [a vignette](http://rtweet.info/articles/stream.html).
+
+## See Also
+
+- [Consuming streaming data](https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data)
