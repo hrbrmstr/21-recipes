@@ -1,0 +1,29 @@
+# Resolving User Profile Information
+
+## Problem
+
+You have a collection of ids and need to resolve basic profile information (such as screen names) for these users.
+
+## Solution
+
+Use `rtweet::lookup_users()`.
+
+## Discussion
+
+The `rtweet` interface to the Twitter API makes this task very straightforward.
+
+```{r 15_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(tidyverse)
+```
+```{r 15_users, message=FALSE, warning=FALSE, cache=TRUE}
+rstats <- rtweet::search_tweets("#rstats", n=30)
+
+(recent_rtweeters <- lookup_users(unique(rstats$user_id)))
+
+glimpse(recent_rtweeters)
+```
+
+## See Also
+
+- [Official Twitter API documentation](https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup) on users.

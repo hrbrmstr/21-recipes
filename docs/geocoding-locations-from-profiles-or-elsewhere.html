@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="visualizing-a-graph-of-retweet-relationships.html">
-<link rel="next" href="making-robust-twitter-requests.html">
+<link rel="prev" href="visualizing-geodata-with-a-dorling-cartogram-problem.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -242,96 +242,73 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="capturing-tweets-in-real-time-with-the-streaming-api" class="section level1">
-<h1><span class="header-section-number">Recipe 8</span> Capturing Tweets in Real-time with the Streaming API</h1>
-<div id="problem-7" class="section level2">
-<h2><span class="header-section-number">8.1</span> Problem</h2>
-<p>You want to capture a stream of public tweets in real-time, optionally filtering by select screen names or keywords in the text of the tweet.</p>
+<div id="geocoding-locations-from-profiles-or-elsewhere" class="section level1">
+<h1><span class="header-section-number">Recipe 18</span> Geocoding Locations from Profiles (or Elsewhere)</h1>
+<div id="problem-17" class="section level2">
+<h2><span class="header-section-number">18.1</span> Problem</h2>
+<p>You want to geocode information in tweets for situations beyond what the Twitter API provides and not just focus on U.S. states as Ecipe 20 did.</p>
 </div>
-<div id="solution-7" class="section level2">
-<h2><span class="header-section-number">8.2</span> Solution</h2>
-<p>Use <code>rtweet::stream_tweets()</code>.</p>
+<div id="solution-17" class="section level2">
+<h2><span class="header-section-number">18.2</span> Solution</h2>
+<p>Use a geocoding service/package to translate location strings into more precise geographic information.</p>
 </div>
-<div id="discussion-6" class="section level2">
-<h2><span class="header-section-number">8.3</span> Discussion</h2>
-<p>Michael has — once again — made it way too easy to work with Twitter’s API. The <code>rtweet::stream_tweets()</code> function has tons of handy options to help capture tweets in real time. The primary <code>q</code> parameter is very versatile and has four possible capture modes:</p>
-<ul>
-<li>The default, <code>q = &quot;&quot;</code>, returns a small random sample of all publicly available Twitter statuses.</li>
-<li>To filter by keyword, provide a comma separated character string with the desired phrase(s) and keyword(s).</li>
-<li>Track users by providing a comma separated list of user IDs or screen names.</li>
-<li>Use four latitude/longitude bounding box points to stream by geo location. This must be provided via a vector of length 4, e.g., <code>c(-125, 26, -65, 49)</code>.</li>
-</ul>
-<p>Let’s capture one minute of tweets in the good ol’ U S of A (this is one of Michael’s examples from the manual page for <code>rtweet::stream_tweets()</code>.</p>
-<pre class="sourceCode r" id="cb53"><code class="sourceCode r"><div class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb53-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb54"><code class="sourceCode r"><div class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">stream_tweets</span>(</div>
-<div class="sourceLine" id="cb54-2" data-line-number="2">  <span class="kw">lookup_coords</span>(<span class="st">&quot;usa&quot;</span>), <span class="co"># handy helper function in rtweet</span></div>
-<div class="sourceLine" id="cb54-3" data-line-number="3">  <span class="dt">verbose =</span> <span class="ot">FALSE</span>,</div>
-<div class="sourceLine" id="cb54-4" data-line-number="4">  <span class="dt">timeout =</span> (<span class="dv">60</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span>),</div>
-<div class="sourceLine" id="cb54-5" data-line-number="5">) -&gt;<span class="st"> </span>usa</div></code></pre>
-<pre><code>## 
- Found 500 records...
- Found 1000 records...
- Found 1323 records...
- Imported 1323 records. Simplifying...</code></pre>
-<p>A 60 second stream resulted in well over 1,000 records.</p>
-<p>Where are they tweeting from?</p>
-<pre class="sourceCode r" id="cb56"><code class="sourceCode r"><div class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">count</span>(usa, place_full_name, <span class="dt">sort=</span><span class="ot">TRUE</span>)</div></code></pre>
-<pre><code>## # A tibble: 724 x 2
-##      place_full_name     n
-##                &lt;chr&gt; &lt;int&gt;
-##  1   Los Angeles, CA    31
-##  2       Houston, TX    28
-##  3     Manhattan, NY    24
-##  4      Florida, USA    19
-##  5      Georgia, USA    18
-##  6   California, USA    16
-##  7 Pennsylvania, USA    16
-##  8        Texas, USA    15
-##  9     Charlotte, NC    14
-## 10       Chicago, IL    14
-## # ... with 714 more rows</code></pre>
-<p>What are they tweeting about?</p>
-<pre class="sourceCode r" id="cb58"><code class="sourceCode r"><div class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">unnest</span>(usa, hashtags) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(hashtags, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(hashtags))</div></code></pre>
-<pre><code>## # A tibble: 289 x 2
-##          hashtags     n
-##             &lt;chr&gt; &lt;int&gt;
-##  1            job    60
-##  2      CareerArc    46
-##  3         Hiring    43
-##  4         hiring    23
-##  5            Job    12
-##  6           Jobs    12
-##  7    Hospitality     7
-##  8 Transportation     6
-##  9     Healthcare     5
-## 10        Nursing     5
-## # ... with 279 more rows</code></pre>
-<p>What app are they using?</p>
-<pre class="sourceCode r" id="cb60"><code class="sourceCode r"><div class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">count</span>(usa, source, <span class="dt">sort=</span><span class="ot">TRUE</span>)</div></code></pre>
-<pre><code>## # A tibble: 26 x 2
-##                      source     n
-##                       &lt;chr&gt; &lt;int&gt;
-##  1       Twitter for iPhone   894
-##  2      Twitter for Android   190
-##  3              TweetMyJOBS    81
-##  4                Instagram    62
-##  5       Twitter Web Client    43
-##  6  &quot;Tweetbot for i\u039fS&quot;    10
-##  7               Foursquare     6
-##  8         Twitter for iPad     6
-##  9                   Cities     4
-## 10 SafeTweet by TweetMyJOBS     4
-## # ... with 16 more rows</code></pre>
-<p>Michael covers the streaming topic in-depth in <a href="http://rtweet.info/articles/stream.html">a vignette</a>.</p>
+<div id="discussion-15" class="section level2">
+<h2><span class="header-section-number">18.3</span> Discussion</h2>
+<p>Recipe 20 focused on extracting U.S. state information from user profiles. But, Twitter is a global service with millions of active users in many countries. Let’s use the Google geocoding API function from the <code>ggmaps</code> package to try to translate user profile location strings into location data.</p>
+<blockquote>
+<p>NOTE: Google’s API has a limit of 2,500 calls per day for free, so you’ll need to pay-up or work in daily batches if you have a large amount of Tweet location data to lookup.</p>
+</blockquote>
+<pre class="sourceCode r" id="cb87"><code class="sourceCode r"><div class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
+<div class="sourceLine" id="cb87-2" data-line-number="2"><span class="kw">library</span>(ggmap)</div>
+<div class="sourceLine" id="cb87-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</div></code></pre>
+<pre class="sourceCode r" id="cb88"><code class="sourceCode r"><div class="sourceLine" id="cb88-1" data-line-number="1">rstats_us &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;#rstats&quot;</span>, <span class="dv">3000</span>)</div>
+<div class="sourceLine" id="cb88-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb88-3" data-line-number="3">user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(<span class="kw">unique</span>(rstats_us<span class="op">$</span>user_id))</div>
+<div class="sourceLine" id="cb88-4" data-line-number="4"></div>
+<div class="sourceLine" id="cb88-5" data-line-number="5"><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb88-6" data-line-number="6"><span class="st">  </span>ggmap<span class="op">::</span><span class="kw">geocode</span>() -&gt;<span class="st"> </span>coded</div>
+<div class="sourceLine" id="cb88-7" data-line-number="7"></div>
+<div class="sourceLine" id="cb88-8" data-line-number="8">coded<span class="op">$</span>location &lt;-<span class="st"> </span><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>)</div>
+<div class="sourceLine" id="cb88-9" data-line-number="9"></div>
+<div class="sourceLine" id="cb88-10" data-line-number="10">user_info &lt;-<span class="st"> </span><span class="kw">left_join</span>(user_info, coded, <span class="st">&quot;location&quot;</span>)</div></code></pre>
+<pre><code>## # A tibble: 503 x 3
+##                                        location        lat
+##                                           &lt;chr&gt;      &lt;dbl&gt;
+##  1                                         Peru  -9.189967
+##  2                       Richmond, B.C., Canada  49.166590
+##  3                                Massachusetts  42.407211
+##  4                                Frederick, MD  39.414269
+##  5                                        Japan  36.204824
+##  6                                          FMU  34.190425
+##  7                                  Chicago, IL  41.878114
+##  8                               &quot;\u65e5\u672c&quot;  36.204824
+##  9 &quot;\u5317\u5927\u30fb\u74b0\u5883\u79d1\u5b66&quot;  43.072764
+## 10                           Stuttgart, Germany  48.775846
+## 11                                 New York, NY  40.712775
+## 12                              Asbury Park, NJ  40.220391
+## 13                                Ann Arbor, MI  42.280826
+## 14                                   Ithaca, NY  42.443961
+## 15            &quot;\u00dcT: 36.1573208,-95.9526115&quot;  40.532392
+## 16                                  Houston, TX  29.760427
+## 17                                     Rome, NY  43.212847
+## 18                             Perth, Australia -31.950527
+## 19                                 Santiago, CL -33.448890
+## 20                                 Johnston, IA  41.670983
+## 21                             Fort Collins, CO  40.585260
+## 22                             Hyderabad, India  17.385044
+## 23                                Nashville, TN  36.162664
+## 24                                  Canton, CHN  23.129110
+## 25                                &quot;Bogot\u00e1&quot;   4.710989
+## 26                              3052, Australia -37.786236
+## 27                          Charlottesville, VA  38.029306
+## 28                             Hobart, Tasmania -42.882138
+## 29                                         moon  40.516977
+## 30                             Toronto, Ontario  43.653226
+## # ... with 473 more rows, and 1 more variables: lon &lt;dbl&gt;</code></pre>
 </div>
-<div id="see-also-7" class="section level2">
-<h2><span class="header-section-number">8.4</span> See Also</h2>
-<ul>
-<li><a href="https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data">Consuming streaming data</a></li>
-</ul>
+<div id="see-also-13" class="section level2">
+<h2><span class="header-section-number">18.4</span> See Also</h2>
+<p>Google’s API is far from perfect, but they have also been collecting gnarly input data for map locations for over a decade, which makes them a good first-choice. You can find more R geocoding packages in the CRAN <a href="https://cran.r-project.org/web/views/WebTechnologies.html">Web Technologies</a> Task View.</p>
 
 </div>
 </div>
@@ -340,8 +317,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           </div>
         </div>
       </div>
-<a href="visualizing-a-graph-of-retweet-relationships.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="making-robust-twitter-requests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="visualizing-geodata-with-a-dorling-cartogram-problem.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

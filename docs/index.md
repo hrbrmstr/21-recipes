@@ -1,14 +1,14 @@
 --- 
 title: "21 Recipes for Mining Twitter Data with rtweet"
 author: "Bob Rudis"
-date: "2018-01-02"
+date: "2018-01-03"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: seankross/21-recipes
-url: 'http\://seankross.com/books/21-recipes/'
+url: 'https\://rud.is/books/21-recipes/'
 description: "An R version of Matthew A. Russell's Python Book"
 ---
 

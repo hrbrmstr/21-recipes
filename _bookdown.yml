@@ -2,6 +2,5 @@ book_filename: "21-recipes-for-mining-twitter-with-rtweet"
 chapter_name: "Recipe "
 repo: https://github.com/hrbrmstr/21-recipes
 output_dir: docs
-rmd_files: ["index.Rmd", "01-Using-OAuth.Rmd", "02-Trending-Topics.Rmd", "03-Extracting-Tweet-Entities.Rmd", "04-Searching-for-Tweets.Rmd", "05-Extracting-a-Retweets-Origins.Rmd", "06-Creating-a-Graph-of-Retweet-Relationships.Rmd", "07-Visualizing-a-Graph-of-Retweet-Relationships.Rmd", "08-Twitter-Streaming-API.Rmd", "09-Making-Robust-Twitter-Requests.Rmd", "10-Harvesting-Tweets.rmd", "11-Creating-a-Tag-Cloud-from-Tweet-Entities.rmd", "12-Summarizing-Link-Targets.rmd", "13-Harvesting-Friends-and-Followers.Rmd", "14-Performing-Setwise-Operations.rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

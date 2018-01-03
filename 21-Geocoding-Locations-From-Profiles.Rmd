@@ -1,0 +1,46 @@
+# Geocoding Locations from Profiles (or Elsewhere)
+
+## Problem
+
+You want to geocode information in tweets for situations beyond what the Twitter API provides and not just focus on U.S. states as Ecipe 20 did.
+
+## Solution
+
+Use a geocoding service/package to translate location strings into more precise geographic information.
+
+## Discussion
+
+Recipe 20 focused on extracting U.S. state information from user profiles. But, Twitter is a global service with millions of active users in many countries. Let's use the Google geocoding API function from the `ggmaps` package to try to translate user profile location strings into location data.
+
+>NOTE: Google's API has a limit of 2,500 calls per day for free, so you'll need to pay-up or work in daily batches if you have a large amount of Tweet location data to lookup.
+
+```{r 21_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(ggmap)
+library(tidyverse)
+```
+```{r 21_geo, message=FALSE, warning=FALSE, eval=FALSE}
+rstats_us <- search_tweets("#rstats", 3000)
+
+user_info <- lookup_users(unique(rstats_us$user_id))
+
+discard(user_info$location, `==`, "") %>% 
+  ggmap::geocode() -> coded
+
+coded$location <- discard(user_info$location, `==`, "")
+
+user_info <- left_join(user_info, coded, "location")
+```
+```{r 21_realdat, message=FALSE, warning=FALSE, echo=FALSE}
+user_info <- read_rds("data/21-user-info-with-geo.rds")
+```
+```{r 21_sel, message=FALSE, warning=FALSE, echo=FALSE}
+select(user_info, location, lat, lon) %>% 
+  filter(!is.na(lat)) %>% 
+  distinct(location, .keep_all = TRUE) %>% 
+  print(n=30)
+```
+
+## See Also
+
+Google's API is far from perfect, but they have also been collecting gnarly input data for map locations for over a decade, which makes them a good first-choice. You can find more R geocoding packages in the CRAN [Web Technologies](https://cran.r-project.org/web/views/WebTechnologies.html) Task View.

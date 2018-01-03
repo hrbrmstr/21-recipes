@@ -12,7 +12,7 @@ Extract the text from the web page, and then use a natural language processing (
 
 R has more than a few NLP tools to work with. We'll work with the `LSAfun` package for this exercise. As the acronym-laden package name implies, it uses  Latent Semantic Analysis (LSA) to determine the most important bits in a set of text.
 
-We'll use tweets by data journalist extraordinaire [Matt Stiles](https://twitter.com/stiles) (@stiles). Matt works for the Los Angeles Times and I learn a _ton_ from him on a daily basis. He's on top of _everything_. Let's summarise some news he shared recently from the New York Times, Reuters, Washington Post, Five Thirty-Eight and his employer. 
+We'll use tweets by data journalist extraordinaire [Matt Stiles](https://twitter.com/stiles). Matt works for the Los Angeles Times and I learn a _ton_ from him on a daily basis. He's on top of _everything_. Let's summarise some news he shared recently from the New York Times, Reuters, Washington Post, Five Thirty-Eight and his employer. 
 
 We'll limit our exploration to the first three new links we find.
 

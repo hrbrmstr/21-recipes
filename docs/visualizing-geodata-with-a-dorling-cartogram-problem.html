@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="visualizing-a-graph-of-retweet-relationships.html">
-<link rel="next" href="making-robust-twitter-requests.html">
+<link rel="prev" href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html">
+<link rel="next" href="geocoding-locations-from-profiles-or-elsewhere.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -242,96 +242,84 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="capturing-tweets-in-real-time-with-the-streaming-api" class="section level1">
-<h1><span class="header-section-number">Recipe 8</span> Capturing Tweets in Real-time with the Streaming API</h1>
-<div id="problem-7" class="section level2">
-<h2><span class="header-section-number">8.1</span> Problem</h2>
-<p>You want to capture a stream of public tweets in real-time, optionally filtering by select screen names or keywords in the text of the tweet.</p>
+<div id="visualizing-geodata-with-a-dorling-cartogram-problem" class="section level1">
+<h1><span class="header-section-number">Recipe 17</span> Visualizing Geodata with a Dorling Cartogram Problem</h1>
+<div id="problem-16" class="section level2">
+<h2><span class="header-section-number">17.1</span> Problem</h2>
+<p>You want to visualize geolocation information (for example, the location field from user profile information, included in a batch of tweets such as a search query), in order to determine if there is a correlation between location and some other criterion.</p>
 </div>
-<div id="solution-7" class="section level2">
-<h2><span class="header-section-number">8.2</span> Solution</h2>
-<p>Use <code>rtweet::stream_tweets()</code>.</p>
+<div id="solution-16" class="section level2">
+<h2><span class="header-section-number">17.2</span> Solution</h2>
+<p>Devise a heuristic to extract the state from the location information in user profiles and visualize it with a Dorling Cartogram.</p>
 </div>
-<div id="discussion-6" class="section level2">
-<h2><span class="header-section-number">8.3</span> Discussion</h2>
-<p>Michael has — once again — made it way too easy to work with Twitter’s API. The <code>rtweet::stream_tweets()</code> function has tons of handy options to help capture tweets in real time. The primary <code>q</code> parameter is very versatile and has four possible capture modes:</p>
+<div id="discussion-14" class="section level2">
+<h2><span class="header-section-number">17.3</span> Discussion</h2>
+<p>(As this cookbook’s Python counterpart notes): <em>“A <a href="http://mbostock.github.io/protovis/ex/cartogram.html">Dorling Cartogram</a> is essentially a bubble chart where each bubble corresponds to a geographic area such as a state, and each bubble is situated as close as possible to its actual location on a map without overlapping with any other bubbles. Since the size and/or color of each bubble can be used to represent meaningful things, a Dorling Cartogram can give you a very intuitive view of data as it relates to geographic boundaries or regions of a larger land mass. The Protovis toolkit comes with some machinery for creating Dorling Cartograms for locations in the United States, and one interesting example of something that you could do builds upon Recipe 19, which demonstrated an approach that you could use to analyze the users who authored tweets from a targeted query.”</em></p>
+<p>One seminal, modern example for Dorling catograms is Mike Bostock’s Protovis (a pre-cursor to D3) <a href="http://mbostock.github.io/protovis/ex/cartogram.html">version</a></p>
+<p><img src="figures/20-protovis.png" /></p>
+<p>I have a love/hate relationship with cartograms. On the one hand, they capture attention by preying on the weakness most of us have to maps. On the other hand, most adults in my home country barely know where their state is on a map when they can see its shape, so most cartograms require extensive labeling and the shape distortions can initially disorient the viewer. Many cartograms also degrade the ability to readily discern the proportions or precision of the underlying data. But, we’re working with Twitter data and the goal for this recipe is to pull a sample of tweets and see where the (geographic) action is at, so using this paticular cartogram style for it is not a terrible choice.</p>
+<blockquote>
+<p>NOTE: This recipe and the next (and, final!) recipe both cover Twitter and geographic data. Any reasonable person should disable the association of location information to Tweets for a whole host of reasons which include security and safety. They should also make the location information in their profile human discernable but difficult for machines to process (better still — use fake location data in your profile). However, there are still a cadre of Twitter users who gleefully provide this information — or, disinformation — so we all can process it.</p>
+</blockquote>
+<p>Rather than rely on the geolocation data of a tweet, let’s pull down some more <code>#rstats</code> tweets and try to limit the locations of the tweets to just the U.S. (despite disabling assocation of location data, Twitter can still internally, generally figure out where you’re tweeting from, especially if you’re on a mobile device).</p>
+<p>After that, we’ll lookup the users of the tweets and extract the location information from their user profile.</p>
+<p>Once we have that location information, we’ll filter it a bit to discern which state it came from. We’ll cover the visualization component after we deal with the data:</p>
+<pre class="sourceCode r" id="cb83"><code class="sourceCode r"><div class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
+<div class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">library</span>(broom)</div>
+<div class="sourceLine" id="cb83-3" data-line-number="3"><span class="kw">library</span>(eechidna)</div>
+<div class="sourceLine" id="cb83-4" data-line-number="4"><span class="kw">library</span>(cartogram) <span class="co"># chxy/cartogram</span></div>
+<div class="sourceLine" id="cb83-5" data-line-number="5"><span class="kw">library</span>(hrbrthemes)</div>
+<div class="sourceLine" id="cb83-6" data-line-number="6"><span class="kw">library</span>(tidyverse)</div></code></pre>
+<pre class="sourceCode r" id="cb84"><code class="sourceCode r"><div class="sourceLine" id="cb84-1" data-line-number="1"><span class="co"># search twitter for tweets</span></div>
+<div class="sourceLine" id="cb84-2" data-line-number="2">rstats_us &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;#rstats&quot;</span>, <span class="dv">3000</span>, <span class="dt">geocode =</span> <span class="st">&quot;2.877742,-97.380979,3000mi&quot;</span>) <span class="co"># geocode request isn&#39;t perfect but helps narrow down</span></div>
+<div class="sourceLine" id="cb84-3" data-line-number="3"></div>
+<div class="sourceLine" id="cb84-4" data-line-number="4"><span class="co"># lookup each user (uniquely) so we can grab location information</span></div>
+<div class="sourceLine" id="cb84-5" data-line-number="5">user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(<span class="kw">unique</span>(rstats_us<span class="op">$</span>user_id)) </div>
+<div class="sourceLine" id="cb84-6" data-line-number="6"></div>
+<div class="sourceLine" id="cb84-7" data-line-number="7"><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ignore blank data</span></div>
+<div class="sourceLine" id="cb84-8" data-line-number="8"><span class="st">  </span><span class="kw">str_match</span>(<span class="kw">sprintf</span>(<span class="st">&quot;(%s)&quot;</span>, <span class="kw">paste0</span>(state.abb, <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>))) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># try to match U.S. state abbreviations</span></div>
+<div class="sourceLine" id="cb84-9" data-line-number="9"><span class="st">  </span>.[,<span class="dv">2</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># the previous step creates a matrix with column 2 being the extracted information (if any)</span></div>
+<div class="sourceLine" id="cb84-10" data-line-number="10"><span class="st">  </span><span class="kw">discard</span>(is.na) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># if no state match was found the value is NA so discard this one</span></div>
+<div class="sourceLine" id="cb84-11" data-line-number="11"><span class="st">  </span><span class="kw">table</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># some habits are hard to break</span></div>
+<div class="sourceLine" id="cb84-12" data-line-number="12"><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># but we can tidy them!</span></div>
+<div class="sourceLine" id="cb84-13" data-line-number="13"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="st">&quot;state&quot;</span>, <span class="st">&quot;n&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># these are more representative names</span></div>
+<div class="sourceLine" id="cb84-14" data-line-number="14"><span class="st">  </span><span class="kw">tbl_df</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># not really necessary but I was printing this when testing</span></div>
+<div class="sourceLine" id="cb84-15" data-line-number="15"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># same as ^^</span></div>
+<div class="sourceLine" id="cb84-16" data-line-number="16"><span class="st">  </span><span class="kw">left_join</span>(</div>
+<div class="sourceLine" id="cb84-17" data-line-number="17">    <span class="kw">as_data_frame</span>(maps<span class="op">::</span>state.carto.center) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join state cartographic center data</span></div>
+<div class="sourceLine" id="cb84-18" data-line-number="18"><span class="st">      </span><span class="kw">mutate</span>(<span class="dt">state=</span>state.abb)</div>
+<div class="sourceLine" id="cb84-19" data-line-number="19">  ) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb84-20" data-line-number="20"><span class="st">  </span><span class="co"># the GitHub-only cartogram package nas a data structure which holds state adjacency information</span></div>
+<div class="sourceLine" id="cb84-21" data-line-number="21"><span class="st">  </span><span class="co"># by specifying that here, it will help make the force-directed cartogram circle positioning more precise (and pretty)</span></div>
+<div class="sourceLine" id="cb84-22" data-line-number="22"><span class="st">  </span><span class="kw">filter</span>(state <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(cartogram<span class="op">::</span>statenbrs)) -&gt;<span class="st"> </span>for_dor </div>
+<div class="sourceLine" id="cb84-23" data-line-number="23"></div>
+<div class="sourceLine" id="cb84-24" data-line-number="24"><span class="kw">glimpse</span>(for_dor)</div></code></pre>
+<pre><code>## Observations: 36
+## Variables: 4
+## $ state &lt;chr&gt; &quot;NY&quot;, &quot;MA&quot;, &quot;PA&quot;, &quot;CA&quot;, &quot;IL&quot;, &quot;NC&quot;, &quot;FL&quot;, &quot;MD&quot;, &quot;TX&quot;, &quot;W...
+## $ n     &lt;int&gt; 34, 28, 17, 14, 11, 11, 9, 9, 9, 8, 6, 6, 5, 5, 5, 5, 4,...
+## $ x     &lt;dbl&gt; 8.041600, 9.025060, 7.222050, 1.410693, 4.823002, 6.9985...
+## $ y     &lt;dbl&gt; 8.746802, 8.684993, 8.029811, 7.337543, 7.757849, 6.5711...</code></pre>
+<p>The visualization component needs some explanation since it’s a bit hack-ish. Xiaoyue Cheng has had n R <a href="https://github.com/chxy/cartogram"><code>cartogram</code></a> package on GitHub for just over five years. It’s not feature complete but has a (mostly) working Dorling cartogram generator. <a href="https://github.com/cpsievert">Carson Sievert</a> incorporated and enhanced some of the <code>cartogram</code> functions for the <a href="https://ropensci.org/">rOpenSci</a> <a href="https://github.com/ropenscilabs/eechidna"><code>eechidna</code></a> package, but uses it internally. Finally, <code>cartogram</code> package has some data sets that make Dorling U.S. state cartogramsa bit more visually appealing.</p>
+<p>What that all means is we’ll be calling an unexported function from <code>eechidna</code> and using some data from <code>cartogram</code>. This is far from an optimal situation, especially since it also means we won’t be using <code>ggplot2</code> for the final visualization. But, it works!</p>
+<p>The code block below starts by setting up some base R plotting parameters, one of which — <code>col=&quot;white&quot;</code> — is going to cause you some grief if you don’t remember to change it to <code>black</code> since it impacts the default color for base R plots. This is also an opportunity to set the font family for the text labels since there is no way to pass text label aesthetics in the <code>dorling()</code> function.</p>
+<p>We pass in the:</p>
 <ul>
-<li>The default, <code>q = &quot;&quot;</code>, returns a small random sample of all publicly available Twitter statuses.</li>
-<li>To filter by keyword, provide a comma separated character string with the desired phrase(s) and keyword(s).</li>
-<li>Track users by providing a comma separated list of user IDs or screen names.</li>
-<li>Use four latitude/longitude bounding box points to stream by geo location. This must be provided via a vector of length 4, e.g., <code>c(-125, 26, -65, 49)</code>.</li>
+<li>state label</li>
+<li>state center</li>
+<li>a scaled value for the tweet count</li>
+<li>state neighbor information</li>
 </ul>
-<p>Let’s capture one minute of tweets in the good ol’ U S of A (this is one of Michael’s examples from the manual page for <code>rtweet::stream_tweets()</code>.</p>
-<pre class="sourceCode r" id="cb53"><code class="sourceCode r"><div class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb53-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb54"><code class="sourceCode r"><div class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">stream_tweets</span>(</div>
-<div class="sourceLine" id="cb54-2" data-line-number="2">  <span class="kw">lookup_coords</span>(<span class="st">&quot;usa&quot;</span>), <span class="co"># handy helper function in rtweet</span></div>
-<div class="sourceLine" id="cb54-3" data-line-number="3">  <span class="dt">verbose =</span> <span class="ot">FALSE</span>,</div>
-<div class="sourceLine" id="cb54-4" data-line-number="4">  <span class="dt">timeout =</span> (<span class="dv">60</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span>),</div>
-<div class="sourceLine" id="cb54-5" data-line-number="5">) -&gt;<span class="st"> </span>usa</div></code></pre>
-<pre><code>## 
- Found 500 records...
- Found 1000 records...
- Found 1323 records...
- Imported 1323 records. Simplifying...</code></pre>
-<p>A 60 second stream resulted in well over 1,000 records.</p>
-<p>Where are they tweeting from?</p>
-<pre class="sourceCode r" id="cb56"><code class="sourceCode r"><div class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">count</span>(usa, place_full_name, <span class="dt">sort=</span><span class="ot">TRUE</span>)</div></code></pre>
-<pre><code>## # A tibble: 724 x 2
-##      place_full_name     n
-##                &lt;chr&gt; &lt;int&gt;
-##  1   Los Angeles, CA    31
-##  2       Houston, TX    28
-##  3     Manhattan, NY    24
-##  4      Florida, USA    19
-##  5      Georgia, USA    18
-##  6   California, USA    16
-##  7 Pennsylvania, USA    16
-##  8        Texas, USA    15
-##  9     Charlotte, NC    14
-## 10       Chicago, IL    14
-## # ... with 714 more rows</code></pre>
-<p>What are they tweeting about?</p>
-<pre class="sourceCode r" id="cb58"><code class="sourceCode r"><div class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">unnest</span>(usa, hashtags) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(hashtags, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(hashtags))</div></code></pre>
-<pre><code>## # A tibble: 289 x 2
-##          hashtags     n
-##             &lt;chr&gt; &lt;int&gt;
-##  1            job    60
-##  2      CareerArc    46
-##  3         Hiring    43
-##  4         hiring    23
-##  5            Job    12
-##  6           Jobs    12
-##  7    Hospitality     7
-##  8 Transportation     6
-##  9     Healthcare     5
-## 10        Nursing     5
-## # ... with 279 more rows</code></pre>
-<p>What app are they using?</p>
-<pre class="sourceCode r" id="cb60"><code class="sourceCode r"><div class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">count</span>(usa, source, <span class="dt">sort=</span><span class="ot">TRUE</span>)</div></code></pre>
-<pre><code>## # A tibble: 26 x 2
-##                      source     n
-##                       &lt;chr&gt; &lt;int&gt;
-##  1       Twitter for iPhone   894
-##  2      Twitter for Android   190
-##  3              TweetMyJOBS    81
-##  4                Instagram    62
-##  5       Twitter Web Client    43
-##  6  &quot;Tweetbot for i\u039fS&quot;    10
-##  7               Foursquare     6
-##  8         Twitter for iPad     6
-##  9                   Cities     4
-## 10 SafeTweet by TweetMyJOBS     4
-## # ... with 16 more rows</code></pre>
-<p>Michael covers the streaming topic in-depth in <a href="http://rtweet.info/articles/stream.html">a vignette</a>.</p>
-</div>
-<div id="see-also-7" class="section level2">
-<h2><span class="header-section-number">8.4</span> See Also</h2>
-<ul>
-<li><a href="https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data">Consuming streaming data</a></li>
-</ul>
+<p>and tweak some aesthetics to produce the final plot. This example opted to “connect the dots” to more explicitly show neighbor information.</p>
+<pre class="sourceCode r" id="cb86"><code class="sourceCode r"><div class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">family=</span>font_rc, <span class="dt">col=</span><span class="st">&quot;white&quot;</span>)</div>
+<div class="sourceLine" id="cb86-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb86-3" data-line-number="3">eechidna<span class="op">:::</span><span class="kw">dorling</span>(</div>
+<div class="sourceLine" id="cb86-4" data-line-number="4">  for_dor<span class="op">$</span>state, for_dor<span class="op">$</span>x, for_dor<span class="op">$</span>y, <span class="kw">sqrt</span>(for_dor<span class="op">$</span>n), <span class="dt">nbr=</span>cartogram<span class="op">::</span>statenbrs, </div>
+<div class="sourceLine" id="cb86-5" data-line-number="5">  <span class="dt">animation =</span> <span class="ot">FALSE</span>, <span class="dt">nbredge =</span> <span class="ot">TRUE</span>, <span class="dt">iteration=</span><span class="dv">100</span>, <span class="dt">name.text=</span><span class="ot">TRUE</span>, <span class="dt">dist.ratio=</span><span class="fl">1.2</span>,</div>
+<div class="sourceLine" id="cb86-6" data-line-number="6">  <span class="dt">main=</span><span class="st">&quot;Dorling Cartogram of U.S. #rstats&quot;</span>, <span class="dt">xlab=</span><span class="st">&#39;&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;&#39;</span>, <span class="dt">col=</span><span class="st">&quot;lightslategray&quot;</span>,</div>
+<div class="sourceLine" id="cb86-7" data-line-number="7">  <span class="dt">frame=</span><span class="ot">FALSE</span>, <span class="dt">asp=</span><span class="dv">1</span>, <span class="dt">family=</span>font_rc, <span class="dt">cex.main=</span><span class="fl">1.75</span>, <span class="dt">adj=</span><span class="dv">0</span></div>
+<div class="sourceLine" id="cb86-8" data-line-number="8">) -&gt;<span class="st"> </span>dor</div></code></pre>
+<p><img src="20-Visualizing-Geodata-with-a-Dorling-Cartogram_files/figure-html4/20_dorling_vis-1.png" width="960" /></p>
 
 </div>
 </div>
@@ -340,8 +328,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           </div>
         </div>
       </div>
-<a href="visualizing-a-graph-of-retweet-relationships.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="making-robust-twitter-requests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geocoding-locations-from-profiles-or-elsewhere.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
