@@ -2,12 +2,24 @@ bookdown::gitbook:
   css: style.css
   split_by: chapter
   config:
+    theme: sandstone
+    fontsettings:
+      theme: white
+      family: serif
+      size: 2
+    download: null
+    sharing:
+        facebook: no
+        twitter: yes
+        github: yes
     toc:
-      collapse: subsection
+      collapse: section
       before: |
         <li><a href="./">21 Recipes for Mining Twitter with rtweet</a></li>
       after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+        <li><span style="font-size:8pt"><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></span></li>
+bookdown::html_book:
+  css: toc.css
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

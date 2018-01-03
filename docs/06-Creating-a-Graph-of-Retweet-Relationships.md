@@ -27,6 +27,7 @@ library(hrbrthemes)
 library(tidyverse)
 ```
 
+
 ```r
 rstats <- search_tweets("#rstats", n=1500)
 

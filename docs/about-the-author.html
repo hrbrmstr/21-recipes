@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="creating-a-tag-cloud-from-tweet-entities.html">
-<link rel="next" href="harvesting-friends-and-followers.html">
+<link rel="prev" href="index.html">
+<link rel="next" href="using-oauth-to-access-twitter-apis.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -261,67 +261,18 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="summarizing-link-targets" class="section level1">
-<h1><span class="header-section-number">Recipe 12</span> Summarizing Link Targets</h1>
-<div id="problem-11" class="section level2">
-<h2><span class="header-section-number">12.1</span> Problem</h2>
-<p>You want to summarize the text of a web page that’s indicated by a short URL in a tweet.</p>
-</div>
-<div id="solution-11" class="section level2">
-<h2><span class="header-section-number">12.2</span> Solution</h2>
-<p>Extract the text from the web page, and then use a natural language processing (NLP) toolkit to help you extract the most important sentences to create a machine-generated abstract.</p>
-</div>
-<div id="discussion-10" class="section level2">
-<h2><span class="header-section-number">12.3</span> Discussion</h2>
-<p>R has more than a few NLP tools to work with. We’ll work with the <code>LSAfun</code> package for this exercise. As the acronym-laden package name implies, it uses Latent Semantic Analysis (LSA) to determine the most important bits in a set of text.</p>
-<p>We’ll use tweets by data journalist extraordinaire <a href="https://twitter.com/stiles">Matt Stiles</a>. Matt works for the Los Angeles Times and I learn a <em>ton</em> from him on a daily basis. He’s on top of <em>everything</em>. Let’s summarise some news he shared recently from the New York Times, Reuters, Washington Post, Five Thirty-Eight and his employer.</p>
-<p>We’ll limit our exploration to the first three new links we find.</p>
-<pre class="sourceCode r" id="cb64"><code class="sourceCode r"><div class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb64-2" data-line-number="2"><span class="kw">library</span>(LSAfun)</div>
-<div class="sourceLine" id="cb64-3" data-line-number="3"><span class="kw">library</span>(jerichojars) <span class="co"># hrbrmstr/jerichojars</span></div>
-<div class="sourceLine" id="cb64-4" data-line-number="4"><span class="kw">library</span>(jericho) <span class="co"># hrbrmstr/jericho</span></div>
-<div class="sourceLine" id="cb64-5" data-line-number="5"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb65"><code class="sourceCode r"><div class="sourceLine" id="cb65-1" data-line-number="1">stiles &lt;-<span class="st"> </span><span class="kw">get_timeline</span>(<span class="st">&quot;stiles&quot;</span>)</div>
-<div class="sourceLine" id="cb65-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb65-3" data-line-number="3"><span class="kw">filter</span>(stiles, <span class="kw">str_detect</span>(urls_expanded_url, <span class="st">&quot;nyti|reut|wapo|lat</span><span class="ch">\\</span><span class="st">.ms|53ei&quot;</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># only get tweets with news links</span></div>
-<div class="sourceLine" id="cb65-4" data-line-number="4"><span class="st">  </span><span class="kw">pull</span>(urls_expanded_url) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract the links</span></div>
-<div class="sourceLine" id="cb65-5" data-line-number="5"><span class="st">  </span><span class="kw">flatten_chr</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># mush them into a nice character vector</span></div>
-<div class="sourceLine" id="cb65-6" data-line-number="6"><span class="st">  </span><span class="kw">head</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get the first 3</span></div>
-<div class="sourceLine" id="cb65-7" data-line-number="7"><span class="st">  </span><span class="kw">map_chr</span>(<span class="op">~</span>{</div>
-<div class="sourceLine" id="cb65-8" data-line-number="8">    httr<span class="op">::</span><span class="kw">GET</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get the URL (I&#39;m lazily calling &quot;fair use&quot; here vs check robots.txt since I&#39;m suggesting you do this for your benefit vs profit)</span></div>
-<div class="sourceLine" id="cb65-9" data-line-number="9"><span class="st">      </span>httr<span class="op">::</span><span class="kw">content</span>(<span class="dt">as=</span><span class="st">&quot;text&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># extract the HTML</span></div>
-<div class="sourceLine" id="cb65-10" data-line-number="10"><span class="st">      </span>jericho<span class="op">::</span><span class="kw">html_to_text</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># strip away extraneous HTML tags</span></div>
-<div class="sourceLine" id="cb65-11" data-line-number="11"><span class="st">      </span>LSAfun<span class="op">::</span><span class="kw">genericSummary</span>(<span class="dt">k=</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># summarise!</span></div>
-<div class="sourceLine" id="cb65-12" data-line-number="12"><span class="st">      </span><span class="kw">paste0</span>(<span class="dt">collapse=</span><span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>) <span class="co"># easier to see</span></div>
-<div class="sourceLine" id="cb65-13" data-line-number="13">  }) <span class="op">%&gt;%</span></div>
-<div class="sourceLine" id="cb65-14" data-line-number="14"><span class="st">  </span><span class="kw">walk</span>(cat)</div></code></pre>
-<pre><code>##  We will continue to put the fairness and accuracy of everything we publish above all else — and in the inevitable moments we fall short, we will continue to own up to our mistakes, and we’ll strive to do better
-## 
-##  We will continue to put the fairness and accuracy of everything we publish above all else — and in the inevitable moments we fall short, we will continue to own up to our mistakes, and we’ll strive to do better
-## 
-##  Our report is stronger than ever, thanks to investments in new forms of journalism like interactive graphics, podcasting and digital video and even greater spending in areas like investigative, international and beat reporting Trump is the 45th president of the United States, but he has spent much of his first year in office defying the conventions and norms established by the previous 44, and transforming the presidency in ways that were once unimaginable
-## 
-##  Trump essentially calls it fake, making no effort to pretend to be above it all, except to boast that he is stronger, richer, smarter and more successful than anyone else
-## 
-##  “The hope would be that given the American people’s reaction to the way he’s handled the presidency, the people running next time will run in the opposite direction Supreme Court CONFIRMED District courts Circuit courts PENDING Obama 1 3 9 9 11 Trump 1 12 7 6 43 White nominees as percent of total Reagan 94% Trump 91 Bush I 89 Bush II 83 Carter 79 Clinton 75 Obama 64 Male nominees Reagan 92% Carter 84 Bush I 81 Trump 81 Bush II 78 Clinton 71 Obama 58 Supreme Court Circuit courts District courts Obama 1 3 9 9 11 CONFIRMED PENDING CONFIRMED PENDING Trump 1 12 7 6 43 CONFIRMED PENDING CONFIRMED PENDING White nominees as percent of total Male nominees Reagan 94% Reagan 92% 91 Carter 84 Trump Bush I 89 Bush I 81 Bush II 83 Trump 81 Carter 79 Bush II 78 75 Clinton Clinton 71 Obama 64 Obama 58 Supreme Court Circuit courts District courts Obama 1 3 9 9 11 CONFIRMED PENDING CONFIRMED PENDING Trump 1 12 7 6 43 CONFIRMED PENDING CONFIRMED PENDING White nominees as percent of total Male nominees Reagan 94% Reagan 92% 91 Carter 84 Trump Bush I 89 Bush I 81 Bush II 83 Trump 81 Carter 79 Bush II 78 75 Clinton Clinton 71 Obama 64 Obama 58 Trump nominee demographics as of Nov
-## 
-##  The improvement in sentiment in the private sector shouldn’t be shocking: If you had been told that you would receive a huge tax cut and be freed from thousands of government regulations, wouldn’t you feel better about your business? As for consumers, their improved mood since the election represents a continuation of a trend that began in 2009 as the floodwaters of the financial crisis were starting to recede
-## 
-##  Additional uninsured after repeal: Uninsured, in millions, before repeal of mandate 4 7 12 12 12 12 13 Total uninsured, 2025: 28 30 31 31 44 million ’17 ’18 ’19 ’20 ’21 ’22 ’23 ’24 ’25 Additional uninsured after repeal: Uninsured, in millions, before repeal of mandate: Total uninsured, 2025: 4 7 12 12 12 12 13 44 28 30 31 31 million 2017 ’18 ’19 ’20 ’21 ’22 ’23 ’24 ’25 Sources: Kaiser Family Foundation; Congressional Budget Office More, and Whiter, Judges From Trump While the new administration has struggled to advance its legislative priorities, it has (unfortunately) excelled at another of its responsibilities: appointing judges</code></pre>
-</div>
-<div id="see-also-9" class="section level2">
-<h2><span class="header-section-number">12.4</span> See Also</h2>
-<p>As noted, there are other NLP packages. Check out the <a href="https://cran.r-project.org/web/views/NaturalLanguageProcessing.html">CRAN Task View</a> on NLP for more resources.</p>
+<div id="about-the-author" class="section level1 unnumbered">
+<h1>About the Author</h1>
+<p>Bob Rudis is a cybersecurity researcher and R afficionado presently thwartng cyber evildoers as [Master] Chief Data Scientist at Rapid7. He was formerly a Security Data Scientist &amp; Managing Principal at Verizon, overseeing the team that produces the annual Data Breach Investigations Report. Bob is a serial tweeter (<a href="https://twitter.com/hrbrmstr" class="uri">https://twitter.com/hrbrmstr</a>), avid blogger (<a href="https://rud.is/b" class="uri">https://rud.is/b</a>), author (Data-Driven Security — [<a href="http://amzn.to/2CKvrqX" class="uri">http://amzn.to/2CKvrqX</a>]), Stack Overflow contributor (<a href="https://stackoverflow.com/users/1457051/hrbrmstr" class="uri">https://stackoverflow.com/users/1457051/hrbrmstr</a>), speaker, and regular contributor to the open source community (<a href="https://github.com/hrbrmstr" class="uri">https://github.com/hrbrmstr</a>). He is the author of several packages on CRAN including **ggalt*, <strong>hrbrthemes</strong>, <strong>waffle</strong>, <strong>statebins</strong>.</p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="creating-a-tag-cloud-from-tweet-entities.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="harvesting-friends-and-followers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="using-oauth-to-access-twitter-apis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

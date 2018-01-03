@@ -25,6 +25,9 @@ library(igraph)
 library(hrbrthemes)
 library(tidyverse)
 ```
+```{r include=FALSE, echo=FALSE}
+extrafont::loadfonts(quiet=TRUE)
+```
 ```{r 06_rstats, message=FALSE, warning=FALSE, cache=TRUE}
 rstats <- search_tweets("#rstats", n=1500)
 

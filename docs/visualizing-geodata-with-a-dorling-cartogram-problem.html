@@ -6,20 +6,20 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>21 Recipes for Mining Twitter Data with rtweet</title>
-  <meta name="description" content="An R version of Matthew A. Russell’s Python Book">
+  <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
   <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
 
   <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://rud.is/books/21-recipes/" />
   
-  <meta property="og:description" content="An R version of Matthew A. Russell’s Python Book" />
-  <meta name="github-repo" content="seankross/21-recipes" />
+  <meta property="og:description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
+  <meta name="github-repo" content="hrbrmstr/21-recipes" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   
-  <meta name="twitter:description" content="An R version of Matthew A. Russell’s Python Book" />
+  <meta name="twitter:description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
   
 
 <meta name="author" content="Bob Rudis">
@@ -120,6 +120,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
 <li class="chapter" data-level="1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html"><i class="fa fa-check"></i><b>1</b> Using OAuth to Access Twitter APIs</a><ul>
 <li class="chapter" data-level="1.1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#problem"><i class="fa fa-check"></i><b>1.1</b> Problem</a></li>
 <li class="chapter" data-level="1.2" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#solution"><i class="fa fa-check"></i><b>1.2</b> Solution</a></li>
@@ -223,7 +224,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="18.4" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#see-also-13"><i class="fa fa-check"></i><b>18.4</b> See Also</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><span style="font-size:8pt"><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></span></li>
 
 </ul>
 
@@ -343,8 +344,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "google": false,
 "weibo": false,
@@ -354,7 +355,7 @@ gitbook.start({
 },
 "fontsettings": {
 "theme": "white",
-"family": "sans",
+"family": "serif",
 "size": 2
 },
 "edit": {
@@ -363,8 +364,9 @@ gitbook.start({
 },
 "download": null,
 "toc": {
-"collapse": "subsection"
-}
+"collapse": "section"
+},
+"theme": "sandstone"
 });
 });
 </script>

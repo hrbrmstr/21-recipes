@@ -1,3 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Mono|PT+Sans+Narrow:400,700|PT+Serif:400,400i,700,700i');
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: none;
+  -webkit-touch-callout: none;
+}
+
+.book .book-body .page-wrapper .page-inner section {
+  line-height: 1.7;
+  font-size: 1.6rem;
+}
+
+p, div {
+  font-family: 'PT Serif', serif;
+  font-size: 1.6rem;
+}
+
+li, h1, h2, h3 {
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-size: 1.6rem;
+}
+
+code, kbd, pre, samp, .sourceLine, .sourceCode {
+  font-family: 'PT Mono', monospace;
+  font-size: 1em;
+}
+
 p.caption {
   color: #777;
   margin-top: 10px;

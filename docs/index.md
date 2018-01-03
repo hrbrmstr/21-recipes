@@ -7,9 +7,9 @@ documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: seankross/21-recipes
+github-repo: hrbrmstr/21-recipes
 url: 'https\://rud.is/books/21-recipes/'
-description: "An R version of Matthew A. Russell's Python Book"
+description: "An R/rtweet edition of Matthew A. Russell's Python Twitter Recipes Book"
 ---
 
 # Preface {-}

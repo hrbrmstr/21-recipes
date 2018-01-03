@@ -1,4 +1,4 @@
-# Visualizing Geodata with a Dorling Cartogram Problem
+# Visualizing Geodata with a Dorling Cartogram
 
 ## Problem
 
@@ -14,7 +14,7 @@ Devise a heuristic to extract the state from the location information in user pr
 
 One seminal, modern example for Dorling catograms is Mike Bostock's Protovis (a pre-cursor to D3) [version](http://mbostock.github.io/protovis/ex/cartogram.html)
 
-![](figures/20-protovis.png)
+![](figures/20-01-protovis.png)
 
 I have a love/hate relationship with cartograms. On the one hand, they capture attention by preying on the weakness most of us have to maps. On the other hand, most adults in my home country barely know where their state is on a map when they can see its shape, so most cartograms require extensive labeling and the shape distortions can initially disorient the viewer. Many cartograms also degrade the ability to readily discern the proportions or precision of the underlying data. But, we're working with Twitter data and the goal for this recipe is to pull a sample of tweets and see where the (geographic) action is at, so using this paticular cartogram style for it is not a terrible choice.
 
@@ -35,6 +35,7 @@ library(cartogram) # chxy/cartogram
 library(hrbrthemes)
 library(tidyverse)
 ```
+
 
 ```r
 # search twitter for tweets

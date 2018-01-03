@@ -6,20 +6,20 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>21 Recipes for Mining Twitter Data with rtweet</title>
-  <meta name="description" content="An R version of Matthew A. Russell’s Python Book">
+  <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
   <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
 
   <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://rud.is/books/21-recipes/" />
   
-  <meta property="og:description" content="An R version of Matthew A. Russell’s Python Book" />
-  <meta name="github-repo" content="seankross/21-recipes" />
+  <meta property="og:description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
+  <meta name="github-repo" content="hrbrmstr/21-recipes" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   
-  <meta name="twitter:description" content="An R version of Matthew A. Russell’s Python Book" />
+  <meta name="twitter:description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
   
 
 <meta name="author" content="Bob Rudis">
@@ -120,6 +120,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
 <li class="chapter" data-level="1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html"><i class="fa fa-check"></i><b>1</b> Using OAuth to Access Twitter APIs</a><ul>
 <li class="chapter" data-level="1.1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#problem"><i class="fa fa-check"></i><b>1.1</b> Problem</a></li>
 <li class="chapter" data-level="1.2" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#solution"><i class="fa fa-check"></i><b>1.2</b> Solution</a></li>
@@ -207,23 +208,41 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="15.3" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#discussion-13"><i class="fa fa-check"></i><b>15.3</b> Discussion</a></li>
 <li class="chapter" data-level="15.4" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#see-also-12"><i class="fa fa-check"></i><b>15.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><i class="fa fa-check"></i><b>16</b> Analyzing the Authors of Tweets that Appear in Search Results</a><ul>
-<li class="chapter" data-level="16.1" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
-<li class="chapter" data-level="16.2" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
+<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Potential Influence</a><ul>
+<li class="chapter" data-level="16.1" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
+<li class="chapter" data-level="16.2" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
+<li class="chapter" data-level="16.3" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#discussion-14"><i class="fa fa-check"></i><b>16.3</b> Discussion</a></li>
+<li class="chapter" data-level="16.4" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#see-also-13"><i class="fa fa-check"></i><b>16.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="visualizing-geodata-with-a-dorling-cartogram-problem.html"><a href="visualizing-geodata-with-a-dorling-cartogram-problem.html"><i class="fa fa-check"></i><b>17</b> Visualizing Geodata with a Dorling Cartogram Problem</a><ul>
-<li class="chapter" data-level="17.1" data-path="visualizing-geodata-with-a-dorling-cartogram-problem.html"><a href="visualizing-geodata-with-a-dorling-cartogram-problem.html#problem-16"><i class="fa fa-check"></i><b>17.1</b> Problem</a></li>
-<li class="chapter" data-level="17.2" data-path="visualizing-geodata-with-a-dorling-cartogram-problem.html"><a href="visualizing-geodata-with-a-dorling-cartogram-problem.html#solution-16"><i class="fa fa-check"></i><b>17.2</b> Solution</a></li>
-<li class="chapter" data-level="17.3" data-path="visualizing-geodata-with-a-dorling-cartogram-problem.html"><a href="visualizing-geodata-with-a-dorling-cartogram-problem.html#discussion-14"><i class="fa fa-check"></i><b>17.3</b> Discussion</a></li>
+<li class="chapter" data-level="17" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html"><i class="fa fa-check"></i><b>17</b> Analyzing Friendship Relationships such as Friends of Friends</a><ul>
+<li class="chapter" data-level="17.1" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#problem-16"><i class="fa fa-check"></i><b>17.1</b> Problem</a></li>
+<li class="chapter" data-level="17.2" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#solution-16"><i class="fa fa-check"></i><b>17.2</b> Solution</a></li>
+<li class="chapter" data-level="17.3" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#discussion-15"><i class="fa fa-check"></i><b>17.3</b> Discussion</a></li>
+<li class="chapter" data-level="17.4" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#see-also-14"><i class="fa fa-check"></i><b>17.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html"><i class="fa fa-check"></i><b>18</b> Geocoding Locations from Profiles (or Elsewhere)</a><ul>
-<li class="chapter" data-level="18.1" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#problem-17"><i class="fa fa-check"></i><b>18.1</b> Problem</a></li>
-<li class="chapter" data-level="18.2" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#solution-17"><i class="fa fa-check"></i><b>18.2</b> Solution</a></li>
-<li class="chapter" data-level="18.3" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#discussion-15"><i class="fa fa-check"></i><b>18.3</b> Discussion</a></li>
-<li class="chapter" data-level="18.4" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#see-also-13"><i class="fa fa-check"></i><b>18.4</b> See Also</a></li>
+<li class="chapter" data-level="18" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html"><i class="fa fa-check"></i><b>18</b> Analyzing Friendship Cliques</a><ul>
+<li class="chapter" data-level="18.1" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#problem-17"><i class="fa fa-check"></i><b>18.1</b> Problem</a></li>
+<li class="chapter" data-level="18.2" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#solution-17"><i class="fa fa-check"></i><b>18.2</b> Solution</a></li>
+<li class="chapter" data-level="18.3" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#discussion-16"><i class="fa fa-check"></i><b>18.3</b> Discussion</a></li>
+<li class="chapter" data-level="18.4" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#see-also-15"><i class="fa fa-check"></i><b>18.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><i class="fa fa-check"></i><b>19</b> Analyzing the Authors of Tweets that Appear in Search Results</a><ul>
+<li class="chapter" data-level="19.1" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#problem-18"><i class="fa fa-check"></i><b>19.1</b> Problem</a></li>
+<li class="chapter" data-level="19.2" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#solution-18"><i class="fa fa-check"></i><b>19.2</b> Solution</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html"><i class="fa fa-check"></i><b>20</b> Visualizing Geodata with a Dorling Cartogram</a><ul>
+<li class="chapter" data-level="20.1" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#problem-19"><i class="fa fa-check"></i><b>20.1</b> Problem</a></li>
+<li class="chapter" data-level="20.2" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#solution-19"><i class="fa fa-check"></i><b>20.2</b> Solution</a></li>
+<li class="chapter" data-level="20.3" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#discussion-17"><i class="fa fa-check"></i><b>20.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html"><i class="fa fa-check"></i><b>21</b> Geocoding Locations from Profiles (or Elsewhere)</a><ul>
+<li class="chapter" data-level="21.1" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#problem-20"><i class="fa fa-check"></i><b>21.1</b> Problem</a></li>
+<li class="chapter" data-level="21.2" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#solution-20"><i class="fa fa-check"></i><b>21.2</b> Solution</a></li>
+<li class="chapter" data-level="21.3" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#discussion-18"><i class="fa fa-check"></i><b>21.3</b> Discussion</a></li>
+<li class="chapter" data-level="21.4" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#see-also-16"><i class="fa fa-check"></i><b>21.4</b> See Also</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><span style="font-size:8pt"><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></span></li>
 
 </ul>
 
@@ -317,8 +336,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "google": false,
 "weibo": false,
@@ -328,17 +347,18 @@ gitbook.start({
 },
 "fontsettings": {
 "theme": "white",
-"family": "sans",
+"family": "serif",
 "size": 2
 },
 "edit": {
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["21-recipes-for-mining-twitter-with-rtweet.pdf", "21-recipes-for-mining-twitter-with-rtweet.epub"],
 "toc": {
-"collapse": "subsection"
-}
+"collapse": "section"
+},
+"theme": "sandstone"
 });
 });
 </script>
