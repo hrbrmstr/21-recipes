@@ -16,8 +16,10 @@ Twitter has [extensive information](https://help.twitter.com/en/using-twitter/tw
 library(rtweet)
 library(tidyverse)
 ```
+```{r echo=FALSE}
+readRenviron("~/.Renviron")
+```
 ```{r 02_trends_avail, message=FALSE, warning=FALSE, cache=TRUE}
-
 (trends_avail <- trends_available())
 
 glimpse(trends_avail)
@@ -58,7 +60,7 @@ repeat {
 
 Later on, we can look at this data with `dplyr`/`dbplyr`:
 
-```{r 02_sql_get, message=FALSE, warning=FALSE, eval=TRUE, cache=TRUE}
+```{r 02_sql_get, message=FALSE, warning=FALSE, eval=TRUE, cache=FALSE}
 library(dplyr)
 
 trends_db <- src_sqlite("data/us-trends.db")

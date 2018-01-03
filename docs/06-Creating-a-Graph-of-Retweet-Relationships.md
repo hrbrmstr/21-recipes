@@ -38,7 +38,7 @@ filter(rstats, retweet_count > 0) %>%
   graph_from_data_frame() -> rt_g
 ```
 
-You can reference the [`igraph` `print()` and `summary()` functions](http://igraph.org/r/doc/print.igraph.html) for more information on the output of `summary()` but output from the following line shows that the graph is `D`irected with `N`amed vertices and it has 890 vertices and 1,487 edges.
+You can reference the [`igraph` `print()` and `summary()` functions](http://igraph.org/r/doc/print.igraph.html) for more information on the output of `summary()` but output from the following line shows that the graph is `D`irected with `N`amed vertices and it has 959 vertices and 1,508 edges.
 
 
 ```r
@@ -46,7 +46,7 @@ summary(rt_g)
 ```
 
 ```
-## IGRAPH 11823c1 DN-- 890 1487 -- 
+## IGRAPH ec3141a DN-- 959 1508 -- 
 ## + attr: name (v/c)
 ```
 
@@ -61,7 +61,7 @@ ggplot(data_frame(y=degree_distribution(rt_g), x=1:length(y))) +
   theme_ipsum_rc(grid="Y", axis="x")
 ```
 
-<img src="06-Creating-a-Graph-of-Retweet-Relationships_files/figure-html4/06_gg-1.png" width="672" />
+![](06-Creating-a-Graph-of-Retweet-Relationships_files/figure-docx/06_gg-1.png)<!-- -->
 
 ## See Also
 

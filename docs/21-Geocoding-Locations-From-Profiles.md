@@ -37,39 +37,39 @@ user_info <- left_join(user_info, coded, "location")
 
 ```
 ## # A tibble: 503 x 3
-##                                        location        lat
-##                                           <chr>      <dbl>
-##  1                                         Peru  -9.189967
-##  2                       Richmond, B.C., Canada  49.166590
-##  3                                Massachusetts  42.407211
-##  4                                Frederick, MD  39.414269
-##  5                                        Japan  36.204824
-##  6                                          FMU  34.190425
-##  7                                  Chicago, IL  41.878114
-##  8                               "\u65e5\u672c"  36.204824
-##  9 "\u5317\u5927\u30fb\u74b0\u5883\u79d1\u5b66"  43.072764
-## 10                           Stuttgart, Germany  48.775846
-## 11                                 New York, NY  40.712775
-## 12                              Asbury Park, NJ  40.220391
-## 13                                Ann Arbor, MI  42.280826
-## 14                                   Ithaca, NY  42.443961
-## 15            "\u00dcT: 36.1573208,-95.9526115"  40.532392
-## 16                                  Houston, TX  29.760427
-## 17                                     Rome, NY  43.212847
-## 18                             Perth, Australia -31.950527
-## 19                                 Santiago, CL -33.448890
-## 20                                 Johnston, IA  41.670983
-## 21                             Fort Collins, CO  40.585260
-## 22                             Hyderabad, India  17.385044
-## 23                                Nashville, TN  36.162664
-## 24                                  Canton, CHN  23.129110
-## 25                                "Bogot\u00e1"   4.710989
-## 26                              3052, Australia -37.786236
-## 27                          Charlottesville, VA  38.029306
-## 28                             Hobart, Tasmania -42.882138
-## 29                                         moon  40.516977
-## 30                             Toronto, Ontario  43.653226
-## # ... with 473 more rows, and 1 more variables: lon <dbl>
+##                      location        lat         lon
+##                         <chr>      <dbl>       <dbl>
+##  1                       Peru  -9.189967  -75.015152
+##  2     Richmond, B.C., Canada  49.166590 -123.133569
+##  3              Massachusetts  42.407211  -71.382437
+##  4              Frederick, MD  39.414269  -77.410541
+##  5                      Japan  36.204824  138.252924
+##  6                        FMU  34.190425  -79.651985
+##  7                Chicago, IL  41.878114  -87.629798
+##  8                       日本  36.204824  138.252924
+##  9             北大・環境科学  43.072764  141.346112
+## 10         Stuttgart, Germany  48.775846    9.182932
+## 11               New York, NY  40.712775  -74.005973
+## 12            Asbury Park, NJ  40.220391  -74.012082
+## 13              Ann Arbor, MI  42.280826  -83.743038
+## 14                 Ithaca, NY  42.443961  -76.501881
+## 15 ÜT: 36.1573208,-95.9526115  40.532392 -112.298984
+## 16                Houston, TX  29.760427  -95.369803
+## 17                   Rome, NY  43.212847  -75.455730
+## 18           Perth, Australia -31.950527  115.860457
+## 19               Santiago, CL -33.448890  -70.669265
+## 20               Johnston, IA  41.670983  -93.713049
+## 21           Fort Collins, CO  40.585260 -105.084423
+## 22           Hyderabad, India  17.385044   78.486671
+## 23              Nashville, TN  36.162664  -86.781602
+## 24                Canton, CHN  23.129110  113.264385
+## 25                     Bogotá   4.710989  -74.072092
+## 26            3052, Australia -37.786236  144.947418
+## 27        Charlottesville, VA  38.029306  -78.476678
+## 28           Hobart, Tasmania -42.882138  147.327195
+## 29                       moon  40.516977  -80.221348
+## 30           Toronto, Ontario  43.653226  -79.383184
+## # ... with 473 more rows
 ```
 
 ## See Also

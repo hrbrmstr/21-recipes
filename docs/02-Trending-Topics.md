@@ -18,6 +18,7 @@ library(rtweet)
 library(tidyverse)
 ```
 
+
 ```r
 (trends_avail <- trends_available())
 ```
@@ -65,20 +66,20 @@ The Twitter API is somewhat unforgiving and unfriendly when you use it directly 
 ```
 
 ```
-## # A tibble: 50 x 9
-##                          trend
-##  *                       <chr>
-##  1                 #backtowork
-##  2            #TuesdayThoughts
-##  3          #SavannahHodaTODAY
-##  4           Justin Timberlake
-##  5 #MyTVShowWasCanceledBecause
-##  6                      #AM2DM
-##  7            Carrie Underwood
-##  8            The Trump Effect
-##  9                   Sean Ryan
-## 10               Micah Parsons
-## # ... with 40 more rows, and 8 more variables: url <chr>,
+## # A tibble: 44 x 9
+##                           trend
+##  *                        <chr>
+##  1             #WednesdayWisdom
+##  2                 Steve Bannon
+##  3                 #BombCyclone
+##  4 #BiggestMisconceptionAboutMe
+##  5                  Tallahassee
+##  6             #BadDaysIn5Words
+##  7                    #1linewed
+##  8                  James Risen
+##  9                   Bill Lazor
+## 10                  Eric Hosmer
+## # ... with 34 more rows, and 8 more variables: url <chr>,
 ## #   promoted_content <lgl>, query <chr>, tweet_volume <int>, place <chr>,
 ## #   woeid <int>, as_of <dttm>, created_at <dttm>
 ```
@@ -88,17 +89,17 @@ glimpse(us)
 ```
 
 ```
-## Observations: 50
+## Observations: 44
 ## Variables: 9
-## $ trend            <chr> "#backtowork", "#TuesdayThoughts", "#Savannah...
-## $ url              <chr> "http://twitter.com/search?q=%23backtowork", ...
+## $ trend            <chr> "#WednesdayWisdom", "Steve Bannon", "#BombCyc...
+## $ url              <chr> "http://twitter.com/search?q=%23WednesdayWisd...
 ## $ promoted_content <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
-## $ query            <chr> "%23backtowork", "%23TuesdayThoughts", "%23Sa...
-## $ tweet_volume     <int> 27544, 30822, 10279, NA, NA, NA, NA, 12000, N...
+## $ query            <chr> "%23WednesdayWisdom", "%22Steve+Bannon%22", "...
+## $ tweet_volume     <int> 46551, 53663, NA, NA, 19722, NA, NA, NA, NA, ...
 ## $ place            <chr> "United States", "United States", "United Sta...
 ## $ woeid            <int> 23424977, 23424977, 23424977, 23424977, 23424...
-## $ as_of            <dttm> 2018-01-02 16:34:11, 2018-01-02 16:34:11, 20...
-## $ created_at       <dttm> 2018-01-02 16:27:46, 2018-01-02 16:27:46, 20...
+## $ as_of            <dttm> 2018-01-03 16:22:42, 2018-01-03 16:22:42, 20...
+## $ created_at       <dttm> 2018-01-03 16:18:00, 2018-01-03 16:18:00, 20...
 ```
 
 Twitter's [documentation](https://developer.twitter.com/en/docs/trends/trends-for-location/api-reference/get-trends-place) states that trends are updated every 5 minutes, which means you should not call the API more frequently than that and their current API rate-limit (Twitter puts some restrictions on how frequently you can call certain API targets) is 75 requests per 15-minute window.

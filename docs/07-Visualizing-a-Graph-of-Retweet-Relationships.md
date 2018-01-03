@@ -54,7 +54,7 @@ ggraph(rt_g, layout = 'linear', circular = TRUE) +
   theme(legend.position="none")
 ```
 
-<img src="07-Visualizing-a-Graph-of-Retweet-Relationships_files/figure-html4/07_graph-1.png" width="960" />
+![](07-Visualizing-a-Graph-of-Retweet-Relationships_files/figure-docx/07_graph-1.png)<!-- -->
 
 ## See Also
 

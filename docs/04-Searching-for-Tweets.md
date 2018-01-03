@@ -29,16 +29,16 @@ search_tweets("#rstats -filter:retweets") %>%
 ## # A tibble: 100 x 1
 ##                                                                           text
 ##                                                                          <chr>
-##  1 "New R Package for #SEO\n\nDiscover RsparkleR : a web crawler powered by @S
-##  2 Word Embeddings with Keras https://t.co/QHzvmKNdGS #rstats https://t.co/KwD
-##  3                  Word Embeddings with Keras https://t.co/cbN12jx74j #rstats
-##  4 You can read the first chapter of Practical Data Science with R on #liveBoo
-##  5  "Big | Data | Insights! https://t.co/hgMeKIOsjQ\n#in #rstats #datascience"
-##  6 Do you have bad R habits? Here's how to identify and fix them. @MicrosoftR 
-##  7 What are the resources to learn creating #Chatbot using R? https://t.co/ip9
-##  8 I have been playing with #ggplot2 and I rather like this plot of bird densi
-##  9 Linking RStudio and GitHub. Very useful blog for anyone interested in produ
-## 10 "@RussellSPierce @davidjayharris After using it for a long time, it's reall
+##  1 Airline passenger safety has clearly immeasurably improved under the presen
+##  2 J'aimerais que plus de profs d'économétrie lisent ceci https://t.co/xFf78u9
+##  3 The new version of tidycensus for @uscensusbureau data in #rstats (version 
+##  4 I couldn't resist and I just signed up @DataCamp using this promo https://t
+##  5 What is the most efficient way to apply the same function to elements of a 
+##  6 My team is growing again. Looking to hire a couple managers on a really fun
+##  7 I find it verrry difficult to read #rstats code where if statements have no
+##  8 "Microsoft SQL Server R Services - Internals XVII.\nUsing WinDbg to find ou
+##  9 "Adobe Illustrator swallows time. I spent the entire day creating the conce
+## 10 Rbloggers Helpful Data Science Reads https://t.co/QxVddTUaj7 #Rstats #DataS
 ## # ... with 90 more rows
 ```
 
@@ -54,16 +54,16 @@ search_tweets("to:kearneymw") %>%
 ## # A tibble: 100 x 1
 ##                                                                           text
 ##                                                                          <chr>
-##  1 @kearneymw @BreitbartNews First thing's first: Breitbart is NOT 'news'.  Na
-##  2 @kearneymw @Twitter interesting. This is what I see https://t.co/PVcuXp8u0r
-##  3 "@kearneymw @Grantimus9 Dang, he was right again.\n\nDebate world is small!
-##  4                                     @kearneymw Amazing. Indeed. @Grantimus9
-##  5                   "@kearneymw Really good. Thanks. \n\n...Eating more fish"
-##  6      @kearneymw Examples sing things well (cohort analysis!) always welcome
-##  7 @josephofiowa I'm using it as an example of (a) difficulties in making caus
-##  8                                         @kearneymw  https://t.co/JI5AZvdoTq
-##  9 "@kearneymw Ohhh, this is neat.\n\nLol @ the projections that simply omit t
-## 10                                                  @kearneymw I just Lacan't?
+##  1 @kearneymw @MattJStannard This is going to come in really handy for me in t
+##  2                                              @kearneymw @slcathena And bam!
+##  3 "@kearneymw @jhollist @dmi3k @ucfagls Could be worse: I brought an entire t
+##  4                    @kearneymw Well, the algorithm's namesake, in that case.
+##  5 "@kearneymw His namesake died from an intestinal blockage. Where are the sh
+##  6 @kearneymw @BreitbartNews First thing's first: Breitbart is NOT 'news'.  Na
+##  7 @kearneymw @Twitter interesting. This is what I see https://t.co/PVcuXp8u0r
+##  8 "@kearneymw @Grantimus9 Dang, he was right again.\n\nDebate world is small!
+##  9                                     @kearneymw Amazing. Indeed. @Grantimus9
+## 10                   "@kearneymw Really good. Thanks. \n\n...Eating more fish"
 ## # ... with 90 more rows
 ```
 
@@ -79,16 +79,16 @@ search_tweets("#rstats url:github -#python") %>%
 ## # A tibble: 100 x 1
 ##                                                                           text
 ##                                                                          <chr>
-##  1 "RT @dataandme: \U0001f60e\U0001f4e6 for changing up your R-\U0001f4ca text
-##  2 Linking RStudio and GitHub. Very useful blog for anyone interested in produ
-##  3 "New year, new blog! Find out how to build this animation that brings a tSN
-##  4 "Open-source #rstats package mclust provides results that are identical to 
-##  5 "RT @dataandme: \U0001f60e\U0001f4e6 for changing up your R-\U0001f4ca text
-##  6 "RT @dataandme: \U0001f60e\U0001f4e6 for changing up your R-\U0001f4ca text
-##  7 "RT @ellessenne: That feeling \U0001f525 thanks #devtools! Interested in co
-##  8 "RT @ma_salmon: @zevross I'll stop the link dumping I promise, but @astroer
-##  9 @zevross I'll stop the link dumping I promise, but @astroeringrand's recent
-## 10 RT @keyboardpipette: @RyanEs Done: https://t.co/kuLOh3liMj My first #rstats
+##  1 The new version of tidycensus for @uscensusbureau data in #rstats (version 
+##  2 RT @krlmlr: Soon on CRAN: Joint profiling of #rstats and native code, with 
+##  3 RT @krlmlr: Soon on CRAN: Joint profiling of #rstats and native code, with 
+##  4 RT @krlmlr: Soon on CRAN: Joint profiling of #rstats and native code, with 
+##  5 RT @krlmlr: Soon on CRAN: Joint profiling of #rstats and native code, with 
+##  6 RT @noamross: Had a little New Year's brainstorm for an @rOpenSci #rstats p
+##  7 RT @noamross: Had a little New Year's brainstorm for an @rOpenSci #rstats p
+##  8 RT @sbmalev: To all 4 of you doing fire history analysis in #rstats: burnr 
+##  9 RT @kwbroman: I think my default should be to always include NAs in any sca
+## 10 RT @sbmalev: To all 4 of you doing fire history analysis in #rstats: burnr 
 ## # ... with 90 more rows
 ```
 
