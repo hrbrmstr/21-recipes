@@ -25,7 +25,7 @@
 <meta name="author" content="Bob Rudis">
 
 
-<meta name="date" content="2018-01-03">
+<meta name="date" content="2018-01-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -208,11 +208,11 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="15.3" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#discussion-13"><i class="fa fa-check"></i><b>15.3</b> Discussion</a></li>
 <li class="chapter" data-level="15.4" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#see-also-12"><i class="fa fa-check"></i><b>15.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Potential Influence</a><ul>
-<li class="chapter" data-level="16.1" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
-<li class="chapter" data-level="16.2" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
-<li class="chapter" data-level="16.3" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#discussion-14"><i class="fa fa-check"></i><b>16.3</b> Discussion</a></li>
-<li class="chapter" data-level="16.4" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#see-also-13"><i class="fa fa-check"></i><b>16.4</b> See Also</a></li>
+<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Primary Influence</a><ul>
+<li class="chapter" data-level="16.1" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
+<li class="chapter" data-level="16.2" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
+<li class="chapter" data-level="16.3" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#discussion-14"><i class="fa fa-check"></i><b>16.3</b> Discussion</a></li>
+<li class="chapter" data-level="16.4" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#see-also-13"><i class="fa fa-check"></i><b>16.4</b> See Also</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html"><i class="fa fa-check"></i><b>17</b> Analyzing Friendship Relationships such as Friends of Friends</a><ul>
 <li class="chapter" data-level="17.1" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#problem-16"><i class="fa fa-check"></i><b>17.1</b> Problem</a></li>
@@ -277,19 +277,19 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <blockquote>
 <p>NOTE: Google’s API has a limit of 2,500 calls per day for free, so you’ll need to pay-up or work in daily batches if you have a large amount of Tweet location data to lookup.</p>
 </blockquote>
-<pre class="sourceCode r" id="cb87"><code class="sourceCode r"><div class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb87-2" data-line-number="2"><span class="kw">library</span>(ggmap)</div>
-<div class="sourceLine" id="cb87-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb88"><code class="sourceCode r"><div class="sourceLine" id="cb88-1" data-line-number="1">rstats_us &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;#rstats&quot;</span>, <span class="dv">3000</span>)</div>
-<div class="sourceLine" id="cb88-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb88-3" data-line-number="3">user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(<span class="kw">unique</span>(rstats_us<span class="op">$</span>user_id))</div>
-<div class="sourceLine" id="cb88-4" data-line-number="4"></div>
-<div class="sourceLine" id="cb88-5" data-line-number="5"><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb88-6" data-line-number="6"><span class="st">  </span>ggmap<span class="op">::</span><span class="kw">geocode</span>() -&gt;<span class="st"> </span>coded</div>
-<div class="sourceLine" id="cb88-7" data-line-number="7"></div>
-<div class="sourceLine" id="cb88-8" data-line-number="8">coded<span class="op">$</span>location &lt;-<span class="st"> </span><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>)</div>
-<div class="sourceLine" id="cb88-9" data-line-number="9"></div>
-<div class="sourceLine" id="cb88-10" data-line-number="10">user_info &lt;-<span class="st"> </span><span class="kw">left_join</span>(user_info, coded, <span class="st">&quot;location&quot;</span>)</div></code></pre>
+<pre class="sourceCode r" id="cb95"><code class="sourceCode r"><div class="sourceLine" id="cb95-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
+<div class="sourceLine" id="cb95-2" data-line-number="2"><span class="kw">library</span>(ggmap)</div>
+<div class="sourceLine" id="cb95-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</div></code></pre>
+<pre class="sourceCode r" id="cb96"><code class="sourceCode r"><div class="sourceLine" id="cb96-1" data-line-number="1">rstats_us &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;#rstats&quot;</span>, <span class="dv">3000</span>)</div>
+<div class="sourceLine" id="cb96-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb96-3" data-line-number="3">user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(<span class="kw">unique</span>(rstats_us<span class="op">$</span>user_id))</div>
+<div class="sourceLine" id="cb96-4" data-line-number="4"></div>
+<div class="sourceLine" id="cb96-5" data-line-number="5"><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb96-6" data-line-number="6"><span class="st">  </span>ggmap<span class="op">::</span><span class="kw">geocode</span>() -&gt;<span class="st"> </span>coded</div>
+<div class="sourceLine" id="cb96-7" data-line-number="7"></div>
+<div class="sourceLine" id="cb96-8" data-line-number="8">coded<span class="op">$</span>location &lt;-<span class="st"> </span><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>)</div>
+<div class="sourceLine" id="cb96-9" data-line-number="9"></div>
+<div class="sourceLine" id="cb96-10" data-line-number="10">user_info &lt;-<span class="st"> </span><span class="kw">left_join</span>(user_info, coded, <span class="st">&quot;location&quot;</span>)</div></code></pre>
 <pre><code>## # A tibble: 503 x 3
 ##                                        location        lat
 ##                                           &lt;chr&gt;      &lt;dbl&gt;

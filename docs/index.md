@@ -1,7 +1,7 @@
 --- 
 title: "21 Recipes for Mining Twitter Data with rtweet"
 author: "Bob Rudis"
-date: "2018-01-03"
+date: "2018-01-05"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]

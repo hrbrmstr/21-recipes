@@ -65,10 +65,10 @@ glimpse(for_dor)
 ```
 
 ```
-## Observations: 37
+## Observations: 36
 ## Variables: 4
-## $ state <chr> "NY", "MA", "PA", "CA", "IL", "NC", "TX", "MD", "FL", "W...
-## $ n     <int> 33, 28, 16, 13, 11, 11, 10, 9, 8, 8, 6, 6, 6, 6, 6, 5, 4...
+## $ state <chr> "NY", "MA", "PA", "CA", "IL", "NC", "FL", "MD", "TX", "W...
+## $ n     <int> 34, 28, 17, 14, 11, 11, 9, 9, 9, 8, 6, 6, 5, 5, 5, 5, 4,...
 ## $ x     <dbl> 8.041600, 9.025060, 7.222050, 1.410693, 4.823002, 6.9985...
 ## $ y     <dbl> 8.746802, 8.684993, 8.029811, 7.337543, 7.757849, 6.5711...
 ```
@@ -100,4 +100,4 @@ eechidna:::dorling(
 ) -> dor
 ```
 
-![](20-Visualizing-Geodata-with-a-Dorling-Cartogram_files/figure-docx/20_dorling_vis-1.png)<!-- -->
+<img src="20-Visualizing-Geodata-with-a-Dorling-Cartogram_files/figure-html4/20_dorling_vis-1.png" width="960" />

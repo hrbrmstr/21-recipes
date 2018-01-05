@@ -1,4 +1,4 @@
-# Crawling Followers to Approximate Potential Influence
+# Crawling Followers to Approximate Primary Influence
 
 ## Problem
 
@@ -6,10 +6,76 @@ You want to approximate someone’s influence based upon their popularity and th
 
 ## Solution
 
-Use a breadth-first traversal to crawl the followers of the user to a reasonable depth, and then count the number of nodes in the graph.
+Use the `rtweet::lookup_users()` and `rtweet::get_followers()` combination to pull primary influence and derive "primary influence" based on "followers-of-followers" counts.
 
 ## Discussion
 
-TBD
+"Influence" is _extremely_ more nuanced than both what the original Python chaper delved into and what this exercise shows. Building "#-removed" total reach counts from a large tree traversal (as the Python version suggests) is worthless on face-value since it doesn't take into account how many times any of the 'n-depth' of followers ever retweeted or even favorited content posted by the seminal user over the course of a certain period. Without gathering such stats, multi-depth "followers-of-followers" is nigh meaningliess.
+
+_However_, once-removed (so the follower counts of those directly following the target user) has some merit. Marketing folks have varying names for this statistic, so we'll just call it "primary influece" since there is legitimate potential of reaching this once-removed audience. Ideally, the retweet- and fav-counts should be factored in, but that can be added on as an exercise.
+
+Let's create a helper function that will capture a snapshot of this _priamry influence_ metric. It will take in a user id or name, pull in that user info and the details of their followers and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the "number of followers" distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overriden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the fuction can be modified --- as an exercise -- to test the distribution and auto-pick scales).
+
+```{r 16_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(hrbrthemes)
+library(tidyverse)
+```
+```{r include=FALSE, echo=FALSE}
+extrafont::loadfonts(quiet=TRUE)
+```
+```{r 16_snap, message=FALSE, warning=FALSE, cache=TRUE}
+influence_snapshot <- function(user, trans=c("log10", "identity")) {
+  
+  user <- user[1]
+  trans <- match.arg(tolower(trimws(trans[1])), c("log10", "identity"))
+  
+  user_info <- lookup_users(user)
+  
+  user_followers <- get_followers(user_info$user_id)
+  uf_details <- lookup_users(user_followers$user_id)
+  
+  primary_influence <- scales::comma(sum(c(uf_details$followers_count, user_info$followers_count)))
+  
+  filter(uf_details, followers_count > 0) %>% 
+    ggplot(aes(followers_count)) +
+    geom_density(aes(y=..count..), color="lightslategray", fill="lightslategray",
+                 alpha=2/3, size=1) +
+    scale_x_continuous(expand=c(0,0), trans="log10", labels=scales::comma) +
+    scale_y_comma() +
+    labs(
+      x="Number of Followers of Followers (log scale)", 
+      y="Number of Followers",
+      title=sprintf("Follower chain distribution of %s (@%s)", user_info$name, user_info$screen_name),
+      subtitle=sprintf("Follower count: %s; Primary influence/reach: %s", 
+                       scales::comma(user_info$followers_count),
+                       scales::comma(primary_influence))
+    ) +
+    theme_ipsum_rc(grid="XY") -> gg
+  
+  print(gg)
+  
+  return(invisible(list(user_info=user_info, follower_details=uf_details)))
+  
+}
+```
+
+Let's run it on [Julia Silge](https://twitter.com/juliasilge), an incredibly talented data scientist over at Stack Overflow and co-author of [Tidy Text Mining with R](https://www.tidytextmining.com/) --- a book that should be on your shelf _especially_ if you're doing Twitter mining.
+
+```{r 16_js, message=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.height=4.5}
+juliasilge <- influence_snapshot("juliasilge")
+
+glimpse(juliasilge)
+```
+
+You'll see that distribution shape quite a bit given the general nature of the social structure of Twitter. Don't believe that? Let's do one more, this time for [Maëlle Salmon](https://twitter.com/ma_salmon/), another incredibly talented data scientist with a [blog](http://www.masalmon.eu/) you _must_ follow if you want to learn how to do fun and useful things with R.L
+
+```{r 16_ms, message=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.height=4.5}
+ma_salmon <- influence_snapshot("ma_salmon")
+
+glimpse(juliasilge)
+```
 
 ## See Also
+
+- Simply Measured's [guide to measuring influence on Twitter](https://simplymeasured.com/blog/7-ways-to-measure-influence-on-twitter/)

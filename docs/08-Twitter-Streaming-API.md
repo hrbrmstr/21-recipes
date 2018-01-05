@@ -34,7 +34,7 @@ stream_tweets(
 ```
 
 ```
-##  Found 500 records... Found 1000 records... Found 1238 records... Imported 1238 records. Simplifying...
+##  Found 500 records... Found 1000 records... Found 1323 records... Imported 1323 records. Simplifying...
 ```
 
 A 60 second stream resulted in well over 1,000 records. 
@@ -47,20 +47,20 @@ count(usa, place_full_name, sort=TRUE)
 ```
 
 ```
-## # A tibble: 686 x 2
-##     place_full_name     n
-##               <chr> <int>
-##  1    Manhattan, NY    28
-##  2      Houston, TX    26
-##  3  Los Angeles, CA    23
-##  4     Florida, USA    22
-##  5      Chicago, IL    20
-##  6     Georgia, USA    19
-##  7       Texas, USA    15
-##  8 Toronto, Ontario    15
-##  9     Brooklyn, NY    14
-## 10 Philadelphia, PA    13
-## # ... with 676 more rows
+## # A tibble: 724 x 2
+##      place_full_name     n
+##                <chr> <int>
+##  1   Los Angeles, CA    31
+##  2       Houston, TX    28
+##  3     Manhattan, NY    24
+##  4      Florida, USA    19
+##  5      Georgia, USA    18
+##  6   California, USA    16
+##  7 Pennsylvania, USA    16
+##  8        Texas, USA    15
+##  9     Charlotte, NC    14
+## 10       Chicago, IL    14
+## # ... with 714 more rows
 ```
 
 What are they tweeting about?
@@ -73,20 +73,20 @@ unnest(usa, hashtags) %>%
 ```
 
 ```
-## # A tibble: 321 x 2
+## # A tibble: 289 x 2
 ##          hashtags     n
 ##             <chr> <int>
-##  1            job    73
-##  2      CareerArc    45
-##  3         Hiring    44
-##  4         hiring    32
-##  5            Job    20
-##  6           Jobs    20
-##  7         Retail    13
-##  8 WPMOYChallenge    10
-##  9    Hospitality     4
-## 10         Boston     3
-## # ... with 311 more rows
+##  1            job    60
+##  2      CareerArc    46
+##  3         Hiring    43
+##  4         hiring    23
+##  5            Job    12
+##  6           Jobs    12
+##  7    Hospitality     7
+##  8 Transportation     6
+##  9     Healthcare     5
+## 10        Nursing     5
+## # ... with 279 more rows
 ```
 
 What app are they using?
@@ -97,20 +97,20 @@ count(usa, source, sort=TRUE)
 ```
 
 ```
-## # A tibble: 27 x 2
+## # A tibble: 26 x 2
 ##                      source     n
 ##                       <chr> <int>
-##  1       Twitter for iPhone   818
-##  2      Twitter for Android   175
-##  3              TweetMyJOBS    91
-##  4                Instagram    58
-##  5       Twitter Web Client    40
-##  6         Twitter for iPad    14
-##  7 SafeTweet by TweetMyJOBS     8
-##  8               Foursquare     6
-##  9         Tweetbot for Mac     5
-## 10                circlepix     3
-## # ... with 17 more rows
+##  1       Twitter for iPhone   894
+##  2      Twitter for Android   190
+##  3              TweetMyJOBS    81
+##  4                Instagram    62
+##  5       Twitter Web Client    43
+##  6  "Tweetbot for i\u039fS"    10
+##  7               Foursquare     6
+##  8         Twitter for iPad     6
+##  9                   Cities     4
+## 10 SafeTweet by TweetMyJOBS     4
+## # ... with 16 more rows
 ```
 
 Michael covers the streaming topic in-depth in [a vignette](http://rtweet.info/articles/stream.html).

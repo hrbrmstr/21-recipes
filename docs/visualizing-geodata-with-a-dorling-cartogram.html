@@ -25,7 +25,7 @@
 <meta name="author" content="Bob Rudis">
 
 
-<meta name="date" content="2018-01-03">
+<meta name="date" content="2018-01-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -208,11 +208,11 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="15.3" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#discussion-13"><i class="fa fa-check"></i><b>15.3</b> Discussion</a></li>
 <li class="chapter" data-level="15.4" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#see-also-12"><i class="fa fa-check"></i><b>15.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Potential Influence</a><ul>
-<li class="chapter" data-level="16.1" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
-<li class="chapter" data-level="16.2" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
-<li class="chapter" data-level="16.3" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#discussion-14"><i class="fa fa-check"></i><b>16.3</b> Discussion</a></li>
-<li class="chapter" data-level="16.4" data-path="crawling-followers-to-approximate-potential-influence.html"><a href="crawling-followers-to-approximate-potential-influence.html#see-also-13"><i class="fa fa-check"></i><b>16.4</b> See Also</a></li>
+<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Primary Influence</a><ul>
+<li class="chapter" data-level="16.1" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
+<li class="chapter" data-level="16.2" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
+<li class="chapter" data-level="16.3" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#discussion-14"><i class="fa fa-check"></i><b>16.3</b> Discussion</a></li>
+<li class="chapter" data-level="16.4" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#see-also-13"><i class="fa fa-check"></i><b>16.4</b> See Also</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html"><i class="fa fa-check"></i><b>17</b> Analyzing Friendship Relationships such as Friends of Friends</a><ul>
 <li class="chapter" data-level="17.1" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#problem-16"><i class="fa fa-check"></i><b>17.1</b> Problem</a></li>
@@ -283,36 +283,36 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p>Rather than rely on the geolocation data of a tweet, let’s pull down some more <code>#rstats</code> tweets and try to limit the locations of the tweets to just the U.S. (despite disabling assocation of location data, Twitter can still internally, generally figure out where you’re tweeting from, especially if you’re on a mobile device).</p>
 <p>After that, we’ll lookup the users of the tweets and extract the location information from their user profile.</p>
 <p>Once we have that location information, we’ll filter it a bit to discern which state it came from. We’ll cover the visualization component after we deal with the data:</p>
-<pre class="sourceCode r" id="cb83"><code class="sourceCode r"><div class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">library</span>(broom)</div>
-<div class="sourceLine" id="cb83-3" data-line-number="3"><span class="kw">library</span>(eechidna)</div>
-<div class="sourceLine" id="cb83-4" data-line-number="4"><span class="kw">library</span>(cartogram) <span class="co"># chxy/cartogram</span></div>
-<div class="sourceLine" id="cb83-5" data-line-number="5"><span class="kw">library</span>(hrbrthemes)</div>
-<div class="sourceLine" id="cb83-6" data-line-number="6"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb84"><code class="sourceCode r"><div class="sourceLine" id="cb84-1" data-line-number="1"><span class="co"># search twitter for tweets</span></div>
-<div class="sourceLine" id="cb84-2" data-line-number="2">rstats_us &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;#rstats&quot;</span>, <span class="dv">3000</span>, <span class="dt">geocode =</span> <span class="st">&quot;2.877742,-97.380979,3000mi&quot;</span>) <span class="co"># geocode request isn&#39;t perfect but helps narrow down</span></div>
-<div class="sourceLine" id="cb84-3" data-line-number="3"></div>
-<div class="sourceLine" id="cb84-4" data-line-number="4"><span class="co"># lookup each user (uniquely) so we can grab location information</span></div>
-<div class="sourceLine" id="cb84-5" data-line-number="5">user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(<span class="kw">unique</span>(rstats_us<span class="op">$</span>user_id)) </div>
-<div class="sourceLine" id="cb84-6" data-line-number="6"></div>
-<div class="sourceLine" id="cb84-7" data-line-number="7"><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ignore blank data</span></div>
-<div class="sourceLine" id="cb84-8" data-line-number="8"><span class="st">  </span><span class="kw">str_match</span>(<span class="kw">sprintf</span>(<span class="st">&quot;(%s)&quot;</span>, <span class="kw">paste0</span>(state.abb, <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>))) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># try to match U.S. state abbreviations</span></div>
-<div class="sourceLine" id="cb84-9" data-line-number="9"><span class="st">  </span>.[,<span class="dv">2</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># the previous step creates a matrix with column 2 being the extracted information (if any)</span></div>
-<div class="sourceLine" id="cb84-10" data-line-number="10"><span class="st">  </span><span class="kw">discard</span>(is.na) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># if no state match was found the value is NA so discard this one</span></div>
-<div class="sourceLine" id="cb84-11" data-line-number="11"><span class="st">  </span><span class="kw">table</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># some habits are hard to break</span></div>
-<div class="sourceLine" id="cb84-12" data-line-number="12"><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># but we can tidy them!</span></div>
-<div class="sourceLine" id="cb84-13" data-line-number="13"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="st">&quot;state&quot;</span>, <span class="st">&quot;n&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># these are more representative names</span></div>
-<div class="sourceLine" id="cb84-14" data-line-number="14"><span class="st">  </span><span class="kw">tbl_df</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># not really necessary but I was printing this when testing</span></div>
-<div class="sourceLine" id="cb84-15" data-line-number="15"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># same as ^^</span></div>
-<div class="sourceLine" id="cb84-16" data-line-number="16"><span class="st">  </span><span class="kw">left_join</span>(</div>
-<div class="sourceLine" id="cb84-17" data-line-number="17">    <span class="kw">as_data_frame</span>(maps<span class="op">::</span>state.carto.center) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join state cartographic center data</span></div>
-<div class="sourceLine" id="cb84-18" data-line-number="18"><span class="st">      </span><span class="kw">mutate</span>(<span class="dt">state=</span>state.abb)</div>
-<div class="sourceLine" id="cb84-19" data-line-number="19">  ) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb84-20" data-line-number="20"><span class="st">  </span><span class="co"># the GitHub-only cartogram package nas a data structure which holds state adjacency information</span></div>
-<div class="sourceLine" id="cb84-21" data-line-number="21"><span class="st">  </span><span class="co"># by specifying that here, it will help make the force-directed cartogram circle positioning more precise (and pretty)</span></div>
-<div class="sourceLine" id="cb84-22" data-line-number="22"><span class="st">  </span><span class="kw">filter</span>(state <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(cartogram<span class="op">::</span>statenbrs)) -&gt;<span class="st"> </span>for_dor </div>
-<div class="sourceLine" id="cb84-23" data-line-number="23"></div>
-<div class="sourceLine" id="cb84-24" data-line-number="24"><span class="kw">glimpse</span>(for_dor)</div></code></pre>
+<pre class="sourceCode r" id="cb91"><code class="sourceCode r"><div class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
+<div class="sourceLine" id="cb91-2" data-line-number="2"><span class="kw">library</span>(broom)</div>
+<div class="sourceLine" id="cb91-3" data-line-number="3"><span class="kw">library</span>(eechidna)</div>
+<div class="sourceLine" id="cb91-4" data-line-number="4"><span class="kw">library</span>(cartogram) <span class="co"># chxy/cartogram</span></div>
+<div class="sourceLine" id="cb91-5" data-line-number="5"><span class="kw">library</span>(hrbrthemes)</div>
+<div class="sourceLine" id="cb91-6" data-line-number="6"><span class="kw">library</span>(tidyverse)</div></code></pre>
+<pre class="sourceCode r" id="cb92"><code class="sourceCode r"><div class="sourceLine" id="cb92-1" data-line-number="1"><span class="co"># search twitter for tweets</span></div>
+<div class="sourceLine" id="cb92-2" data-line-number="2">rstats_us &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;#rstats&quot;</span>, <span class="dv">3000</span>, <span class="dt">geocode =</span> <span class="st">&quot;2.877742,-97.380979,3000mi&quot;</span>) <span class="co"># geocode request isn&#39;t perfect but helps narrow down</span></div>
+<div class="sourceLine" id="cb92-3" data-line-number="3"></div>
+<div class="sourceLine" id="cb92-4" data-line-number="4"><span class="co"># lookup each user (uniquely) so we can grab location information</span></div>
+<div class="sourceLine" id="cb92-5" data-line-number="5">user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(<span class="kw">unique</span>(rstats_us<span class="op">$</span>user_id)) </div>
+<div class="sourceLine" id="cb92-6" data-line-number="6"></div>
+<div class="sourceLine" id="cb92-7" data-line-number="7"><span class="kw">discard</span>(user_info<span class="op">$</span>location, <span class="st">`</span><span class="dt">==</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ignore blank data</span></div>
+<div class="sourceLine" id="cb92-8" data-line-number="8"><span class="st">  </span><span class="kw">str_match</span>(<span class="kw">sprintf</span>(<span class="st">&quot;(%s)&quot;</span>, <span class="kw">paste0</span>(state.abb, <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>))) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># try to match U.S. state abbreviations</span></div>
+<div class="sourceLine" id="cb92-9" data-line-number="9"><span class="st">  </span>.[,<span class="dv">2</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># the previous step creates a matrix with column 2 being the extracted information (if any)</span></div>
+<div class="sourceLine" id="cb92-10" data-line-number="10"><span class="st">  </span><span class="kw">discard</span>(is.na) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># if no state match was found the value is NA so discard this one</span></div>
+<div class="sourceLine" id="cb92-11" data-line-number="11"><span class="st">  </span><span class="kw">table</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># some habits are hard to break</span></div>
+<div class="sourceLine" id="cb92-12" data-line-number="12"><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># but we can tidy them!</span></div>
+<div class="sourceLine" id="cb92-13" data-line-number="13"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="st">&quot;state&quot;</span>, <span class="st">&quot;n&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># these are more representative names</span></div>
+<div class="sourceLine" id="cb92-14" data-line-number="14"><span class="st">  </span><span class="kw">tbl_df</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># not really necessary but I was printing this when testing</span></div>
+<div class="sourceLine" id="cb92-15" data-line-number="15"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># same as ^^</span></div>
+<div class="sourceLine" id="cb92-16" data-line-number="16"><span class="st">  </span><span class="kw">left_join</span>(</div>
+<div class="sourceLine" id="cb92-17" data-line-number="17">    <span class="kw">as_data_frame</span>(maps<span class="op">::</span>state.carto.center) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join state cartographic center data</span></div>
+<div class="sourceLine" id="cb92-18" data-line-number="18"><span class="st">      </span><span class="kw">mutate</span>(<span class="dt">state=</span>state.abb)</div>
+<div class="sourceLine" id="cb92-19" data-line-number="19">  ) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb92-20" data-line-number="20"><span class="st">  </span><span class="co"># the GitHub-only cartogram package nas a data structure which holds state adjacency information</span></div>
+<div class="sourceLine" id="cb92-21" data-line-number="21"><span class="st">  </span><span class="co"># by specifying that here, it will help make the force-directed cartogram circle positioning more precise (and pretty)</span></div>
+<div class="sourceLine" id="cb92-22" data-line-number="22"><span class="st">  </span><span class="kw">filter</span>(state <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(cartogram<span class="op">::</span>statenbrs)) -&gt;<span class="st"> </span>for_dor </div>
+<div class="sourceLine" id="cb92-23" data-line-number="23"></div>
+<div class="sourceLine" id="cb92-24" data-line-number="24"><span class="kw">glimpse</span>(for_dor)</div></code></pre>
 <pre><code>## Observations: 36
 ## Variables: 4
 ## $ state &lt;chr&gt; &quot;NY&quot;, &quot;MA&quot;, &quot;PA&quot;, &quot;CA&quot;, &quot;IL&quot;, &quot;NC&quot;, &quot;FL&quot;, &quot;MD&quot;, &quot;TX&quot;, &quot;W...
@@ -330,14 +330,14 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>state neighbor information</li>
 </ul>
 <p>and tweak some aesthetics to produce the final plot. This example opted to “connect the dots” to more explicitly show neighbor information.</p>
-<pre class="sourceCode r" id="cb86"><code class="sourceCode r"><div class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">family=</span>font_rc, <span class="dt">col=</span><span class="st">&quot;white&quot;</span>)</div>
-<div class="sourceLine" id="cb86-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb86-3" data-line-number="3">eechidna<span class="op">:::</span><span class="kw">dorling</span>(</div>
-<div class="sourceLine" id="cb86-4" data-line-number="4">  for_dor<span class="op">$</span>state, for_dor<span class="op">$</span>x, for_dor<span class="op">$</span>y, <span class="kw">sqrt</span>(for_dor<span class="op">$</span>n), <span class="dt">nbr=</span>cartogram<span class="op">::</span>statenbrs, </div>
-<div class="sourceLine" id="cb86-5" data-line-number="5">  <span class="dt">animation =</span> <span class="ot">FALSE</span>, <span class="dt">nbredge =</span> <span class="ot">TRUE</span>, <span class="dt">iteration=</span><span class="dv">100</span>, <span class="dt">name.text=</span><span class="ot">TRUE</span>, <span class="dt">dist.ratio=</span><span class="fl">1.2</span>,</div>
-<div class="sourceLine" id="cb86-6" data-line-number="6">  <span class="dt">main=</span><span class="st">&quot;Dorling Cartogram of U.S. #rstats&quot;</span>, <span class="dt">xlab=</span><span class="st">&#39;&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;&#39;</span>, <span class="dt">col=</span><span class="st">&quot;lightslategray&quot;</span>,</div>
-<div class="sourceLine" id="cb86-7" data-line-number="7">  <span class="dt">frame=</span><span class="ot">FALSE</span>, <span class="dt">asp=</span><span class="dv">1</span>, <span class="dt">family=</span>font_rc, <span class="dt">cex.main=</span><span class="fl">1.75</span>, <span class="dt">adj=</span><span class="dv">0</span></div>
-<div class="sourceLine" id="cb86-8" data-line-number="8">) -&gt;<span class="st"> </span>dor</div></code></pre>
+<pre class="sourceCode r" id="cb94"><code class="sourceCode r"><div class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">family=</span>font_rc, <span class="dt">col=</span><span class="st">&quot;white&quot;</span>)</div>
+<div class="sourceLine" id="cb94-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb94-3" data-line-number="3">eechidna<span class="op">:::</span><span class="kw">dorling</span>(</div>
+<div class="sourceLine" id="cb94-4" data-line-number="4">  for_dor<span class="op">$</span>state, for_dor<span class="op">$</span>x, for_dor<span class="op">$</span>y, <span class="kw">sqrt</span>(for_dor<span class="op">$</span>n), <span class="dt">nbr=</span>cartogram<span class="op">::</span>statenbrs, </div>
+<div class="sourceLine" id="cb94-5" data-line-number="5">  <span class="dt">animation =</span> <span class="ot">FALSE</span>, <span class="dt">nbredge =</span> <span class="ot">TRUE</span>, <span class="dt">iteration=</span><span class="dv">100</span>, <span class="dt">name.text=</span><span class="ot">TRUE</span>, <span class="dt">dist.ratio=</span><span class="fl">1.2</span>,</div>
+<div class="sourceLine" id="cb94-6" data-line-number="6">  <span class="dt">main=</span><span class="st">&quot;Dorling Cartogram of U.S. #rstats&quot;</span>, <span class="dt">xlab=</span><span class="st">&#39;&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;&#39;</span>, <span class="dt">col=</span><span class="st">&quot;lightslategray&quot;</span>,</div>
+<div class="sourceLine" id="cb94-7" data-line-number="7">  <span class="dt">frame=</span><span class="ot">FALSE</span>, <span class="dt">asp=</span><span class="dv">1</span>, <span class="dt">family=</span>font_rc, <span class="dt">cex.main=</span><span class="fl">1.75</span>, <span class="dt">adj=</span><span class="dv">0</span></div>
+<div class="sourceLine" id="cb94-8" data-line-number="8">) -&gt;<span class="st"> </span>dor</div></code></pre>
 <p><img src="20-Visualizing-Geodata-with-a-Dorling-Cartogram_files/figure-html4/20_dorling_vis-1.png" width="960" /></p>
 
 </div>

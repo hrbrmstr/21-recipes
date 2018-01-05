@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>21 Recipes for Mining Twitter Data with rtweet</title>
+  <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
+  <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
+
+  <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://rud.is/books/21-recipes/" />
+  
+  <meta property="og:description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
+  <meta name="github-repo" content="hrbrmstr/21-recipes" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="21 Recipes for Mining Twitter Data with rtweet" />
+  
+  <meta name="twitter:description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
+  
+
+<meta name="author" content="Bob Rudis">
+
+
+<meta name="date" content="2018-01-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="resolving-user-profile-information.html">
+<link rel="next" href="analyzing-friendship-relationships-such-as-friends-of-friends.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; }
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource div.sourceLine, .numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; color: initial; }
+}
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.bn { color: #40a070; } /* BaseN */
+code span.fl { color: #40a070; } /* Float */
+code span.ch { color: #4070a0; } /* Char */
+code span.st { color: #4070a0; } /* String */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">21 Recipes for Mining Twitter with rtweet</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html"><i class="fa fa-check"></i><b>1</b> Using OAuth to Access Twitter APIs</a><ul>
+<li class="chapter" data-level="1.1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#problem"><i class="fa fa-check"></i><b>1.1</b> Problem</a></li>
+<li class="chapter" data-level="1.2" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#solution"><i class="fa fa-check"></i><b>1.2</b> Solution</a></li>
+<li class="chapter" data-level="1.3" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#discussion"><i class="fa fa-check"></i><b>1.3</b> Discussion</a></li>
+<li class="chapter" data-level="1.4" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#see-also"><i class="fa fa-check"></i><b>1.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html"><i class="fa fa-check"></i><b>2</b> Looking Up the Trending Topics</a><ul>
+<li class="chapter" data-level="2.1" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#problem-1"><i class="fa fa-check"></i><b>2.1</b> Problem</a></li>
+<li class="chapter" data-level="2.2" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#solution-1"><i class="fa fa-check"></i><b>2.2</b> Solution</a></li>
+<li class="chapter" data-level="2.3" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#discussion-1"><i class="fa fa-check"></i><b>2.3</b> Discussion</a></li>
+<li class="chapter" data-level="2.4" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#see-also-1"><i class="fa fa-check"></i><b>2.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html"><i class="fa fa-check"></i><b>3</b> Extracting Tweet Entities</a><ul>
+<li class="chapter" data-level="3.1" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#problem-2"><i class="fa fa-check"></i><b>3.1</b> Problem</a></li>
+<li class="chapter" data-level="3.2" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#solution-2"><i class="fa fa-check"></i><b>3.2</b> Solution</a></li>
+<li class="chapter" data-level="3.3" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#discussion-2"><i class="fa fa-check"></i><b>3.3</b> Discussion</a></li>
+<li class="chapter" data-level="3.4" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#see-also-2"><i class="fa fa-check"></i><b>3.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html"><i class="fa fa-check"></i><b>4</b> Searching for Tweets</a><ul>
+<li class="chapter" data-level="4.1" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#problem-3"><i class="fa fa-check"></i><b>4.1</b> Problem</a></li>
+<li class="chapter" data-level="4.2" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#solution-3"><i class="fa fa-check"></i><b>4.2</b> Solution</a></li>
+<li class="chapter" data-level="4.3" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#discussion-3"><i class="fa fa-check"></i><b>4.3</b> Discussion</a></li>
+<li class="chapter" data-level="4.4" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#see-also-3"><i class="fa fa-check"></i><b>4.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html"><i class="fa fa-check"></i><b>5</b> Extracting a Retweet’s Origins</a><ul>
+<li class="chapter" data-level="5.1" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#problem-4"><i class="fa fa-check"></i><b>5.1</b> Problem</a></li>
+<li class="chapter" data-level="5.2" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#solution-4"><i class="fa fa-check"></i><b>5.2</b> Solution</a></li>
+<li class="chapter" data-level="5.3" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#discussion-4"><i class="fa fa-check"></i><b>5.3</b> Discussion</a></li>
+<li class="chapter" data-level="5.4" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#see-also-4"><i class="fa fa-check"></i><b>5.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>6</b> Creating a Graph of Retweet Relationships</a><ul>
+<li class="chapter" data-level="6.1" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#problem-5"><i class="fa fa-check"></i><b>6.1</b> Problem</a></li>
+<li class="chapter" data-level="6.2" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#solution-5"><i class="fa fa-check"></i><b>6.2</b> Solution</a></li>
+<li class="chapter" data-level="6.3" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#discussion-5"><i class="fa fa-check"></i><b>6.3</b> Discussion</a></li>
+<li class="chapter" data-level="6.4" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#see-also-5"><i class="fa fa-check"></i><b>6.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>7</b> Visualizing a Graph of Retweet Relationships</a><ul>
+<li class="chapter" data-level="7.1" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#problem-6"><i class="fa fa-check"></i><b>7.1</b> Problem</a></li>
+<li class="chapter" data-level="7.2" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#solution-6"><i class="fa fa-check"></i><b>7.2</b> Solution</a></li>
+<li class="chapter" data-level="7.3" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#see-also-6"><i class="fa fa-check"></i><b>7.3</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html"><i class="fa fa-check"></i><b>8</b> Capturing Tweets in Real-time with the Streaming API</a><ul>
+<li class="chapter" data-level="8.1" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#problem-7"><i class="fa fa-check"></i><b>8.1</b> Problem</a></li>
+<li class="chapter" data-level="8.2" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#solution-7"><i class="fa fa-check"></i><b>8.2</b> Solution</a></li>
+<li class="chapter" data-level="8.3" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#discussion-6"><i class="fa fa-check"></i><b>8.3</b> Discussion</a></li>
+<li class="chapter" data-level="8.4" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#see-also-7"><i class="fa fa-check"></i><b>8.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html"><i class="fa fa-check"></i><b>9</b> Making Robust Twitter Requests</a><ul>
+<li class="chapter" data-level="9.1" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#problem-8"><i class="fa fa-check"></i><b>9.1</b> Problem</a></li>
+<li class="chapter" data-level="9.2" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#solution-8"><i class="fa fa-check"></i><b>9.2</b> Solution</a></li>
+<li class="chapter" data-level="9.3" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#discussion-7"><i class="fa fa-check"></i><b>9.3</b> Discussion</a></li>
+<li class="chapter" data-level="9.4" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#see-also-8"><i class="fa fa-check"></i><b>9.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html"><i class="fa fa-check"></i><b>10</b> Harvesting Tweets</a><ul>
+<li class="chapter" data-level="10.1" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#problem-9"><i class="fa fa-check"></i><b>10.1</b> Problem</a></li>
+<li class="chapter" data-level="10.2" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#solution-9"><i class="fa fa-check"></i><b>10.2</b> Solution</a></li>
+<li class="chapter" data-level="10.3" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#discussion-8"><i class="fa fa-check"></i><b>10.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html"><i class="fa fa-check"></i><b>11</b> Creating a Tag Cloud from Tweet Entities</a><ul>
+<li class="chapter" data-level="11.1" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#problem-10"><i class="fa fa-check"></i><b>11.1</b> Problem</a></li>
+<li class="chapter" data-level="11.2" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#solution-10"><i class="fa fa-check"></i><b>11.2</b> Solution</a></li>
+<li class="chapter" data-level="11.3" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#discussion-9"><i class="fa fa-check"></i><b>11.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html"><i class="fa fa-check"></i><b>12</b> Summarizing Link Targets</a><ul>
+<li class="chapter" data-level="12.1" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#problem-11"><i class="fa fa-check"></i><b>12.1</b> Problem</a></li>
+<li class="chapter" data-level="12.2" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#solution-11"><i class="fa fa-check"></i><b>12.2</b> Solution</a></li>
+<li class="chapter" data-level="12.3" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#discussion-10"><i class="fa fa-check"></i><b>12.3</b> Discussion</a></li>
+<li class="chapter" data-level="12.4" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#see-also-9"><i class="fa fa-check"></i><b>12.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html"><i class="fa fa-check"></i><b>13</b> Harvesting Friends and Followers</a><ul>
+<li class="chapter" data-level="13.1" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#problem-12"><i class="fa fa-check"></i><b>13.1</b> Problem</a></li>
+<li class="chapter" data-level="13.2" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#solution-12"><i class="fa fa-check"></i><b>13.2</b> Solution</a></li>
+<li class="chapter" data-level="13.3" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#discussion-11"><i class="fa fa-check"></i><b>13.3</b> Discussion</a></li>
+<li class="chapter" data-level="13.4" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#see-also-10"><i class="fa fa-check"></i><b>13.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html"><i class="fa fa-check"></i><b>14</b> Performing Setwise Operations on Friendship Data</a><ul>
+<li class="chapter" data-level="14.1" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#problem-13"><i class="fa fa-check"></i><b>14.1</b> Problem</a></li>
+<li class="chapter" data-level="14.2" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#solution-13"><i class="fa fa-check"></i><b>14.2</b> Solution</a></li>
+<li class="chapter" data-level="14.3" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#discussion-12"><i class="fa fa-check"></i><b>14.3</b> Discussion</a></li>
+<li class="chapter" data-level="14.4" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#see-also-11"><i class="fa fa-check"></i><b>14.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html"><i class="fa fa-check"></i><b>15</b> Resolving User Profile Information</a><ul>
+<li class="chapter" data-level="15.1" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#problem-14"><i class="fa fa-check"></i><b>15.1</b> Problem</a></li>
+<li class="chapter" data-level="15.2" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#solution-14"><i class="fa fa-check"></i><b>15.2</b> Solution</a></li>
+<li class="chapter" data-level="15.3" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#discussion-13"><i class="fa fa-check"></i><b>15.3</b> Discussion</a></li>
+<li class="chapter" data-level="15.4" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#see-also-12"><i class="fa fa-check"></i><b>15.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Primary Influence</a><ul>
+<li class="chapter" data-level="16.1" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
+<li class="chapter" data-level="16.2" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
+<li class="chapter" data-level="16.3" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#discussion-14"><i class="fa fa-check"></i><b>16.3</b> Discussion</a></li>
+<li class="chapter" data-level="16.4" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#see-also-13"><i class="fa fa-check"></i><b>16.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html"><i class="fa fa-check"></i><b>17</b> Analyzing Friendship Relationships such as Friends of Friends</a><ul>
+<li class="chapter" data-level="17.1" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#problem-16"><i class="fa fa-check"></i><b>17.1</b> Problem</a></li>
+<li class="chapter" data-level="17.2" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#solution-16"><i class="fa fa-check"></i><b>17.2</b> Solution</a></li>
+<li class="chapter" data-level="17.3" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#discussion-15"><i class="fa fa-check"></i><b>17.3</b> Discussion</a></li>
+<li class="chapter" data-level="17.4" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#see-also-14"><i class="fa fa-check"></i><b>17.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html"><i class="fa fa-check"></i><b>18</b> Analyzing Friendship Cliques</a><ul>
+<li class="chapter" data-level="18.1" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#problem-17"><i class="fa fa-check"></i><b>18.1</b> Problem</a></li>
+<li class="chapter" data-level="18.2" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#solution-17"><i class="fa fa-check"></i><b>18.2</b> Solution</a></li>
+<li class="chapter" data-level="18.3" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#discussion-16"><i class="fa fa-check"></i><b>18.3</b> Discussion</a></li>
+<li class="chapter" data-level="18.4" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#see-also-15"><i class="fa fa-check"></i><b>18.4</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><i class="fa fa-check"></i><b>19</b> Analyzing the Authors of Tweets that Appear in Search Results</a><ul>
+<li class="chapter" data-level="19.1" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#problem-18"><i class="fa fa-check"></i><b>19.1</b> Problem</a></li>
+<li class="chapter" data-level="19.2" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#solution-18"><i class="fa fa-check"></i><b>19.2</b> Solution</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html"><i class="fa fa-check"></i><b>20</b> Visualizing Geodata with a Dorling Cartogram</a><ul>
+<li class="chapter" data-level="20.1" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#problem-19"><i class="fa fa-check"></i><b>20.1</b> Problem</a></li>
+<li class="chapter" data-level="20.2" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#solution-19"><i class="fa fa-check"></i><b>20.2</b> Solution</a></li>
+<li class="chapter" data-level="20.3" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#discussion-17"><i class="fa fa-check"></i><b>20.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html"><i class="fa fa-check"></i><b>21</b> Geocoding Locations from Profiles (or Elsewhere)</a><ul>
+<li class="chapter" data-level="21.1" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#problem-20"><i class="fa fa-check"></i><b>21.1</b> Problem</a></li>
+<li class="chapter" data-level="21.2" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#solution-20"><i class="fa fa-check"></i><b>21.2</b> Solution</a></li>
+<li class="chapter" data-level="21.3" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#discussion-18"><i class="fa fa-check"></i><b>21.3</b> Discussion</a></li>
+<li class="chapter" data-level="21.4" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#see-also-16"><i class="fa fa-check"></i><b>21.4</b> See Also</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><span style="font-size:8pt"><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></span></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">21 Recipes for Mining Twitter Data with rtweet</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="crawling-followers-to-approximate-primary-influence" class="section level1">
+<h1><span class="header-section-number">Recipe 16</span> Crawling Followers to Approximate Primary Influence</h1>
+<div id="problem-15" class="section level2">
+<h2><span class="header-section-number">16.1</span> Problem</h2>
+<p>You want to approximate someone’s influence based upon their popularity and the popularity of their followers.</p>
+</div>
+<div id="solution-15" class="section level2">
+<h2><span class="header-section-number">16.2</span> Solution</h2>
+<p>Use the <code>rtweet::lookup_users()</code> and <code>rtweet::get_followers()</code> combination to pull primary influence and derive “primary influence” based on “followers-of-followers” counts.</p>
+</div>
+<div id="discussion-14" class="section level2">
+<h2><span class="header-section-number">16.3</span> Discussion</h2>
+<p>“Influence” is <em>extremely</em> more nuanced than both what the original Python chaper delved into and what this exercise shows. Building “#-removed” total reach counts from a large tree traversal (as the Python version suggests) is worthless on face-value since it doesn’t take into account how many times any of the ‘n-depth’ of followers ever retweeted or even favorited content posted by the seminal user over the course of a certain period. Without gathering such stats, multi-depth “followers-of-followers” is nigh meaningliess.</p>
+<p><em>However</em>, once-removed (so the follower counts of those directly following the target user) has some merit. Marketing folks have varying names for this statistic, so we’ll just call it “primary influece” since there is legitimate potential of reaching this once-removed audience. Ideally, the retweet- and fav-counts should be factored in, but that can be added on as an exercise.</p>
+<p>Let’s create a helper function that will capture a snapshot of this <em>priamry influence</em> metric. It will take in a user id or name, pull in that user info and the details of their followers and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the “number of followers” distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overriden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the fuction can be modified — as an exercise – to test the distribution and auto-pick scales).</p>
+<pre class="sourceCode r" id="cb83"><code class="sourceCode r"><div class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
+<div class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">library</span>(hrbrthemes)</div>
+<div class="sourceLine" id="cb83-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</div></code></pre>
+<pre class="sourceCode r" id="cb84"><code class="sourceCode r"><div class="sourceLine" id="cb84-1" data-line-number="1">influence_snapshot &lt;-<span class="st"> </span><span class="cf">function</span>(user, <span class="dt">trans=</span><span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>)) {</div>
+<div class="sourceLine" id="cb84-2" data-line-number="2">  </div>
+<div class="sourceLine" id="cb84-3" data-line-number="3">  user &lt;-<span class="st"> </span>user[<span class="dv">1</span>]</div>
+<div class="sourceLine" id="cb84-4" data-line-number="4">  trans &lt;-<span class="st"> </span><span class="kw">match.arg</span>(<span class="kw">tolower</span>(<span class="kw">trimws</span>(trans[<span class="dv">1</span>])), <span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>))</div>
+<div class="sourceLine" id="cb84-5" data-line-number="5">  </div>
+<div class="sourceLine" id="cb84-6" data-line-number="6">  user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user)</div>
+<div class="sourceLine" id="cb84-7" data-line-number="7">  </div>
+<div class="sourceLine" id="cb84-8" data-line-number="8">  user_followers &lt;-<span class="st"> </span><span class="kw">get_followers</span>(user_info<span class="op">$</span>user_id)</div>
+<div class="sourceLine" id="cb84-9" data-line-number="9">  uf_details &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user_followers<span class="op">$</span>user_id)</div>
+<div class="sourceLine" id="cb84-10" data-line-number="10">  </div>
+<div class="sourceLine" id="cb84-11" data-line-number="11">  primary_influence &lt;-<span class="st"> </span>scales<span class="op">::</span><span class="kw">comma</span>(<span class="kw">sum</span>(<span class="kw">c</span>(uf_details<span class="op">$</span>followers_count, user_info<span class="op">$</span>followers_count)))</div>
+<div class="sourceLine" id="cb84-12" data-line-number="12">  </div>
+<div class="sourceLine" id="cb84-13" data-line-number="13">  <span class="kw">filter</span>(uf_details, followers_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
+<div class="sourceLine" id="cb84-14" data-line-number="14"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(followers_count)) <span class="op">+</span></div>
+<div class="sourceLine" id="cb84-15" data-line-number="15"><span class="st">    </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..count..), <span class="dt">color=</span><span class="st">&quot;lightslategray&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;lightslategray&quot;</span>,</div>
+<div class="sourceLine" id="cb84-16" data-line-number="16">                 <span class="dt">alpha=</span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></div>
+<div class="sourceLine" id="cb84-17" data-line-number="17"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">trans=</span><span class="st">&quot;log10&quot;</span>, <span class="dt">labels=</span>scales<span class="op">::</span>comma) <span class="op">+</span></div>
+<div class="sourceLine" id="cb84-18" data-line-number="18"><span class="st">    </span><span class="kw">scale_y_comma</span>() <span class="op">+</span></div>
+<div class="sourceLine" id="cb84-19" data-line-number="19"><span class="st">    </span><span class="kw">labs</span>(</div>
+<div class="sourceLine" id="cb84-20" data-line-number="20">      <span class="dt">x=</span><span class="st">&quot;Number of Followers of Followers (log scale)&quot;</span>, </div>
+<div class="sourceLine" id="cb84-21" data-line-number="21">      <span class="dt">y=</span><span class="st">&quot;Number of Followers&quot;</span>,</div>
+<div class="sourceLine" id="cb84-22" data-line-number="22">      <span class="dt">title=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower chain distribution of %s (@%s)&quot;</span>, user_info<span class="op">$</span>name, user_info<span class="op">$</span>screen_name),</div>
+<div class="sourceLine" id="cb84-23" data-line-number="23">      <span class="dt">subtitle=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower count: %s; Primary influence/reach: %s&quot;</span>, </div>
+<div class="sourceLine" id="cb84-24" data-line-number="24">                       scales<span class="op">::</span><span class="kw">comma</span>(user_info<span class="op">$</span>followers_count),</div>
+<div class="sourceLine" id="cb84-25" data-line-number="25">                       scales<span class="op">::</span><span class="kw">comma</span>(primary_influence))</div>
+<div class="sourceLine" id="cb84-26" data-line-number="26">    ) <span class="op">+</span></div>
+<div class="sourceLine" id="cb84-27" data-line-number="27"><span class="st">    </span><span class="kw">theme_ipsum_rc</span>(<span class="dt">grid=</span><span class="st">&quot;XY&quot;</span>) -&gt;<span class="st"> </span>gg</div>
+<div class="sourceLine" id="cb84-28" data-line-number="28">  </div>
+<div class="sourceLine" id="cb84-29" data-line-number="29">  <span class="kw">print</span>(gg)</div>
+<div class="sourceLine" id="cb84-30" data-line-number="30">  </div>
+<div class="sourceLine" id="cb84-31" data-line-number="31">  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">user_info=</span>user_info, <span class="dt">follower_details=</span>uf_details)))</div>
+<div class="sourceLine" id="cb84-32" data-line-number="32">  </div>
+<div class="sourceLine" id="cb84-33" data-line-number="33">}</div></code></pre>
+<p>Let’s run it on <a href="https://twitter.com/juliasilge">Julia Silge</a>, an incredibly talented data scientist over at Stack Overflow and co-author of <a href="https://www.tidytextmining.com/">Tidy Text Mining with R</a> — a book that should be on your shelf <em>especially</em> if you’re doing Twitter mining.</p>
+<pre class="sourceCode r" id="cb85"><code class="sourceCode r"><div class="sourceLine" id="cb85-1" data-line-number="1">juliasilge &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;juliasilge&quot;</span>)</div></code></pre>
+<p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html4/16_js-1.png" width="960" /></p>
+<pre class="sourceCode r" id="cb86"><code class="sourceCode r"><div class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">glimpse</span>(juliasilge)</div></code></pre>
+<pre><code>## List of 2
+##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  20 variables:
+##   ..$ user_id               : chr &quot;13074042&quot;
+##   ..$ name                  : chr &quot;Julia Silge&quot;
+##   ..$ screen_name           : chr &quot;juliasilge&quot;
+##   ..$ location              : chr &quot;Salt Lake City, UT&quot;
+##   ..$ description           : chr &quot;Data science and visualization at Stack Overflow, #rstats, author of Text Mining with R, parenthood, reading, f&quot;| __truncated__
+##   ..$ url                   : chr &quot;https://t.co/0LpY8Ihz2B&quot;
+##   ..$ protected             : logi FALSE
+##   ..$ followers_count       : int 10910
+##   ..$ friends_count         : int 445
+##   ..$ listed_count          : int 410
+##   ..$ statuses_count        : int 16365
+##   ..$ favourites_count      : int 19811
+##   ..$ account_created_at    : POSIXct[1:1], format: &quot;2008-02-05 00:47:07&quot;
+##   ..$ verified              : logi FALSE
+##   ..$ profile_url           : chr &quot;https://t.co/0LpY8Ihz2B&quot;
+##   ..$ profile_expanded_url  : chr &quot;http://juliasilge.com/&quot;
+##   ..$ account_lang          : chr &quot;en&quot;
+##   ..$ profile_banner_url    : chr &quot;https://pbs.twimg.com/profile_banners/13074042/1511394461&quot;
+##   ..$ profile_background_url: chr &quot;http://abs.twimg.com/images/themes/theme13/bg.gif&quot;
+##   ..$ profile_image_url     : chr &quot;http://pbs.twimg.com/profile_images/930639796510244865/D_N-CofS_normal.jpg&quot;
+##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  68 variables:
+##   .. ..$ status_id              : chr &quot;949090073693204480&quot;
+##   .. ..$ created_at             : POSIXct[1:1], format: &quot;2018-01-05 01:28:01&quot;
+##   .. ..$ user_id                : chr &quot;13074042&quot;
+##   .. ..$ screen_name            : chr &quot;juliasilge&quot;
+##   .. ..$ text                   : chr &quot;RT @statwonk: Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable an&quot;| __truncated__
+##   .. ..$ source                 : chr &quot;Twitter for iPhone&quot;
+##   .. ..$ display_text_width     : int NA
+##   .. ..$ reply_to_status_id     : logi NA
+##   .. ..$ reply_to_user_id       : logi NA
+##   .. ..$ reply_to_screen_name   : logi NA
+##   .. ..$ is_quote               : logi FALSE
+##   .. ..$ is_retweet             : logi TRUE
+##   .. ..$ favorite_count         : int 0
+##   .. ..$ retweet_count          : int 6
+##   .. ..$ hashtags               :List of 1
+##   .. ..$ symbols                :List of 1
+##   .. ..$ urls_url               :List of 1
+##   .. ..$ urls_t.co              :List of 1
+##   .. ..$ urls_expanded_url      :List of 1
+##   .. ..$ media_url              :List of 1
+##   .. ..$ media_t.co             :List of 1
+##   .. ..$ media_expanded_url     :List of 1
+##   .. ..$ media_type             :List of 1
+##   .. ..$ ext_media_url          :List of 1
+##   .. ..$ ext_media_t.co         :List of 1
+##   .. ..$ ext_media_expanded_url :List of 1
+##   .. ..$ ext_media_type         : chr NA
+##   .. ..$ mentions_user_id       :List of 1
+##   .. ..$ mentions_screen_name   :List of 1
+##   .. ..$ lang                   : chr &quot;en&quot;
+##   .. ..$ quoted_status_id       : chr NA
+##   .. ..$ quoted_text            : chr NA
+##   .. ..$ quoted_created_at      : POSIXct[1:1], format: NA
+##   .. ..$ quoted_source          : chr NA
+##   .. ..$ quoted_favorite_count  : int NA
+##   .. ..$ quoted_retweet_count   : int NA
+##   .. ..$ quoted_user_id         : chr NA
+##   .. ..$ quoted_screen_name     : chr NA
+##   .. ..$ quoted_name            : chr NA
+##   .. ..$ quoted_followers_count : int NA
+##   .. ..$ quoted_friends_count   : int NA
+##   .. ..$ quoted_statuses_count  : int NA
+##   .. ..$ quoted_location        : chr NA
+##   .. ..$ quoted_description     : chr NA
+##   .. ..$ quoted_verified        : logi NA
+##   .. ..$ retweet_status_id      : chr &quot;949042404455219201&quot;
+##   .. ..$ retweet_text           : chr &quot;Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable and infinite. On&quot;| __truncated__
+##   .. ..$ retweet_created_at     : POSIXct[1:1], format: &quot;2018-01-04 22:18:36&quot;
+##   .. ..$ retweet_source         : chr NA
+##   .. ..$ retweet_favorite_count : int 21
+##   .. ..$ retweet_user_id        : chr NA
+##   .. ..$ retweet_screen_name    : chr NA
+##   .. ..$ retweet_name           : chr NA
+##   .. ..$ retweet_followers_count: int NA
+##   .. ..$ retweet_friends_count  : int NA
+##   .. ..$ retweet_statuses_count : int NA
+##   .. ..$ retweet_location       : chr NA
+##   .. ..$ retweet_description    : chr NA
+##   .. ..$ retweet_verified       : logi NA
+##   .. ..$ place_url              : chr NA
+##   .. ..$ place_name             : chr NA
+##   .. ..$ place_full_name        : chr NA
+##   .. ..$ place_type             : chr NA
+##   .. ..$ country                : chr NA
+##   .. ..$ country_code           : chr NA
+##   .. ..$ geo_coords             :List of 1
+##   .. ..$ coords_coords          :List of 1
+##   .. ..$ bbox_coords            :List of 1
+##  $ follower_details:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  20 variables:
+##   ..$ user_id               : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
+##   ..$ name                  : chr [1:5000] &quot;Surajit Dhar&quot; &quot;Helen Graham&quot; &quot;DouglasiMorgan&quot; &quot;kamex kenneth&quot; ...
+##   ..$ screen_name           : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
+##   ..$ location              : chr [1:5000] &quot;&quot; &quot;Edinburgh&quot; &quot;&quot; &quot;La Canada Flintridge, CA&quot; ...
+##   ..$ description           : chr [1:5000] &quot;&quot; &quot;I torture data for fun and profit. Still a cheesecake enthusiast.&quot; &quot;&quot; &quot;Happy&quot; ...
+##   ..$ url                   : chr [1:5000] NA NA NA NA ...
+##   ..$ protected             : logi [1:5000] TRUE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ followers_count       : int [1:5000] 18 99 243 155 2 6172 56 215 427 5 ...
+##   ..$ friends_count         : int [1:5000] 248 382 2806 1521 74 4020 284 884 957 179 ...
+##   ..$ listed_count          : int [1:5000] 0 4 0 0 0 201 4 2 53 0 ...
+##   ..$ statuses_count        : int [1:5000] 92 771 0 1 13 9720 152 1026 2394 6 ...
+##   ..$ favourites_count      : int [1:5000] 30 107 0 8 1 13093 259 612 5479 1 ...
+##   ..$ account_created_at    : POSIXct[1:5000], format: &quot;2009-04-10 10:55:17&quot; ...
+##   ..$ verified              : logi [1:5000] FALSE FALSE FALSE FALSE FALSE TRUE ...
+##   ..$ profile_url           : chr [1:5000] NA NA NA NA ...
+##   ..$ profile_expanded_url  : chr [1:5000] NA NA NA NA ...
+##   ..$ account_lang          : chr [1:5000] &quot;en&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
+##   ..$ profile_banner_url    : chr [1:5000] NA &quot;https://pbs.twimg.com/profile_banners/23437966/1362861613&quot; &quot;https://pbs.twimg.com/profile_banners/944279909521911809/1513973832&quot; NA ...
+##   ..$ profile_background_url: chr [1:5000] &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://pbs.twimg.com/profile_background_images/5966931/xmas_002.jpg&quot; NA NA ...
+##   ..$ profile_image_url     : chr [1:5000] &quot;http://pbs.twimg.com/profile_images/3619425574/017e3c69373add7399c0689d70d5e3b5_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/378800000858153027/-lbO7veR_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/944301258415984640/NY--VNaG_normal.jpg&quot; &quot;http://pbs.twimg.com/profile_images/934426923584966657/GJUKnQuG_normal.jpg&quot; ...
+##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  68 variables:
+##   .. ..$ status_id              : chr [1:5000] NA &quot;949208591524945920&quot; NA &quot;934660498246852608&quot; ...
+##   .. ..$ created_at             : POSIXct[1:5000], format: NA ...
+##   .. ..$ user_id                : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
+##   .. ..$ screen_name            : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
+##   .. ..$ text                   : chr [1:5000] NA &quot;Every time you drink raw water, somewhere in the great beyond Darwin does a massive facepalm but also feels a bit vindicated.&quot; NA &quot;@ConnLoraine Lovely&quot; ...
+##   .. ..$ source                 : chr [1:5000] NA &quot;Twitter for Android&quot; NA &quot;Twitter for iPhone&quot; ...
+##   .. ..$ display_text_width     : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ reply_to_status_id     : chr [1:5000] NA NA NA &quot;934643010813358081&quot; ...
+##   .. ..$ reply_to_user_id       : chr [1:5000] NA NA NA &quot;893460901470154752&quot; ...
+##   .. ..$ reply_to_screen_name   : chr [1:5000] NA NA NA &quot;ConnLoraine&quot; ...
+##   .. ..$ is_quote               : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   .. ..$ is_retweet             : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   .. ..$ favorite_count         : int [1:5000] NA 0 NA 46 0 4 1 0 0 0 ...
+##   .. ..$ retweet_count          : int [1:5000] NA 0 NA 7 0 0 0 96 64 0 ...
+##   .. ..$ hashtags               :List of 5000
+##   .. ..$ symbols                :List of 5000
+##   .. ..$ urls_url               :List of 5000
+##   .. ..$ urls_t.co              :List of 5000
+##   .. ..$ urls_expanded_url      :List of 5000
+##   .. ..$ media_url              :List of 5000
+##   .. ..$ media_t.co             :List of 5000
+##   .. ..$ media_expanded_url     :List of 5000
+##   .. ..$ media_type             :List of 5000
+##   .. ..$ ext_media_url          :List of 5000
+##   .. ..$ ext_media_t.co         :List of 5000
+##   .. ..$ ext_media_expanded_url :List of 5000
+##   .. ..$ ext_media_type         : chr [1:5000] NA NA NA NA ...
+##   .. ..$ mentions_user_id       :List of 5000
+##   .. ..$ mentions_screen_name   :List of 5000
+##   .. ..$ lang                   : chr [1:5000] NA &quot;en&quot; NA &quot;en&quot; ...
+##   .. ..$ quoted_status_id       : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_text            : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_created_at      : POSIXct[1:5000], format: NA ...
+##   .. ..$ quoted_source          : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_favorite_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_retweet_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_user_id         : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_screen_name     : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_name            : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_followers_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_friends_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_statuses_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_location        : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_description     : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_verified        : logi [1:5000] NA NA NA NA NA NA ...
+##   .. ..$ retweet_status_id      : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_text           : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_created_at     : POSIXct[1:5000], format: NA ...
+##   .. ..$ retweet_source         : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_favorite_count : int [1:5000] NA NA NA NA NA NA NA 169 162 NA ...
+##   .. ..$ retweet_user_id        : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_screen_name    : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_name           : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_followers_count: int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ retweet_friends_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ retweet_statuses_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ retweet_location       : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_description    : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_verified       : logi [1:5000] NA NA NA NA NA NA ...
+##   .. ..$ place_url              : chr [1:5000] NA NA NA NA ...
+##   .. ..$ place_name             : chr [1:5000] NA NA NA NA ...
+##   .. ..$ place_full_name        : chr [1:5000] NA NA NA NA ...
+##   .. ..$ place_type             : chr [1:5000] NA NA NA NA ...
+##   .. ..$ country                : chr [1:5000] NA NA NA NA ...
+##   .. ..$ country_code           : chr [1:5000] NA NA NA NA ...
+##   .. ..$ geo_coords             :List of 5000
+##   .. ..$ coords_coords          :List of 5000
+##   .. ..$ bbox_coords            :List of 5000</code></pre>
+<p>You’ll see that distribution shape quite a bit given the general nature of the social structure of Twitter. Don’t believe that? Let’s do one more, this time for <a href="https://twitter.com/ma_salmon/">Maëlle Salmon</a>, another incredibly talented data scientist with a <a href="http://www.masalmon.eu/">blog</a> you <em>must</em> follow if you want to learn how to do fun and useful things with R.L</p>
+<pre class="sourceCode r" id="cb88"><code class="sourceCode r"><div class="sourceLine" id="cb88-1" data-line-number="1">ma_salmon &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;ma_salmon&quot;</span>)</div></code></pre>
+<p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html4/16_ms-1.png" width="960" /></p>
+<pre class="sourceCode r" id="cb89"><code class="sourceCode r"><div class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">glimpse</span>(juliasilge)</div></code></pre>
+<pre><code>## List of 2
+##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  20 variables:
+##   ..$ user_id               : chr &quot;13074042&quot;
+##   ..$ name                  : chr &quot;Julia Silge&quot;
+##   ..$ screen_name           : chr &quot;juliasilge&quot;
+##   ..$ location              : chr &quot;Salt Lake City, UT&quot;
+##   ..$ description           : chr &quot;Data science and visualization at Stack Overflow, #rstats, author of Text Mining with R, parenthood, reading, f&quot;| __truncated__
+##   ..$ url                   : chr &quot;https://t.co/0LpY8Ihz2B&quot;
+##   ..$ protected             : logi FALSE
+##   ..$ followers_count       : int 10910
+##   ..$ friends_count         : int 445
+##   ..$ listed_count          : int 410
+##   ..$ statuses_count        : int 16365
+##   ..$ favourites_count      : int 19811
+##   ..$ account_created_at    : POSIXct[1:1], format: &quot;2008-02-05 00:47:07&quot;
+##   ..$ verified              : logi FALSE
+##   ..$ profile_url           : chr &quot;https://t.co/0LpY8Ihz2B&quot;
+##   ..$ profile_expanded_url  : chr &quot;http://juliasilge.com/&quot;
+##   ..$ account_lang          : chr &quot;en&quot;
+##   ..$ profile_banner_url    : chr &quot;https://pbs.twimg.com/profile_banners/13074042/1511394461&quot;
+##   ..$ profile_background_url: chr &quot;http://abs.twimg.com/images/themes/theme13/bg.gif&quot;
+##   ..$ profile_image_url     : chr &quot;http://pbs.twimg.com/profile_images/930639796510244865/D_N-CofS_normal.jpg&quot;
+##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  68 variables:
+##   .. ..$ status_id              : chr &quot;949090073693204480&quot;
+##   .. ..$ created_at             : POSIXct[1:1], format: &quot;2018-01-05 01:28:01&quot;
+##   .. ..$ user_id                : chr &quot;13074042&quot;
+##   .. ..$ screen_name            : chr &quot;juliasilge&quot;
+##   .. ..$ text                   : chr &quot;RT @statwonk: Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable an&quot;| __truncated__
+##   .. ..$ source                 : chr &quot;Twitter for iPhone&quot;
+##   .. ..$ display_text_width     : int NA
+##   .. ..$ reply_to_status_id     : logi NA
+##   .. ..$ reply_to_user_id       : logi NA
+##   .. ..$ reply_to_screen_name   : logi NA
+##   .. ..$ is_quote               : logi FALSE
+##   .. ..$ is_retweet             : logi TRUE
+##   .. ..$ favorite_count         : int 0
+##   .. ..$ retweet_count          : int 6
+##   .. ..$ hashtags               :List of 1
+##   .. ..$ symbols                :List of 1
+##   .. ..$ urls_url               :List of 1
+##   .. ..$ urls_t.co              :List of 1
+##   .. ..$ urls_expanded_url      :List of 1
+##   .. ..$ media_url              :List of 1
+##   .. ..$ media_t.co             :List of 1
+##   .. ..$ media_expanded_url     :List of 1
+##   .. ..$ media_type             :List of 1
+##   .. ..$ ext_media_url          :List of 1
+##   .. ..$ ext_media_t.co         :List of 1
+##   .. ..$ ext_media_expanded_url :List of 1
+##   .. ..$ ext_media_type         : chr NA
+##   .. ..$ mentions_user_id       :List of 1
+##   .. ..$ mentions_screen_name   :List of 1
+##   .. ..$ lang                   : chr &quot;en&quot;
+##   .. ..$ quoted_status_id       : chr NA
+##   .. ..$ quoted_text            : chr NA
+##   .. ..$ quoted_created_at      : POSIXct[1:1], format: NA
+##   .. ..$ quoted_source          : chr NA
+##   .. ..$ quoted_favorite_count  : int NA
+##   .. ..$ quoted_retweet_count   : int NA
+##   .. ..$ quoted_user_id         : chr NA
+##   .. ..$ quoted_screen_name     : chr NA
+##   .. ..$ quoted_name            : chr NA
+##   .. ..$ quoted_followers_count : int NA
+##   .. ..$ quoted_friends_count   : int NA
+##   .. ..$ quoted_statuses_count  : int NA
+##   .. ..$ quoted_location        : chr NA
+##   .. ..$ quoted_description     : chr NA
+##   .. ..$ quoted_verified        : logi NA
+##   .. ..$ retweet_status_id      : chr &quot;949042404455219201&quot;
+##   .. ..$ retweet_text           : chr &quot;Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable and infinite. On&quot;| __truncated__
+##   .. ..$ retweet_created_at     : POSIXct[1:1], format: &quot;2018-01-04 22:18:36&quot;
+##   .. ..$ retweet_source         : chr NA
+##   .. ..$ retweet_favorite_count : int 21
+##   .. ..$ retweet_user_id        : chr NA
+##   .. ..$ retweet_screen_name    : chr NA
+##   .. ..$ retweet_name           : chr NA
+##   .. ..$ retweet_followers_count: int NA
+##   .. ..$ retweet_friends_count  : int NA
+##   .. ..$ retweet_statuses_count : int NA
+##   .. ..$ retweet_location       : chr NA
+##   .. ..$ retweet_description    : chr NA
+##   .. ..$ retweet_verified       : logi NA
+##   .. ..$ place_url              : chr NA
+##   .. ..$ place_name             : chr NA
+##   .. ..$ place_full_name        : chr NA
+##   .. ..$ place_type             : chr NA
+##   .. ..$ country                : chr NA
+##   .. ..$ country_code           : chr NA
+##   .. ..$ geo_coords             :List of 1
+##   .. ..$ coords_coords          :List of 1
+##   .. ..$ bbox_coords            :List of 1
+##  $ follower_details:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  20 variables:
+##   ..$ user_id               : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
+##   ..$ name                  : chr [1:5000] &quot;Surajit Dhar&quot; &quot;Helen Graham&quot; &quot;DouglasiMorgan&quot; &quot;kamex kenneth&quot; ...
+##   ..$ screen_name           : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
+##   ..$ location              : chr [1:5000] &quot;&quot; &quot;Edinburgh&quot; &quot;&quot; &quot;La Canada Flintridge, CA&quot; ...
+##   ..$ description           : chr [1:5000] &quot;&quot; &quot;I torture data for fun and profit. Still a cheesecake enthusiast.&quot; &quot;&quot; &quot;Happy&quot; ...
+##   ..$ url                   : chr [1:5000] NA NA NA NA ...
+##   ..$ protected             : logi [1:5000] TRUE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ followers_count       : int [1:5000] 18 99 243 155 2 6172 56 215 427 5 ...
+##   ..$ friends_count         : int [1:5000] 248 382 2806 1521 74 4020 284 884 957 179 ...
+##   ..$ listed_count          : int [1:5000] 0 4 0 0 0 201 4 2 53 0 ...
+##   ..$ statuses_count        : int [1:5000] 92 771 0 1 13 9720 152 1026 2394 6 ...
+##   ..$ favourites_count      : int [1:5000] 30 107 0 8 1 13093 259 612 5479 1 ...
+##   ..$ account_created_at    : POSIXct[1:5000], format: &quot;2009-04-10 10:55:17&quot; ...
+##   ..$ verified              : logi [1:5000] FALSE FALSE FALSE FALSE FALSE TRUE ...
+##   ..$ profile_url           : chr [1:5000] NA NA NA NA ...
+##   ..$ profile_expanded_url  : chr [1:5000] NA NA NA NA ...
+##   ..$ account_lang          : chr [1:5000] &quot;en&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
+##   ..$ profile_banner_url    : chr [1:5000] NA &quot;https://pbs.twimg.com/profile_banners/23437966/1362861613&quot; &quot;https://pbs.twimg.com/profile_banners/944279909521911809/1513973832&quot; NA ...
+##   ..$ profile_background_url: chr [1:5000] &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://pbs.twimg.com/profile_background_images/5966931/xmas_002.jpg&quot; NA NA ...
+##   ..$ profile_image_url     : chr [1:5000] &quot;http://pbs.twimg.com/profile_images/3619425574/017e3c69373add7399c0689d70d5e3b5_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/378800000858153027/-lbO7veR_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/944301258415984640/NY--VNaG_normal.jpg&quot; &quot;http://pbs.twimg.com/profile_images/934426923584966657/GJUKnQuG_normal.jpg&quot; ...
+##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  68 variables:
+##   .. ..$ status_id              : chr [1:5000] NA &quot;949208591524945920&quot; NA &quot;934660498246852608&quot; ...
+##   .. ..$ created_at             : POSIXct[1:5000], format: NA ...
+##   .. ..$ user_id                : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
+##   .. ..$ screen_name            : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
+##   .. ..$ text                   : chr [1:5000] NA &quot;Every time you drink raw water, somewhere in the great beyond Darwin does a massive facepalm but also feels a bit vindicated.&quot; NA &quot;@ConnLoraine Lovely&quot; ...
+##   .. ..$ source                 : chr [1:5000] NA &quot;Twitter for Android&quot; NA &quot;Twitter for iPhone&quot; ...
+##   .. ..$ display_text_width     : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ reply_to_status_id     : chr [1:5000] NA NA NA &quot;934643010813358081&quot; ...
+##   .. ..$ reply_to_user_id       : chr [1:5000] NA NA NA &quot;893460901470154752&quot; ...
+##   .. ..$ reply_to_screen_name   : chr [1:5000] NA NA NA &quot;ConnLoraine&quot; ...
+##   .. ..$ is_quote               : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   .. ..$ is_retweet             : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   .. ..$ favorite_count         : int [1:5000] NA 0 NA 46 0 4 1 0 0 0 ...
+##   .. ..$ retweet_count          : int [1:5000] NA 0 NA 7 0 0 0 96 64 0 ...
+##   .. ..$ hashtags               :List of 5000
+##   .. ..$ symbols                :List of 5000
+##   .. ..$ urls_url               :List of 5000
+##   .. ..$ urls_t.co              :List of 5000
+##   .. ..$ urls_expanded_url      :List of 5000
+##   .. ..$ media_url              :List of 5000
+##   .. ..$ media_t.co             :List of 5000
+##   .. ..$ media_expanded_url     :List of 5000
+##   .. ..$ media_type             :List of 5000
+##   .. ..$ ext_media_url          :List of 5000
+##   .. ..$ ext_media_t.co         :List of 5000
+##   .. ..$ ext_media_expanded_url :List of 5000
+##   .. ..$ ext_media_type         : chr [1:5000] NA NA NA NA ...
+##   .. ..$ mentions_user_id       :List of 5000
+##   .. ..$ mentions_screen_name   :List of 5000
+##   .. ..$ lang                   : chr [1:5000] NA &quot;en&quot; NA &quot;en&quot; ...
+##   .. ..$ quoted_status_id       : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_text            : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_created_at      : POSIXct[1:5000], format: NA ...
+##   .. ..$ quoted_source          : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_favorite_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_retweet_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_user_id         : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_screen_name     : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_name            : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_followers_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_friends_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_statuses_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ quoted_location        : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_description     : chr [1:5000] NA NA NA NA ...
+##   .. ..$ quoted_verified        : logi [1:5000] NA NA NA NA NA NA ...
+##   .. ..$ retweet_status_id      : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_text           : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_created_at     : POSIXct[1:5000], format: NA ...
+##   .. ..$ retweet_source         : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_favorite_count : int [1:5000] NA NA NA NA NA NA NA 169 162 NA ...
+##   .. ..$ retweet_user_id        : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_screen_name    : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_name           : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_followers_count: int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ retweet_friends_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ retweet_statuses_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..$ retweet_location       : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_description    : chr [1:5000] NA NA NA NA ...
+##   .. ..$ retweet_verified       : logi [1:5000] NA NA NA NA NA NA ...
+##   .. ..$ place_url              : chr [1:5000] NA NA NA NA ...
+##   .. ..$ place_name             : chr [1:5000] NA NA NA NA ...
+##   .. ..$ place_full_name        : chr [1:5000] NA NA NA NA ...
+##   .. ..$ place_type             : chr [1:5000] NA NA NA NA ...
+##   .. ..$ country                : chr [1:5000] NA NA NA NA ...
+##   .. ..$ country_code           : chr [1:5000] NA NA NA NA ...
+##   .. ..$ geo_coords             :List of 5000
+##   .. ..$ coords_coords          :List of 5000
+##   .. ..$ bbox_coords            :List of 5000</code></pre>
+</div>
+<div id="see-also-13" class="section level2">
+<h2><span class="header-section-number">16.4</span> See Also</h2>
+<ul>
+<li>Simply Measured’s <a href="https://simplymeasured.com/blog/7-ways-to-measure-influence-on-twitter/">guide to measuring influence on Twitter</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="resolving-user-profile-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analyzing-friendship-relationships-such-as-friends-of-friends.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["21-recipes-for-mining-twitter-with-rtweet.pdf", "21-recipes-for-mining-twitter-with-rtweet.epub"],
+"toc": {
+"collapse": "section"
+},
+"theme": "sandstone"
+});
+});
+</script>
+
+</body>
+
+</html>
