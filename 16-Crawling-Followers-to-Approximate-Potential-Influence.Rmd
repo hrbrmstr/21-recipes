@@ -73,7 +73,7 @@ You'll see that distribution shape quite a bit given the general nature of the s
 ```{r 16_ms, message=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.height=4.5}
 ma_salmon <- influence_snapshot("ma_salmon")
 
-glimpse(juliasilge)
+glimpse(ma_salmon)
 ```
 
 ## See Also
