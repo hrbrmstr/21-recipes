@@ -14,23 +14,29 @@ You want to examine the intersection of twitter followers between a group of def
 
 ## Discussion
 
-```{r}
+```{r 22_lib, message=FALSE, warning=FALSE}
 library(rtweet)
 library(tidyverse)
 library(UpSetR)
 ```
-```{r}
+```{r 22_followers, message=FALSE, warning=FALSE, cache=TRUE}
 # get a list of twitter handles you want to compare
-rstaters <- c("dataandme", "JennyBryan", "hrbrmstr", "xieyihui", "drob", "juliasilge", "thomasp85")
+rstaters <- c("dataandme", 
+              "JennyBryan", 
+              "hrbrmstr", 
+              "xieyihui", 
+              "drob", 
+              "juliasilge", 
+              "thomasp85")
 
 # scrape the user_id of all followers for each handle in the list and bind into 1 dataframe
-followers <- map_df(rstaters, ~ get_followers(.x, n = 20000, retryonratelimit = TRUE) %>% mutate(account = .x))
-```
-```{r}
+followers <- map_df(rstaters, ~ get_followers(.x, n = 20000, retryonratelimit = TRUE) %>% 
+                      mutate(account = .x))
+
 head(followers)
 tail(followers)
 ```
-```{r}
+```{r 22_matrix, message=FALSE, warning=FALSE, cache=TRUE}
 # get a de-duplicated list of all followers
 aRdent_followers <- unique(followers$user_id)
 
@@ -45,8 +51,12 @@ names(binaries) <- rstaters
 # have a look at the data
 head(binaries)
 ```
-```{r}
+```{r 22_upset, message=FALSE, warning=FALSE, cache=TRUE}
 # plot the sets with UpSetR
 upset(binaries, nsets = 7, main.bar.color = "SteelBlue", sets.bar.color = "DarkCyan", 
       sets.x.label = "Follower Count", text.scale = c(rep(1.4, 5), 1), order.by = "freq")
 ```
+
+## See Also
+
+- [UpSet Project](http://caleydo.org/tools/upset/)
