@@ -1,0 +1,52 @@
+# Visualising Intersecting Follower Sets with UpSetR
+
+## Problem
+
+You want to examine the intersection of twitter followers between a group of definied twitter handles.
+
+## Solution
+
+- Scrape all follower ID's for each handle
+- Combine into one dataframe
+- Create de-duplicated list of all followers
+- Build a logical matrix to indicate if each follower follows each handle or not
+- Plot the intersecting sets with [`UpSetR`](https://github.com/hms-dbmi/UpSetR)
+
+## Discussion
+
+```{r}
+library(rtweet)
+library(tidyverse)
+library(UpSetR)
+```
+```{r}
+# get a list of twitter handles you want to compare
+rstaters <- c("dataandme", "JennyBryan", "hrbrmstr", "xieyihui", "drob", "juliasilge", "thomasp85")
+
+# scrape the user_id of all followers for each handle in the list and bind into 1 dataframe
+followers <- map_df(rstaters, ~ get_followers(.x, n = 20000, retryonratelimit = TRUE) %>% mutate(account = .x))
+```
+```{r}
+head(followers)
+tail(followers)
+```
+```{r}
+# get a de-duplicated list of all followers
+aRdent_followers <- unique(followers$user_id)
+
+# for each follower, get a binary indicator of whether they follow each tweeter or not and bind to one dataframe
+binaries <- rstaters %>% 
+  map_dfc(~ ifelse(aRdent_followers %in% filter(followers, account == .x)$user_id, 1, 0) %>% 
+            as.data.frame) # UpSetR doesn't like tibbles
+
+# set column names
+names(binaries) <- rstaters
+
+# have a look at the data
+head(binaries)
+```
+```{r}
+# plot the sets with UpSetR
+upset(binaries, nsets = 7, main.bar.color = "SteelBlue", sets.bar.color = "DarkCyan", 
+      sets.x.label = "Follower Count", text.scale = c(rep(1.4, 5), 1), order.by = "freq")
+```
