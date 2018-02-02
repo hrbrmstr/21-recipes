@@ -1,4 +1,4 @@
-# Visualising Intersecting Follower Sets with UpSetR
+# Visualizing Intersecting Follower Sets with UpSetR
 
 ## Problem
 
@@ -14,11 +14,20 @@ You want to examine the intersection of twitter followers between a group of def
 
 ## Discussion
 
+Set visualization, typically done using Venn diagrams, can become challenging when the number of sets exceeds a a trivial threshold. To address this, the UpSet project was born. 
+
+> A novel visualization technique for the quantitative analysis of sets, their intersections, and aggregates of intersections.
+
+Thankfully, there is an R package version of the project that we can use with follower data pulled with `rtweet`. `UpSetR` requires the data to be in a binary matrix format, so there is some data wrangling work to be done before we can visualize.
+
 ```{r 22_lib, message=FALSE, warning=FALSE}
 library(rtweet)
 library(tidyverse)
 library(UpSetR)
 ```
+
+First we will make a list of twitter handles we want to compare then scrape all of their followers into a one dataframe using a `get_followers` function inside a `purrr::map_df` call. Set `n` to a number => the max follower count in your set and `retryonratelimit = TRUE` to ensure you capture all followers. This may take some time depending on how may followers you are scraping.
+
 ```{r 22_followers, message=FALSE, warning=FALSE, cache=TRUE}
 # get a list of twitter handles you want to compare
 rstaters <- c("dataandme", 
@@ -30,12 +39,16 @@ rstaters <- c("dataandme",
               "thomasp85")
 
 # scrape the user_id of all followers for each handle in the list and bind into 1 dataframe
-followers <- map_df(rstaters, ~ get_followers(.x, n = 20000, retryonratelimit = TRUE) %>% 
-                      mutate(account = .x))
+followers <- rstaters %>%
+  map_df(~ get_followers(.x, n = 20000, retryonratelimit = TRUE) %>% 
+           mutate(account = .x))
 
 head(followers)
 tail(followers)
 ```
+
+Next we form a binary matrix by using an `ifelse` inside another `map_df` to ascertain whether or not each follower in the master list follows each of the twitter handles.
+
 ```{r 22_matrix, message=FALSE, warning=FALSE, cache=TRUE}
 # get a de-duplicated list of all followers
 aRdent_followers <- unique(followers$user_id)
@@ -49,9 +62,12 @@ binaries <- rstaters %>%
 names(binaries) <- rstaters
 
 # have a look at the data
-head(binaries)
+glimpse(binaries)
 ```
-```{r 22_upset, message=FALSE, warning=FALSE, cache=TRUE}
+
+Finally, we let `UpSetR` work its magic on the matrix and visualize the intersections...
+
+```{r 22_upset, message=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.height=6}
 # plot the sets with UpSetR
 upset(binaries, nsets = 7, main.bar.color = "SteelBlue", sets.bar.color = "DarkCyan", 
       sets.x.label = "Follower Count", text.scale = c(rep(1.4, 5), 1), order.by = "freq")
