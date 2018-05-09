@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>21 Recipes for Mining Twitter Data with rtweet</title>
   <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
-  <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Bob Rudis">
 
 
-<meta name="date" content="2018-01-05">
+<meta name="date" content="2018-05-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,57 +50,69 @@
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
+pre.numberSource a.sourceLine
   { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
     position: absolute; left: -5em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+a.sourceLine::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -274,25 +286,24 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="discussion-1" class="section level2">
 <h2><span class="header-section-number">2.3</span> Discussion</h2>
 <p>Twitter has <a href="https://help.twitter.com/en/using-twitter/twitter-trending-faqs">extensive information</a> on trending topics and their API enables you to see topics that are trending globally or regionally. Twitter uses <a href="https://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where on Earth</a> identifiers (WOEIDs) for the regions which can be obtained from <code>rtweet::trends_available()</code>:</p>
-<pre class="sourceCode r" id="cb11"><code class="sourceCode r"><div class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb12"><code class="sourceCode r"><div class="sourceLine" id="cb12-1" data-line-number="1">(trends_avail &lt;-<span class="st"> </span><span class="kw">trends_available</span>())</div></code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(rtweet)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">(trends_avail &lt;-<span class="st"> </span><span class="kw">trends_available</span>())</a></code></pre></div>
 <pre><code>## # A tibble: 467 x 8
-##          name                                       url parentid
-##  *      &lt;chr&gt;                                     &lt;chr&gt;    &lt;int&gt;
-##  1  Worldwide     http://where.yahooapis.com/v1/place/1        0
-##  2   Winnipeg  http://where.yahooapis.com/v1/place/2972 23424775
-##  3     Ottawa  http://where.yahooapis.com/v1/place/3369 23424775
-##  4     Quebec  http://where.yahooapis.com/v1/place/3444 23424775
-##  5   Montreal  http://where.yahooapis.com/v1/place/3534 23424775
-##  6    Toronto  http://where.yahooapis.com/v1/place/4118 23424775
-##  7   Edmonton  http://where.yahooapis.com/v1/place/8676 23424775
-##  8    Calgary  http://where.yahooapis.com/v1/place/8775 23424775
-##  9  Vancouver  http://where.yahooapis.com/v1/place/9807 23424775
-## 10 Birmingham http://where.yahooapis.com/v1/place/12723 23424975
-## # ... with 457 more rows, and 5 more variables: country &lt;chr&gt;,
-## #   woeid &lt;int&gt;, countryCode &lt;chr&gt;, code &lt;int&gt;, place_type &lt;chr&gt;</code></pre>
-<pre class="sourceCode r" id="cb14"><code class="sourceCode r"><div class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">glimpse</span>(trends_avail)</div></code></pre>
+##    name       url      parentid country woeid countryCode  code place_type
+##  * &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     
+##  1 Worldwide  http://…        0 &quot;&quot;          1 &lt;NA&gt;           19 Supername 
+##  2 Winnipeg   http://… 23424775 Canada   2972 CA              7 Town      
+##  3 Ottawa     http://… 23424775 Canada   3369 CA              7 Town      
+##  4 Quebec     http://… 23424775 Canada   3444 CA              7 Town      
+##  5 Montreal   http://… 23424775 Canada   3534 CA              7 Town      
+##  6 Toronto    http://… 23424775 Canada   4118 CA              7 Town      
+##  7 Edmonton   http://… 23424775 Canada   8676 CA              7 Town      
+##  8 Calgary    http://… 23424775 Canada   8775 CA              7 Town      
+##  9 Vancouver  http://… 23424775 Canada   9807 CA              7 Town      
+## 10 Birmingham http://… 23424975 United… 12723 GB              7 Town      
+## # ... with 457 more rows</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">glimpse</span>(trends_avail)</a></code></pre></div>
 <pre><code>## Observations: 467
 ## Variables: 8
 ## $ name        &lt;chr&gt; &quot;Worldwide&quot;, &quot;Winnipeg&quot;, &quot;Ottawa&quot;, &quot;Quebec&quot;, &quot;Mont...
@@ -304,35 +315,34 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 ## $ code        &lt;int&gt; 19, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7...
 ## $ place_type  &lt;chr&gt; &quot;Supername&quot;, &quot;Town&quot;, &quot;Town&quot;, &quot;Town&quot;, &quot;Town&quot;, &quot;Town...</code></pre>
 <p>The Twitter API is somewhat unforgiving and unfriendly when you use it directly since it requires the use of a WOEID. Michael has made life much easier for us all by enabling the use of names or regular expressions when asking for trends from a particular place. That means we don’t even need to care about capitalization:</p>
-<pre class="sourceCode r" id="cb16"><code class="sourceCode r"><div class="sourceLine" id="cb16-1" data-line-number="1">(us &lt;-<span class="st"> </span><span class="kw">get_trends</span>(<span class="st">&quot;united states&quot;</span>))</div></code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">(us &lt;-<span class="st"> </span><span class="kw">get_trends</span>(<span class="st">&quot;united states&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 50 x 9
-##                          trend
-##  *                       &lt;chr&gt;
-##  1                 #backtowork
-##  2            #TuesdayThoughts
-##  3          #SavannahHodaTODAY
-##  4           Justin Timberlake
-##  5 #MyTVShowWasCanceledBecause
-##  6                      #AM2DM
-##  7            Carrie Underwood
-##  8            The Trump Effect
-##  9                   Sean Ryan
-## 10               Micah Parsons
-## # ... with 40 more rows, and 8 more variables: url &lt;chr&gt;,
-## #   promoted_content &lt;lgl&gt;, query &lt;chr&gt;, tweet_volume &lt;int&gt;, place &lt;chr&gt;,
-## #   woeid &lt;int&gt;, as_of &lt;dttm&gt;, created_at &lt;dttm&gt;</code></pre>
-<pre class="sourceCode r" id="cb18"><code class="sourceCode r"><div class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">glimpse</span>(us)</div></code></pre>
+##    trend   url         promoted_content query   tweet_volume place   woeid
+##  * &lt;chr&gt;   &lt;chr&gt;       &lt;lgl&gt;            &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;int&gt;
+##  1 Teairr… http://twi… NA               %22Tea…           NA Unite… 2.34e7
+##  2 #Wedne… http://twi… NA               %23Wed…       162658 Unite… 2.34e7
+##  3 #NetNe… http://twi… NA               %23Net…        79857 Unite… 2.34e7
+##  4 #Funny… http://twi… NA               %23Fun…           NA Unite… 2.34e7
+##  5 Novart… http://twi… NA               Novart…       139836 Unite… 2.34e7
+##  6 #TWcha… http://twi… NA               %23TWc…           NA Unite… 2.34e7
+##  7 #Outla… http://twi… NA               %23Out…           NA Unite… 2.34e7
+##  8 Haspel  http://twi… NA               Haspel        258046 Unite… 2.34e7
+##  9 Annett… http://twi… NA               %22Ann…           NA Unite… 2.34e7
+## 10 Carlos… http://twi… NA               %22Car…           NA Unite… 2.34e7
+## # ... with 40 more rows, and 2 more variables: as_of &lt;dttm&gt;,
+## #   created_at &lt;dttm&gt;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">glimpse</span>(us)</a></code></pre></div>
 <pre><code>## Observations: 50
 ## Variables: 9
-## $ trend            &lt;chr&gt; &quot;#backtowork&quot;, &quot;#TuesdayThoughts&quot;, &quot;#Savannah...
-## $ url              &lt;chr&gt; &quot;http://twitter.com/search?q=%23backtowork&quot;, ...
+## $ trend            &lt;chr&gt; &quot;Teairra Mari&quot;, &quot;#WednesdayWisdom&quot;, &quot;#NetNeut...
+## $ url              &lt;chr&gt; &quot;http://twitter.com/search?q=%22Teairra+Mari%...
 ## $ promoted_content &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
-## $ query            &lt;chr&gt; &quot;%23backtowork&quot;, &quot;%23TuesdayThoughts&quot;, &quot;%23Sa...
-## $ tweet_volume     &lt;int&gt; 27544, 30822, 10279, NA, NA, NA, NA, 12000, N...
+## $ query            &lt;chr&gt; &quot;%22Teairra+Mari%22&quot;, &quot;%23WednesdayWisdom&quot;, &quot;...
+## $ tweet_volume     &lt;int&gt; NA, 162658, 79857, NA, 139836, NA, NA, 258046...
 ## $ place            &lt;chr&gt; &quot;United States&quot;, &quot;United States&quot;, &quot;United Sta...
 ## $ woeid            &lt;int&gt; 23424977, 23424977, 23424977, 23424977, 23424...
-## $ as_of            &lt;dttm&gt; 2018-01-02 16:34:11, 2018-01-02 16:34:11, 20...
-## $ created_at       &lt;dttm&gt; 2018-01-02 16:27:46, 2018-01-02 16:27:46, 20...</code></pre>
+## $ as_of            &lt;dttm&gt; 2018-05-09 20:06:44, 2018-05-09 20:06:44, 20...
+## $ created_at       &lt;dttm&gt; 2018-05-09 20:01:03, 2018-05-09 20:01:03, 20...</code></pre>
 <p>Twitter’s <a href="https://developer.twitter.com/en/docs/trends/trends-for-location/api-reference/get-trends-place">documentation</a> states that trends are updated every 5 minutes, which means you should not call the API more frequently than that and their current API rate-limit (Twitter puts some restrictions on how frequently you can call certain API targets) is 75 requests per 15-minute window.</p>
 <p>The <code>rtweet::get_trends()</code> function returns a data frame. Our ultimate goal is to retrieve the trends data on a schedule and cache it. There are numerous — and usually complex – ways to schedule jobs. One cross-platform solution is to use R itself to run a task periodically. This means keeping an R console open and running at all times, so is far from an optimal solution. See the <a href="https://github.com/bnosac/taskscheduleR"><code>taskscheduleR</code></a> package for other ideas on how to setup more robust scheduled jobs.</p>
 <p>In this example, we will:</p>
@@ -341,39 +351,39 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>use the <code>DBI</code> add <code>RSQlite</code> packages to work with this database</li>
 <li>setup a never-ending loop with <code>Sys.sleep()</code> providing a pause between requests</li>
 </ul>
-<pre class="sourceCode r" id="cb20"><code class="sourceCode r"><div class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">library</span>(DBI)</div>
-<div class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">library</span>(RSQLite)</div>
-<div class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">library</span>(rtweet) <span class="co"># mkearney/rtweet</span></div>
-<div class="sourceLine" id="cb20-4" data-line-number="4"></div>
-<div class="sourceLine" id="cb20-5" data-line-number="5"><span class="cf">repeat</span> {</div>
-<div class="sourceLine" id="cb20-6" data-line-number="6">  <span class="kw">message</span>(<span class="st">&quot;Retrieveing trends...&quot;</span>) <span class="co"># optional</span></div>
-<div class="sourceLine" id="cb20-7" data-line-number="7">  us &lt;-<span class="st"> </span><span class="kw">get_trends</span>(<span class="st">&quot;united states&quot;</span>)</div>
-<div class="sourceLine" id="cb20-8" data-line-number="8">  db_con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(RSQLite<span class="op">::</span><span class="kw">SQLite</span>(), <span class="st">&quot;data/us-trends.db&quot;</span>)</div>
-<div class="sourceLine" id="cb20-9" data-line-number="9">  <span class="kw">dbWriteTable</span>(db_con, <span class="st">&quot;us_trends&quot;</span>, us, <span class="dt">append=</span><span class="ot">TRUE</span>) <span class="co"># append=TRUE will update the table vs overwrite and also create it on first run if it does not exist</span></div>
-<div class="sourceLine" id="cb20-10" data-line-number="10">  <span class="kw">dbDisconnect</span>(db_con)</div>
-<div class="sourceLine" id="cb20-11" data-line-number="11">  <span class="kw">Sys.sleep</span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span>) <span class="co"># sleep for 10 minutes</span></div>
-<div class="sourceLine" id="cb20-12" data-line-number="12">}</div></code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">library</span>(DBI)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">library</span>(RSQLite)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">library</span>(rtweet) <span class="co"># mkearney/rtweet</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="cf">repeat</span> {</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">  <span class="kw">message</span>(<span class="st">&quot;Retrieveing trends...&quot;</span>) <span class="co"># optional</span></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">  us &lt;-<span class="st"> </span><span class="kw">get_trends</span>(<span class="st">&quot;united states&quot;</span>)</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">  db_con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(RSQLite<span class="op">::</span><span class="kw">SQLite</span>(), <span class="st">&quot;data/us-trends.db&quot;</span>)</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">  <span class="kw">dbWriteTable</span>(db_con, <span class="st">&quot;us_trends&quot;</span>, us, <span class="dt">append=</span><span class="ot">TRUE</span>) <span class="co"># append=TRUE will update the table vs overwrite and also create it on first run if it does not exist</span></a>
+<a class="sourceLine" id="cb20-10" data-line-number="10">  <span class="kw">dbDisconnect</span>(db_con)</a>
+<a class="sourceLine" id="cb20-11" data-line-number="11">  <span class="kw">Sys.sleep</span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="dv">60</span>) <span class="co"># sleep for 10 minutes</span></a>
+<a class="sourceLine" id="cb20-12" data-line-number="12">}</a></code></pre></div>
 <p>Later on, we can look at this data with <code>dplyr</code>/<code>dbplyr</code>:</p>
-<pre class="sourceCode r" id="cb21"><code class="sourceCode r"><div class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">library</span>(dplyr)</div>
-<div class="sourceLine" id="cb21-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb21-3" data-line-number="3">trends_db &lt;-<span class="st"> </span><span class="kw">src_sqlite</span>(<span class="st">&quot;data/us-trends.db&quot;</span>)</div>
-<div class="sourceLine" id="cb21-4" data-line-number="4">us &lt;-<span class="st"> </span><span class="kw">tbl</span>(trends_db, <span class="st">&quot;us_trends&quot;</span>)</div>
-<div class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw">select</span>(us, trend)</div></code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">trends_db &lt;-<span class="st"> </span><span class="kw">src_sqlite</span>(<span class="st">&quot;data/us-trends.db&quot;</span>)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">us &lt;-<span class="st"> </span><span class="kw">tbl</span>(trends_db, <span class="st">&quot;us_trends&quot;</span>)</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw">select</span>(us, trend)</a></code></pre></div>
 <pre><code>## # Source:   lazy query [?? x 1]
-## # Database: sqlite 3.19.3
+## # Database: sqlite 3.22.0
 ## #   [/Users/hrbrmstr/Development/21-recipes/data/us-trends.db]
-##                          trend
-##                          &lt;chr&gt;
-##  1            #TuesdayThoughts
-##  2                 #backtowork
-##  3          #SavannahHodaTODAY
-##  4           Justin Timberlake
+##    trend                      
+##    &lt;chr&gt;                      
+##  1 #TuesdayThoughts           
+##  2 #backtowork                
+##  3 #SavannahHodaTODAY         
+##  4 Justin Timberlake          
 ##  5 #MyTVShowWasCanceledBecause
-##  6                      #AM2DM
-##  7            The Trump Effect
-##  8            Carrie Underwood
-##  9                   Sean Ryan
-## 10               Larry Krasner
+##  6 #AM2DM                     
+##  7 The Trump Effect           
+##  8 Carrie Underwood           
+##  9 Sean Ryan                  
+## 10 Larry Krasner              
 ## # ... with more rows</code></pre>
 </div>
 <div id="see-also-1" class="section level2">
@@ -409,10 +419,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",

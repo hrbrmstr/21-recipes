@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>21 Recipes for Mining Twitter Data with rtweet</title>
   <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
-  <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Bob Rudis">
 
 
-<meta name="date" content="2018-01-05">
+<meta name="date" content="2018-05-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,57 +50,69 @@
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
+pre.numberSource a.sourceLine
   { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
     position: absolute; left: -5em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+a.sourceLine::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -276,38 +288,38 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p>R has more than a few NLP tools to work with. We’ll work with the <code>LSAfun</code> package for this exercise. As the acronym-laden package name implies, it uses Latent Semantic Analysis (LSA) to determine the most important bits in a set of text.</p>
 <p>We’ll use tweets by data journalist extraordinaire <a href="https://twitter.com/stiles">Matt Stiles</a>. Matt works for the Los Angeles Times and I learn a <em>ton</em> from him on a daily basis. He’s on top of <em>everything</em>. Let’s summarise some news he shared recently from the New York Times, Reuters, Washington Post, Five Thirty-Eight and his employer.</p>
 <p>We’ll limit our exploration to the first three new links we find.</p>
-<pre class="sourceCode r" id="cb64"><code class="sourceCode r"><div class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb64-2" data-line-number="2"><span class="kw">library</span>(LSAfun)</div>
-<div class="sourceLine" id="cb64-3" data-line-number="3"><span class="kw">library</span>(jerichojars) <span class="co"># hrbrmstr/jerichojars</span></div>
-<div class="sourceLine" id="cb64-4" data-line-number="4"><span class="kw">library</span>(jericho) <span class="co"># hrbrmstr/jericho</span></div>
-<div class="sourceLine" id="cb64-5" data-line-number="5"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb65"><code class="sourceCode r"><div class="sourceLine" id="cb65-1" data-line-number="1">stiles &lt;-<span class="st"> </span><span class="kw">get_timeline</span>(<span class="st">&quot;stiles&quot;</span>)</div>
-<div class="sourceLine" id="cb65-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb65-3" data-line-number="3"><span class="kw">filter</span>(stiles, <span class="kw">str_detect</span>(urls_expanded_url, <span class="st">&quot;nyti|reut|wapo|lat</span><span class="ch">\\</span><span class="st">.ms|53ei&quot;</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># only get tweets with news links</span></div>
-<div class="sourceLine" id="cb65-4" data-line-number="4"><span class="st">  </span><span class="kw">pull</span>(urls_expanded_url) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract the links</span></div>
-<div class="sourceLine" id="cb65-5" data-line-number="5"><span class="st">  </span><span class="kw">flatten_chr</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># mush them into a nice character vector</span></div>
-<div class="sourceLine" id="cb65-6" data-line-number="6"><span class="st">  </span><span class="kw">head</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get the first 3</span></div>
-<div class="sourceLine" id="cb65-7" data-line-number="7"><span class="st">  </span><span class="kw">map_chr</span>(<span class="op">~</span>{</div>
-<div class="sourceLine" id="cb65-8" data-line-number="8">    httr<span class="op">::</span><span class="kw">GET</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get the URL (I&#39;m lazily calling &quot;fair use&quot; here vs check robots.txt since I&#39;m suggesting you do this for your benefit vs profit)</span></div>
-<div class="sourceLine" id="cb65-9" data-line-number="9"><span class="st">      </span>httr<span class="op">::</span><span class="kw">content</span>(<span class="dt">as=</span><span class="st">&quot;text&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># extract the HTML</span></div>
-<div class="sourceLine" id="cb65-10" data-line-number="10"><span class="st">      </span>jericho<span class="op">::</span><span class="kw">html_to_text</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># strip away extraneous HTML tags</span></div>
-<div class="sourceLine" id="cb65-11" data-line-number="11"><span class="st">      </span>LSAfun<span class="op">::</span><span class="kw">genericSummary</span>(<span class="dt">k=</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># summarise!</span></div>
-<div class="sourceLine" id="cb65-12" data-line-number="12"><span class="st">      </span><span class="kw">paste0</span>(<span class="dt">collapse=</span><span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>) <span class="co"># easier to see</span></div>
-<div class="sourceLine" id="cb65-13" data-line-number="13">  }) <span class="op">%&gt;%</span></div>
-<div class="sourceLine" id="cb65-14" data-line-number="14"><span class="st">  </span><span class="kw">walk</span>(cat)</div></code></pre>
-<pre><code>##  We will continue to put the fairness and accuracy of everything we publish above all else — and in the inevitable moments we fall short, we will continue to own up to our mistakes, and we’ll strive to do better
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">library</span>(rtweet)</a>
+<a class="sourceLine" id="cb64-2" data-line-number="2"><span class="kw">library</span>(LSAfun)</a>
+<a class="sourceLine" id="cb64-3" data-line-number="3"><span class="kw">library</span>(jerichojars) <span class="co"># hrbrmstr/jerichojars</span></a>
+<a class="sourceLine" id="cb64-4" data-line-number="4"><span class="kw">library</span>(jericho) <span class="co"># hrbrmstr/jericho</span></a>
+<a class="sourceLine" id="cb64-5" data-line-number="5"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">stiles &lt;-<span class="st"> </span><span class="kw">get_timeline</span>(<span class="st">&quot;stiles&quot;</span>)</a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb65-3" data-line-number="3"><span class="kw">filter</span>(stiles, <span class="kw">str_detect</span>(urls_expanded_url, <span class="st">&quot;nyti|reut|wapo|lat</span><span class="ch">\\</span><span class="st">.ms|53ei&quot;</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># only get tweets with news links</span></a>
+<a class="sourceLine" id="cb65-4" data-line-number="4"><span class="st">  </span><span class="kw">pull</span>(urls_expanded_url) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract the links</span></a>
+<a class="sourceLine" id="cb65-5" data-line-number="5"><span class="st">  </span><span class="kw">flatten_chr</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># mush them into a nice character vector</span></a>
+<a class="sourceLine" id="cb65-6" data-line-number="6"><span class="st">  </span><span class="kw">head</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get the first 3</span></a>
+<a class="sourceLine" id="cb65-7" data-line-number="7"><span class="st">  </span><span class="kw">map_chr</span>(<span class="op">~</span>{</a>
+<a class="sourceLine" id="cb65-8" data-line-number="8">    httr<span class="op">::</span><span class="kw">GET</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get the URL (I&#39;m lazily calling &quot;fair use&quot; here vs check robots.txt since I&#39;m suggesting you do this for your benefit vs profit)</span></a>
+<a class="sourceLine" id="cb65-9" data-line-number="9"><span class="st">      </span>httr<span class="op">::</span><span class="kw">content</span>(<span class="dt">as=</span><span class="st">&quot;text&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># extract the HTML</span></a>
+<a class="sourceLine" id="cb65-10" data-line-number="10"><span class="st">      </span>jericho<span class="op">::</span><span class="kw">html_to_text</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># strip away extraneous HTML tags</span></a>
+<a class="sourceLine" id="cb65-11" data-line-number="11"><span class="st">      </span>LSAfun<span class="op">::</span><span class="kw">genericSummary</span>(<span class="dt">k=</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># summarise!</span></a>
+<a class="sourceLine" id="cb65-12" data-line-number="12"><span class="st">      </span><span class="kw">paste0</span>(<span class="dt">collapse=</span><span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>) <span class="co"># easier to see</span></a>
+<a class="sourceLine" id="cb65-13" data-line-number="13">  }) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-14" data-line-number="14"><span class="st">  </span><span class="kw">walk</span>(cat)</a></code></pre></div>
+<pre><code>##  says North Korea&#39;s ICBM launch is &#39;a new escalation of the threat to the United States&#39; and the world As the world focuses on its nuclear ambitions, North Korea deploys another weapon: Drones North Korea is building mysterious artificial islands that would be perfect for missile launches Advertisement Be the first to comment Hide Comments Please enable JavaScript to view the comments powered by SolidOpinion
 ## 
-##  We will continue to put the fairness and accuracy of everything we publish above all else — and in the inevitable moments we fall short, we will continue to own up to our mistakes, and we’ll strive to do better
+## com Travel Offers About Press Releases Staff Directory Giving Search xml:space=&quot;preserve&quot;&gt; Local Politics Sports Entertainment Opinion Place an ad Advertisement Asia When this broadcaster makes a rare appearance, North Koreans know it&#39;s serious By Matt Stiles Jul 05, 2017 | 9:55 AM | Seoul When Ri Chun Hee appears on North Korea’s state-run news network, the audience knows the looming declaration is serious
 ## 
-##  Our report is stronger than ever, thanks to investments in new forms of journalism like interactive graphics, podcasting and digital video and even greater spending in areas like investigative, international and beat reporting Trump is the 45th president of the United States, but he has spent much of his first year in office defying the conventions and norms established by the previous 44, and transforming the presidency in ways that were once unimaginable
+##  says North Korea&#39;s ICBM launch is &#39;a new escalation of the threat to the United States&#39; and the world As the world focuses on its nuclear ambitions, North Korea deploys another weapon: Drones North Korea is building mysterious artificial islands that would be perfect for missile launches Advertisement Be the first to comment Hide Comments Please enable JavaScript to view the comments powered by SolidOpinion&lt;!–– 0000000 000 0000000 111111111 11111111100 000 111111111 00000 111111111111111111 00000 000000 000 1111111111111111111111111100000 000 000 1111 1111111111111111100 000 000 11 0 1111111100 000 000 1 00 1 000 000 00 00 1 000 000 000 00000 1 000 00000 0000 00000000 1 00000 11111 000 00 000000 000 11111 00000 0000 000000 00000 00000 000 10000 000000 000 0000 000 00000 000000 1 000 000 000000 10000 1 0 000 000 1000000 00 1 00 000 000 1111111 1 0000 000 000 1111111100 000000 000 0000 111111111111111110000000 0000 111111111 111111111111100000 111111111 0000000 00000000 0000000 NYTimes
 ## 
-##  Trump essentially calls it fake, making no effort to pretend to be above it all, except to boast that he is stronger, richer, smarter and more successful than anyone else
+## com/Tech --&gt; New Revelations Suggest a President Losing Control of His Narrative - The New York Times Sections SEARCH Skip to contentSkip to site index Politics Subscribe Log In SubscribeLog In Advertisement Supported by News Analysis New Revelations Suggest a President Losing Control of His Narrative Image President Trump is used to dictating the terms of his own life to create a narrative that suits his desired image
 ## 
-##  “The hope would be that given the American people’s reaction to the way he’s handled the presidency, the people running next time will run in the opposite direction Supreme Court CONFIRMED District courts Circuit courts PENDING Obama 1 3 9 9 11 Trump 1 12 7 6 43 White nominees as percent of total Reagan 94% Trump 91 Bush I 89 Bush II 83 Carter 79 Clinton 75 Obama 64 Male nominees Reagan 92% Carter 84 Bush I 81 Trump 81 Bush II 78 Clinton 71 Obama 58 Supreme Court Circuit courts District courts Obama 1 3 9 9 11 CONFIRMED PENDING CONFIRMED PENDING Trump 1 12 7 6 43 CONFIRMED PENDING CONFIRMED PENDING White nominees as percent of total Male nominees Reagan 94% Reagan 92% 91 Carter 84 Trump Bush I 89 Bush I 81 Bush II 83 Trump 81 Carter 79 Bush II 78 75 Clinton Clinton 71 Obama 64 Obama 58 Supreme Court Circuit courts District courts Obama 1 3 9 9 11 CONFIRMED PENDING CONFIRMED PENDING Trump 1 12 7 6 43 CONFIRMED PENDING CONFIRMED PENDING White nominees as percent of total Male nominees Reagan 94% Reagan 92% 91 Carter 84 Trump Bush I 89 Bush I 81 Bush II 83 Trump 81 Carter 79 Bush II 78 75 Clinton Clinton 71 Obama 64 Obama 58 Trump nominee demographics as of Nov
+##  politics politics New York business tech science sports obituaries today&#39;s paper corrections corrections opinion today&#39;s opinion today&#39;s opinion op-ed columnists editorials editorials contributing writers op-ed Contributors letters letters sunday review sunday review taking note video: opinion arts today&#39;s arts art &amp; design books dance movies music television theater video: arts living automobiles automobiles crossword food food education fashion &amp; style health jobs magazine real estate t magazine travel weddings listings &amp; more tools &amp; services N By Jane Mayer May 07, 2018 Listen to the New Yorker Radio Hour Buy the Cover Play the Jigsaw Puzzle News &amp; Politics Daily Comment Our Columnists News Desk Culture Cultural Comment Culture Desk Goings On About Town The Critics Jia Tolentino Persons of Interest Business, Science &amp; Tech Currency Elements Maria Konnikova Humor Daily Shouts Shouts &amp; Murmurs The Borowitz Report Cartoons Daily Cartoon Cartoon Caption Contest Cartoon Bank Books &amp; Fiction Page-Turner Books Literary Lives Poems Fiction Magazine This Week&#39;s Issue Archive Subscribe Photography Photo Booth Portfolio Video Culture Humor Politics Business Science &amp; Tech Books Sports Podcasts The New Yorker Radio Hour Political Scene The Writer&#39;s Voice Fiction Poetry Out Loud More Customer Care Buy the Cover Apps Jigsaw Puzzle SecureDrop Store RSS Site Map Newsletters The Daily Culture Review Podcasts Cartoons John Cassidy The Borowitz Report Fiction Goings On About Town About Us About Careers Contact FAQ Media Kit Press Accessibility Help Sections News &amp; Politics Culture Business, Science &amp; Tech Humor Cartoons Books &amp; Fiction Magazine Photography Video Podcasts More Newsletters About Careers Contact FAQ Media Kit Press Accessibility Help Follow Us © 2018 Condé Nast
 ## 
-##  The improvement in sentiment in the private sector shouldn’t be shocking: If you had been told that you would receive a huge tax cut and be freed from thousands of government regulations, wouldn’t you feel better about your business? As for consumers, their improved mood since the election represents a continuation of a trend that began in 2009 as the floodwaters of the financial crisis were starting to recede
+##  By Jane Mayer May 07, 2018 Listen to the New Yorker Radio Hour Buy the Cover Play the Jigsaw Puzzle News &amp; Politics Daily Comment Our Columnists News Desk Culture Cultural Comment Culture Desk Goings On About Town The Critics Jia Tolentino Persons of Interest Business, Science &amp; Tech Currency Elements Maria Konnikova Humor Daily Shouts Shouts &amp; Murmurs The Borowitz Report Cartoons Daily Cartoon Cartoon Caption Contest Cartoon Bank Books &amp; Fiction Page-Turner Books Literary Lives Poems Fiction Magazine This Week&#39;s Issue Archive Subscribe Photography Photo Booth Portfolio Video Culture Humor Politics Business Science &amp; Tech Books Sports Podcasts The New Yorker Radio Hour Political Scene The Writer&#39;s Voice Fiction Poetry Out Loud More Customer Care Buy the Cover Apps Jigsaw Puzzle SecureDrop Store RSS Site Map Newsletters The Daily Culture Review Podcasts Cartoons John Cassidy The Borowitz Report Fiction Goings On About Town About Us About Careers Contact FAQ Media Kit Press Accessibility Help Sections News &amp; Politics Culture Business, Science &amp; Tech Humor Cartoons Books &amp; Fiction Magazine Photography Video Podcasts More Newsletters About Careers Contact FAQ Media Kit Press Accessibility Help Follow Us © 2018 Condé Nast
 ## 
-##  Additional uninsured after repeal: Uninsured, in millions, before repeal of mandate 4 7 12 12 12 12 13 Total uninsured, 2025: 28 30 31 31 44 million ’17 ’18 ’19 ’20 ’21 ’22 ’23 ’24 ’25 Additional uninsured after repeal: Uninsured, in millions, before repeal of mandate: Total uninsured, 2025: 4 7 12 12 12 12 13 44 28 30 31 31 million 2017 ’18 ’19 ’20 ’21 ’22 ’23 ’24 ’25 Sources: Kaiser Family Foundation; Congressional Budget Office More, and Whiter, Judges From Trump While the new administration has struggled to advance its legislative priorities, it has (unfortunately) excelled at another of its responsibilities: appointing judges</code></pre>
+##  It has become commonplace to say that enough was known about Trump’s shady business before he was elected; his followers voted for him precisely because they liked that he was someone willing to do whatever it takes to succeed, and they also believe that all rich businesspeople have to do shady things from time to time</code></pre>
 </div>
 <div id="see-also-9" class="section level2">
 <h2><span class="header-section-number">12.4</span> See Also</h2>
@@ -339,10 +351,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>21 Recipes for Mining Twitter Data with rtweet</title>
   <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
-  <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Bob Rudis">
 
 
-<meta name="date" content="2018-01-05">
+<meta name="date" content="2018-05-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,57 +50,69 @@
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
+pre.numberSource a.sourceLine
   { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
     position: absolute; left: -5em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+a.sourceLine::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -281,69 +293,70 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>Use four latitude/longitude bounding box points to stream by geo location. This must be provided via a vector of length 4, e.g., <code>c(-125, 26, -65, 49)</code>.</li>
 </ul>
 <p>Let’s capture one minute of tweets in the good ol’ U S of A (this is one of Michael’s examples from the manual page for <code>rtweet::stream_tweets()</code>.</p>
-<pre class="sourceCode r" id="cb53"><code class="sourceCode r"><div class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb53-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb54"><code class="sourceCode r"><div class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">stream_tweets</span>(</div>
-<div class="sourceLine" id="cb54-2" data-line-number="2">  <span class="kw">lookup_coords</span>(<span class="st">&quot;usa&quot;</span>), <span class="co"># handy helper function in rtweet</span></div>
-<div class="sourceLine" id="cb54-3" data-line-number="3">  <span class="dt">verbose =</span> <span class="ot">FALSE</span>,</div>
-<div class="sourceLine" id="cb54-4" data-line-number="4">  <span class="dt">timeout =</span> (<span class="dv">60</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span>),</div>
-<div class="sourceLine" id="cb54-5" data-line-number="5">) -&gt;<span class="st"> </span>usa</div></code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">library</span>(rtweet)</a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">stream_tweets</span>(</a>
+<a class="sourceLine" id="cb54-2" data-line-number="2">  <span class="kw">lookup_coords</span>(<span class="st">&quot;usa&quot;</span>), <span class="co"># handy helper function in rtweet</span></a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">  <span class="dt">verbose =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb54-4" data-line-number="4">  <span class="dt">timeout =</span> (<span class="dv">60</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb54-5" data-line-number="5">) -&gt;<span class="st"> </span>usa</a></code></pre></div>
 <pre><code>## 
  Found 500 records...
  Found 1000 records...
- Found 1323 records...
- Imported 1323 records. Simplifying...</code></pre>
+ Found 1500 records...
+ Found 1560 records...
+ Imported 1560 records. Simplifying...</code></pre>
 <p>A 60 second stream resulted in well over 1,000 records.</p>
 <p>Where are they tweeting from?</p>
-<pre class="sourceCode r" id="cb56"><code class="sourceCode r"><div class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">count</span>(usa, place_full_name, <span class="dt">sort=</span><span class="ot">TRUE</span>)</div></code></pre>
-<pre><code>## # A tibble: 724 x 2
-##      place_full_name     n
-##                &lt;chr&gt; &lt;int&gt;
-##  1   Los Angeles, CA    31
-##  2       Houston, TX    28
-##  3     Manhattan, NY    24
-##  4      Florida, USA    19
-##  5      Georgia, USA    18
-##  6   California, USA    16
-##  7 Pennsylvania, USA    16
-##  8        Texas, USA    15
-##  9     Charlotte, NC    14
-## 10       Chicago, IL    14
-## # ... with 714 more rows</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">count</span>(usa, place_full_name, <span class="dt">sort=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 854 x 2
+##    place_full_name         n
+##    &lt;chr&gt;               &lt;int&gt;
+##  1 Los Angeles, CA        35
+##  2 Manhattan, NY          34
+##  3 Houston, TX            29
+##  4 North Carolina, USA    18
+##  5 Texas, USA             18
+##  6 Chicago, IL            15
+##  7 Florida, USA           13
+##  8 Georgia, USA           13
+##  9 Indianapolis, IN       13
+## 10 San Antonio, TX        13
+## # ... with 844 more rows</code></pre>
 <p>What are they tweeting about?</p>
-<pre class="sourceCode r" id="cb58"><code class="sourceCode r"><div class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">unnest</span>(usa, hashtags) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(hashtags, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(hashtags))</div></code></pre>
-<pre><code>## # A tibble: 289 x 2
-##          hashtags     n
-##             &lt;chr&gt; &lt;int&gt;
-##  1            job    60
-##  2      CareerArc    46
-##  3         Hiring    43
-##  4         hiring    23
-##  5            Job    12
-##  6           Jobs    12
-##  7    Hospitality     7
-##  8 Transportation     6
-##  9     Healthcare     5
-## 10        Nursing     5
-## # ... with 279 more rows</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">unnest</span>(usa, hashtags) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(hashtags, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(hashtags))</a></code></pre></div>
+<pre><code>## # A tibble: 541 x 2
+##    hashtags       n
+##    &lt;chr&gt;      &lt;int&gt;
+##  1 job          346
+##  2 CareerArc    294
+##  3 Hiring       240
+##  4 hiring       132
+##  5 Job           74
+##  6 Jobs          74
+##  7 IT            20
+##  8 Accounting    15
+##  9 HR            14
+## 10 Retail        12
+## # ... with 531 more rows</code></pre>
 <p>What app are they using?</p>
-<pre class="sourceCode r" id="cb60"><code class="sourceCode r"><div class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">count</span>(usa, source, <span class="dt">sort=</span><span class="ot">TRUE</span>)</div></code></pre>
-<pre><code>## # A tibble: 26 x 2
-##                      source     n
-##                       &lt;chr&gt; &lt;int&gt;
-##  1       Twitter for iPhone   894
-##  2      Twitter for Android   190
-##  3              TweetMyJOBS    81
-##  4                Instagram    62
-##  5       Twitter Web Client    43
-##  6  &quot;Tweetbot for i\u039fS&quot;    10
-##  7               Foursquare     6
-##  8         Twitter for iPad     6
-##  9                   Cities     4
-## 10 SafeTweet by TweetMyJOBS     4
-## # ... with 16 more rows</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">count</span>(usa, source, <span class="dt">sort=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 23 x 2
+##    source                  n
+##    &lt;chr&gt;               &lt;int&gt;
+##  1 Twitter for iPhone    806
+##  2 TweetMyJOBS           472
+##  3 Twitter for Android   135
+##  4 Twitter Web Client     46
+##  5 Instagram              40
+##  6 Twitter for iPad       19
+##  7 Foursquare              8
+##  8 Tweetbot for iΟS        8
+##  9 Cities                  6
+## 10 &quot;Beer Menus &quot;           3
+## # ... with 13 more rows</code></pre>
 <p>Michael covers the streaming topic in-depth in <a href="http://rtweet.info/articles/stream.html">a vignette</a>.</p>
 </div>
 <div id="see-also-7" class="section level2">
@@ -378,10 +391,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",

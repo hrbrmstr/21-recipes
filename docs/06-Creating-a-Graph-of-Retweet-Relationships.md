@@ -12,7 +12,7 @@ Query for the topic, extract the retweet origins, and then use `igraph` to const
 
 Recipes 4 and 5 introduced and expanded on searching Twitter plus looking for retweets. The [`igraph`](http://igraph.org/r/) package can be used to capture and analyze details of relationships across retweets. We'll focus on just examining the Twitter user pair relationships.
 
-Let's get a larger sample this time --- 1,500 tweets in `#rstats`. We can use the technique from the previous recips and:
+Let's get a larger sample this time --- 1,500 tweets in `#rstats`. We can use the technique from the previous recipe and:
 
 - find the retweets (using the API-provided data)
 - expand out all the mentioned screen names
@@ -38,7 +38,7 @@ filter(rstats, retweet_count > 0) %>%
   graph_from_data_frame() -> rt_g
 ```
 
-You can reference the [`igraph` `print()` and `summary()` functions](http://igraph.org/r/doc/print.igraph.html) for more information on the output of `summary()` but output from the following line shows that the graph is `D`irected with `N`amed vertices and it has 890 vertices and 1,487 edges.
+You can reference the [`igraph` `print()` and `summary()` functions](http://igraph.org/r/doc/print.igraph.html) for more information on the output of `summary()` but output from the following line shows that the graph is `D`irected with `N`amed vertices and it has 1,106 vertices and 1,945 edges.
 
 
 ```r
@@ -46,7 +46,7 @@ summary(rt_g)
 ```
 
 ```
-## IGRAPH 11823c1 DN-- 890 1487 -- 
+## IGRAPH b4b8447 DN-- 1106 1945 -- 
 ## + attr: name (v/c)
 ```
 
@@ -61,7 +61,7 @@ ggplot(data_frame(y=degree_distribution(rt_g), x=1:length(y))) +
   theme_ipsum_rc(grid="Y", axis="x")
 ```
 
-<img src="06-Creating-a-Graph-of-Retweet-Relationships_files/figure-html4/06_gg-1.png" width="672" />
+<img src="06-Creating-a-Graph-of-Retweet-Relationships_files/figure-html/06_gg-1.png" width="672" />
 
 ## See Also
 

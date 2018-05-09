@@ -1,7 +1,7 @@
 --- 
 title: "21 Recipes for Mining Twitter Data with rtweet"
 author: "Bob Rudis"
-date: "2018-01-05"
+date: "2018-05-09"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
@@ -14,7 +14,7 @@ description: "An R/rtweet edition of Matthew A. Russell's Python Twitter Recipes
 
 # Preface {-}
 
-I'm using this as way to familiarize myself with bookdown so I don't make as many mistakes with my web scraping field guide book.
+I'm using this as a way to familiarize myself with bookdown so I don't make as many mistakes with my web scraping field guide book.
 
 It's based on Matthew R. Russell's [book](https://github.com/ptwobrussell/Recipes-for-Mining-Twitter). That book is out of distribution and much of the content is in Matthew's "Mining the Social Web" book. There will be _many_ similarities between his "21 Recipes" book and this book _on purpose_. I am not claiming originality in this work, just making an R-centric version of the cookbook.
 
