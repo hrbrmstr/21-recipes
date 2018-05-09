@@ -6,7 +6,7 @@ You want to operate on collections of friends and followers to answer questions 
 
 ## Solution
 
-Use R setwise operations amd `rtweet::lookup_friendships()`.
+Use R setwise operations and `rtweet::lookup_friendships()`.
 
 ## Discussion
 
@@ -25,7 +25,7 @@ brooke_followers <- rtweet::get_followers("gbwanderson")
 brooke_friends <- rtweet::get_friends("gbwanderson")
 ```
 
-Now we can see the count of mutual and disperate relationships:
+Now we can see the count of mutual and disparate relationships:
 
 ```{r 14_sets, message=FALSE, warning=FALSE, cache=TRUE}
 # common

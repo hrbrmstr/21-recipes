@@ -10,9 +10,9 @@ Use harvesting techniques shown in previous recipes and pass the cloud-destined 
 
 ## Discussion
 
-Word clouds are virtually devoid of meaning. Neiman Lab went to far as to call them [harmful](http://www.niemanlab.org/2011/10/word-clouds-considered-harmful/). But, this recipe is in the Python version of the book (figures, eh?) and this was desingned to be a 1:1 mapping of said book, so let's proceed.
+Word clouds are virtually devoid of meaning. Neiman Lab went to far as to call them [harmful](http://www.niemanlab.org/2011/10/word-clouds-considered-harmful/). But, this recipe is in the Python version of the book (figures, eh?) and this was designed to be a 1:1 mapping of said book, so let's proceed.
 
-The folowing uses some handy text taming and word cloud packages to make a collage from `#NationalScienceFictionDay` tweets:
+The following uses some handy text taming and word cloud packages to make a collage from `#NationalScienceFictionDay` tweets:
 
 ```{r 11_lib, message=FALSE, warning=FALSE}
 library(rtweet)

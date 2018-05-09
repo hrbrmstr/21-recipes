@@ -13,10 +13,10 @@ Take advantage of Twitter’s OAuth implementation to gain full access to Twitte
 Twitter uses [OAuth Core 1.0 Revision A](https://oauth.net/core/1.0a/) ("OAuth 1.0a" for short & to further reduce verbosity, "oauth" from now on). A few, key purposes of oauth in the context of Twitter are:
 
 - to ensure end-users know an application is registered with Twitter, and
-- know who the author(s) fo the application are;
+- know who the author(s) of the application are;
 - enable limiting what operations an application can perform with your Twitter account;
 - obviate the need to share your actual Twitter username and password with a third party, which also 
-- enables recovation of application access to your Twitter account without resetting your password.
+- enables revocation of application access to your Twitter account without resetting your password.
 
 The `rtweet` package takes this one step further by having _you_ create an "application", which is nothing more than you setting up some basic configuration information. To do so, you must visit [apps.twitter.com](https://apps.twitter.com/) and create a new application. You will need to provide values for the following fields:
 
