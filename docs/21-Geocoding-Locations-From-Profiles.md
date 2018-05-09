@@ -2,7 +2,7 @@
 
 ## Problem
 
-You want to geocode information in tweets for situations beyond what the Twitter API provides and not just focus on U.S. states as Ecipe 20 did.
+You want to geocode information in tweets for situations beyond what the Twitter API provides and not just focus on U.S. states as Recipe 20 did.
 
 ## Solution
 
@@ -37,39 +37,39 @@ user_info <- left_join(user_info, coded, "location")
 
 ```
 ## # A tibble: 503 x 3
-##                                        location        lat
-##                                           <chr>      <dbl>
-##  1                                         Peru  -9.189967
-##  2                       Richmond, B.C., Canada  49.166590
-##  3                                Massachusetts  42.407211
-##  4                                Frederick, MD  39.414269
-##  5                                        Japan  36.204824
-##  6                                          FMU  34.190425
-##  7                                  Chicago, IL  41.878114
-##  8                               "\u65e5\u672c"  36.204824
-##  9 "\u5317\u5927\u30fb\u74b0\u5883\u79d1\u5b66"  43.072764
-## 10                           Stuttgart, Germany  48.775846
-## 11                                 New York, NY  40.712775
-## 12                              Asbury Park, NJ  40.220391
-## 13                                Ann Arbor, MI  42.280826
-## 14                                   Ithaca, NY  42.443961
-## 15            "\u00dcT: 36.1573208,-95.9526115"  40.532392
-## 16                                  Houston, TX  29.760427
-## 17                                     Rome, NY  43.212847
-## 18                             Perth, Australia -31.950527
-## 19                                 Santiago, CL -33.448890
-## 20                                 Johnston, IA  41.670983
-## 21                             Fort Collins, CO  40.585260
-## 22                             Hyderabad, India  17.385044
-## 23                                Nashville, TN  36.162664
-## 24                                  Canton, CHN  23.129110
-## 25                                "Bogot\u00e1"   4.710989
-## 26                              3052, Australia -37.786236
-## 27                          Charlottesville, VA  38.029306
-## 28                             Hobart, Tasmania -42.882138
-## 29                                         moon  40.516977
-## 30                             Toronto, Ontario  43.653226
-## # ... with 473 more rows, and 1 more variables: lon <dbl>
+##    location                      lat     lon
+##    <chr>                       <dbl>   <dbl>
+##  1 Peru                        -9.19  -75.0 
+##  2 Richmond, B.C., Canada      49.2  -123.  
+##  3 Massachusetts               42.4   -71.4 
+##  4 Frederick, MD               39.4   -77.4 
+##  5 Japan                       36.2   138.  
+##  6 FMU                         34.2   -79.7 
+##  7 Chicago, IL                 41.9   -87.6 
+##  8 日本                        36.2   138.  
+##  9 北大・環境科学              43.1   141.  
+## 10 Stuttgart, Germany          48.8     9.18
+## 11 New York, NY                40.7   -74.0 
+## 12 Asbury Park, NJ             40.2   -74.0 
+## 13 Ann Arbor, MI               42.3   -83.7 
+## 14 Ithaca, NY                  42.4   -76.5 
+## 15 ÜT: 36.1573208,-95.9526115  40.5  -112.  
+## 16 Houston, TX                 29.8   -95.4 
+## 17 Rome, NY                    43.2   -75.5 
+## 18 Perth, Australia           -32.0   116.  
+## 19 Santiago, CL               -33.4   -70.7 
+## 20 Johnston, IA                41.7   -93.7 
+## 21 Fort Collins, CO            40.6  -105.  
+## 22 Hyderabad, India            17.4    78.5 
+## 23 Nashville, TN               36.2   -86.8 
+## 24 Canton, CHN                 23.1   113.  
+## 25 Bogotá                       4.71  -74.1 
+## 26 3052, Australia            -37.8   145.  
+## 27 Charlottesville, VA         38.0   -78.5 
+## 28 Hobart, Tasmania           -42.9   147.  
+## 29 moon                        40.5   -80.2 
+## 30 Toronto, Ontario            43.7   -79.4 
+## # ... with 473 more rows
 ```
 
 ## See Also

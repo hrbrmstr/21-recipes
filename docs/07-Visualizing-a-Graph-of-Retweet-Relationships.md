@@ -38,7 +38,7 @@ V(rt_g)$node_label <- unname(ifelse(degree(rt_g)[V(rt_g)] > 20, names(V(rt_g)), 
 V(rt_g)$node_size <- unname(ifelse(degree(rt_g)[V(rt_g)] > 20, degree(rt_g), 0)) 
 ```
 
-Now, we'll creatre the graph. Using `..index..` for the alpha channel will help show edge weight without too much extra effort. Note the _heavy_ customization of `geom_node_label()`. Thomas made it way too easy to make beautiful network graphs with `ggraph`:
+Now, we'll create the graph. Using `..index..` for the alpha channel will help show edge weight without too much extra effort. Note the _heavy_ customization of `geom_node_label()`. Thomas made it way too easy to make beautiful network graphs with `ggraph`:
 
 
 ```r
@@ -54,7 +54,7 @@ ggraph(rt_g, layout = 'linear', circular = TRUE) +
   theme(legend.position="none")
 ```
 
-<img src="07-Visualizing-a-Graph-of-Retweet-Relationships_files/figure-html4/07_graph-1.png" width="960" />
+<img src="07-Visualizing-a-Graph-of-Retweet-Relationships_files/figure-html/07_graph-1.png" width="960" />
 
 ## See Also
 

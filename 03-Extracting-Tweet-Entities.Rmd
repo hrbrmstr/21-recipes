@@ -10,7 +10,7 @@ Use `rtweet::search_tweets()` or any of the _timeline_ functions in `rtweet`.
 
 ## Discussion
 
-Michael has provided a very powerful search interace for Twitter data mining. `rtweet::search_tweets()` retrieves, parses and extracts an asounding amount of data for you to then use. Let's search Twitter for the `#rstats` hashtag and see what is available:
+Michael has provided a very powerful search interface for Twitter data mining. `rtweet::search_tweets()` retrieves, parses and extracts an astounding amount of data for you to then use. Let's search Twitter for the `#rstats` hashtag and see what is available:
 
 ```{r 03_pkgs, message=FALSE, warning=FALSE, cache=TRUE}
 library(rtweet)

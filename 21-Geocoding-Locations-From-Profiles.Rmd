@@ -2,7 +2,7 @@
 
 ## Problem
 
-You want to geocode information in tweets for situations beyond what the Twitter API provides and not just focus on U.S. states as Ecipe 20 did.
+You want to geocode information in tweets for situations beyond what the Twitter API provides and not just focus on U.S. states as Recipe 20 did.
 
 ## Solution
 

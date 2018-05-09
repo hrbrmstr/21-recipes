@@ -25,20 +25,20 @@ library(tidyverse)
 ```
 
 ```
-## # A tibble: 256 x 1
-##               user_id
-##                 <chr>
-##  1 913819461727195138
-##  2           25819761
-##  3         2198622000
-##  4           59655036
-##  5 769616000593428480
-##  6         2973406683
-##  7           73603242
-##  8         2790116012
-##  9          392787202
-## 10 920639877397364736
-## # ... with 246 more rows
+## # A tibble: 276 x 1
+##    user_id           
+##    <chr>             
+##  1 80428539          
+##  2 220529839         
+##  3 990192627847856128
+##  4 1558406653        
+##  5 2165203542        
+##  6 866585485522685952
+##  7 3301964953        
+##  8 14888109          
+##  9 875599623900889088
+## 10 334461893         
+## # ... with 266 more rows
 ```
 
 ```r
@@ -46,20 +46,20 @@ library(tidyverse)
 ```
 
 ```
-## # A tibble: 103 x 2
-##           user            user_id
-##          <chr>              <chr>
-##  1 gbwanderson         3230388598
+## # A tibble: 102 x 2
+##    user        user_id           
+##    <chr>       <chr>             
+##  1 gbwanderson 3230388598        
 ##  2 gbwanderson 776596392559177728
-##  3 gbwanderson         1715370056
-##  4 gbwanderson          131498466
-##  5 gbwanderson           97464922
-##  6 gbwanderson          363210621
-##  7 gbwanderson           17203405
-##  8 gbwanderson 910392773081104384
-##  9 gbwanderson           91333167
-## 10 gbwanderson         1568606814
-## # ... with 93 more rows
+##  3 gbwanderson 1715370056        
+##  4 gbwanderson 131498466         
+##  5 gbwanderson 97464922          
+##  6 gbwanderson 363210621         
+##  7 gbwanderson 17203405          
+##  8 gbwanderson 91333167          
+##  9 gbwanderson 1568606814        
+## 10 gbwanderson 724715837442129920
+## # ... with 92 more rows
 ```
 
 ## See Also

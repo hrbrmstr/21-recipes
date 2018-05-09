@@ -12,7 +12,7 @@ Query for the topic, extract the retweet origins, and then use `igraph` to const
 
 Recipes 4 and 5 introduced and expanded on searching Twitter plus looking for retweets. The [`igraph`](http://igraph.org/r/) package can be used to capture and analyze details of relationships across retweets. We'll focus on just examining the Twitter user pair relationships.
 
-Let's get a larger sample this time --- 1,500 tweets in `#rstats`. We can use the technique from the previous recips and:
+Let's get a larger sample this time --- 1,500 tweets in `#rstats`. We can use the technique from the previous recipe and:
 
 - find the retweets (using the API-provided data)
 - expand out all the mentioned screen names

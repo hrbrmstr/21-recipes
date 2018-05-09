@@ -26,20 +26,20 @@ search_tweets("#rstats -filter:retweets") %>%
 ```
 
 ```
-## # A tibble: 100 x 1
-##                                                                           text
-##                                                                          <chr>
-##  1 "New R Package for #SEO\n\nDiscover RsparkleR : a web crawler powered by @S
-##  2 Word Embeddings with Keras https://t.co/QHzvmKNdGS #rstats https://t.co/KwD
-##  3                  Word Embeddings with Keras https://t.co/cbN12jx74j #rstats
-##  4 You can read the first chapter of Practical Data Science with R on #liveBoo
-##  5  "Big | Data | Insights! https://t.co/hgMeKIOsjQ\n#in #rstats #datascience"
-##  6 Do you have bad R habits? Here's how to identify and fix them. @MicrosoftR 
-##  7 What are the resources to learn creating #Chatbot using R? https://t.co/ip9
-##  8 I have been playing with #ggplot2 and I rather like this plot of bird densi
-##  9 Linking RStudio and GitHub. Very useful blog for anyone interested in produ
-## 10 "@RussellSPierce @davidjayharris After using it for a long time, it's reall
-## # ... with 90 more rows
+## # A tibble: 92 x 1
+##    text                                                                   
+##    <chr>                                                                  
+##  1 Just published an update to the #tidycensus documentation: a table sho…
+##  2 "Is Stagraph Open Source?\n#DataVisualization #dataviz #DataAnalytics …
+##  3 Day 13: Sometimes I doubt my commitment to #sparklines. #rstats #100Da…
+##  4 How to detect heteroscedasticity and rectify it? https://t.co/kq5lVSAh…
+##  5 runs scored and allowed #MLB #dataviz #rstats https://t.co/m21biXBWwE  
+##  6 CRAN updates: cati xyloplot https://t.co/y5W2NTKSXT #rstats            
+##  7 #rstats pkgdown discovery- if you format your function name correctly …
+##  8 I've felt one very-long and super-annoying day away from being compete…
+##  9 This looks like a really interesting addition to #rstats with #shiny h…
+## 10 BTRY 6020 has been my favorite course @Cornell. @JoeGuinnesss ended th…
+## # ... with 82 more rows
 ```
 
 or, all the recent tweet-replies sent to `@kearneymw`:
@@ -51,20 +51,20 @@ search_tweets("to:kearneymw") %>%
 ```
 
 ```
-## # A tibble: 100 x 1
-##                                                                           text
-##                                                                          <chr>
-##  1 @kearneymw @BreitbartNews First thing's first: Breitbart is NOT 'news'.  Na
-##  2 @kearneymw @Twitter interesting. This is what I see https://t.co/PVcuXp8u0r
-##  3 "@kearneymw @Grantimus9 Dang, he was right again.\n\nDebate world is small!
-##  4                                     @kearneymw Amazing. Indeed. @Grantimus9
-##  5                   "@kearneymw Really good. Thanks. \n\n...Eating more fish"
-##  6      @kearneymw Examples sing things well (cohort analysis!) always welcome
-##  7 @josephofiowa I'm using it as an example of (a) difficulties in making caus
-##  8                                         @kearneymw  https://t.co/JI5AZvdoTq
-##  9 "@kearneymw Ohhh, this is neat.\n\nLol @ the projections that simply omit t
-## 10                                                  @kearneymw I just Lacan't?
-## # ... with 90 more rows
+## # A tibble: 94 x 1
+##    text                                                                   
+##    <chr>                                                                  
+##  1 @kearneymw Adverts all over public transit stations too.               
+##  2 @kearneymw I like it, better than falling back on the truth that earni…
+##  3 @kearneymw 🤦                                                          
+##  4 @kearneymw It is trying to tell you something about importance of usin…
+##  5 @kearneymw Ugh this is a @josephofiowa joke if I ever heard one        
+##  6 @kearneymw and, of course, it's pres elecs                             
+##  7 @gelliottmorris But obvi that original tweet was overselling regardles…
+##  8 @kearneymw 😂                                                          
+##  9 @kearneymw I 💜 this and want to read your replies...how do I find you …
+## 10 @kearneymw magic mike                                                  
+## # ... with 84 more rows
 ```
 
 and, even all the `#rstats` tweets that have GitHub links in them (but no `#python` hashtags):
@@ -77,18 +77,18 @@ search_tweets("#rstats url:github -#python") %>%
 
 ```
 ## # A tibble: 100 x 1
-##                                                                           text
-##                                                                          <chr>
-##  1 "RT @dataandme: \U0001f60e\U0001f4e6 for changing up your R-\U0001f4ca text
-##  2 Linking RStudio and GitHub. Very useful blog for anyone interested in produ
-##  3 "New year, new blog! Find out how to build this animation that brings a tSN
-##  4 "Open-source #rstats package mclust provides results that are identical to 
-##  5 "RT @dataandme: \U0001f60e\U0001f4e6 for changing up your R-\U0001f4ca text
-##  6 "RT @dataandme: \U0001f60e\U0001f4e6 for changing up your R-\U0001f4ca text
-##  7 "RT @ellessenne: That feeling \U0001f525 thanks #devtools! Interested in co
-##  8 "RT @ma_salmon: @zevross I'll stop the link dumping I promise, but @astroer
-##  9 @zevross I'll stop the link dumping I promise, but @astroeringrand's recent
-## 10 RT @keyboardpipette: @RyanEs Done: https://t.co/kuLOh3liMj My first #rstats
+##    text                                                                   
+##    <chr>                                                                  
+##  1 RT @_pvictorr: Pimp your #shiny apps with custom input control from pa…
+##  2 RT @_pvictorr: Some fun with #r2d3: maps in D3 (made possible by aweso…
+##  3 RT @ingorohlfing: @Thoughtfulnz I am not sure whether it helps, but yo…
+##  4 RT @David_McGaughey: Let’s Plot 6: Simple guide to ComplexHeatmaps htt…
+##  5 RT @David_McGaughey: Let’s Plot 6: Simple guide to ComplexHeatmaps htt…
+##  6 RT @JennyBryan: I think these worked examples of operating on a data f…
+##  7 Finally, while I plan to retain maintainership, if you have any intere…
+##  8 RT @David_McGaughey: Let’s Plot 6: Simple guide to ComplexHeatmaps htt…
+##  9 RT @jilly_mackay: *Deep breath* Okay! I have some #rstats teaching mat…
+## 10 RT @David_McGaughey: Let’s Plot 6: Simple guide to ComplexHeatmaps htt…
 ## # ... with 90 more rows
 ```
 

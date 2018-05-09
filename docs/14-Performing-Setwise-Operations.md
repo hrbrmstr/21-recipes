@@ -6,7 +6,7 @@ You want to operate on collections of friends and followers to answer questions 
 
 ## Solution
 
-Use R setwise operations amd `rtweet::lookup_friendships()`.
+Use R setwise operations and `rtweet::lookup_friendships()`.
 
 ## Discussion
 
@@ -27,7 +27,7 @@ brooke_followers <- rtweet::get_followers("gbwanderson")
 brooke_friends <- rtweet::get_friends("gbwanderson")
 ```
 
-Now we can see the count of mutual and disperate relationships:
+Now we can see the count of mutual and disparate relationships:
 
 
 ```r
@@ -45,7 +45,7 @@ length(setdiff(brooke_followers$user_id, brooke_friends$user_id))
 ```
 
 ```
-## [1] 206
+## [1] 226
 ```
 
 The Python counterpart to this cookbook suggests [Redis](https://redis.io/topics/data-types-intro) as a "big-ish" data solution for performing set operations at-scale. R has at least 3 packages that provide direct support for Redis, so if you need to perform these operations at-scale, cache the info you retrieve from the Twitter API into Redis and then go crazy!

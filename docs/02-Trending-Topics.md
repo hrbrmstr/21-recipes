@@ -25,20 +25,19 @@ library(tidyverse)
 
 ```
 ## # A tibble: 467 x 8
-##          name                                       url parentid
-##  *      <chr>                                     <chr>    <int>
-##  1  Worldwide     http://where.yahooapis.com/v1/place/1        0
-##  2   Winnipeg  http://where.yahooapis.com/v1/place/2972 23424775
-##  3     Ottawa  http://where.yahooapis.com/v1/place/3369 23424775
-##  4     Quebec  http://where.yahooapis.com/v1/place/3444 23424775
-##  5   Montreal  http://where.yahooapis.com/v1/place/3534 23424775
-##  6    Toronto  http://where.yahooapis.com/v1/place/4118 23424775
-##  7   Edmonton  http://where.yahooapis.com/v1/place/8676 23424775
-##  8    Calgary  http://where.yahooapis.com/v1/place/8775 23424775
-##  9  Vancouver  http://where.yahooapis.com/v1/place/9807 23424775
-## 10 Birmingham http://where.yahooapis.com/v1/place/12723 23424975
-## # ... with 457 more rows, and 5 more variables: country <chr>,
-## #   woeid <int>, countryCode <chr>, code <int>, place_type <chr>
+##    name       url      parentid country woeid countryCode  code place_type
+##  * <chr>      <chr>       <int> <chr>   <int> <chr>       <int> <chr>     
+##  1 Worldwide  http://…        0 ""          1 <NA>           19 Supername 
+##  2 Winnipeg   http://… 23424775 Canada   2972 CA              7 Town      
+##  3 Ottawa     http://… 23424775 Canada   3369 CA              7 Town      
+##  4 Quebec     http://… 23424775 Canada   3444 CA              7 Town      
+##  5 Montreal   http://… 23424775 Canada   3534 CA              7 Town      
+##  6 Toronto    http://… 23424775 Canada   4118 CA              7 Town      
+##  7 Edmonton   http://… 23424775 Canada   8676 CA              7 Town      
+##  8 Calgary    http://… 23424775 Canada   8775 CA              7 Town      
+##  9 Vancouver  http://… 23424775 Canada   9807 CA              7 Town      
+## 10 Birmingham http://… 23424975 United… 12723 GB              7 Town      
+## # ... with 457 more rows
 ```
 
 ```r
@@ -67,21 +66,20 @@ The Twitter API is somewhat unforgiving and unfriendly when you use it directly 
 
 ```
 ## # A tibble: 50 x 9
-##                          trend
-##  *                       <chr>
-##  1                 #backtowork
-##  2            #TuesdayThoughts
-##  3          #SavannahHodaTODAY
-##  4           Justin Timberlake
-##  5 #MyTVShowWasCanceledBecause
-##  6                      #AM2DM
-##  7            Carrie Underwood
-##  8            The Trump Effect
-##  9                   Sean Ryan
-## 10               Micah Parsons
-## # ... with 40 more rows, and 8 more variables: url <chr>,
-## #   promoted_content <lgl>, query <chr>, tweet_volume <int>, place <chr>,
-## #   woeid <int>, as_of <dttm>, created_at <dttm>
+##    trend   url         promoted_content query   tweet_volume place   woeid
+##  * <chr>   <chr>       <lgl>            <chr>          <int> <chr>   <int>
+##  1 Teairr… http://twi… NA               %22Tea…           NA Unite… 2.34e7
+##  2 #Wedne… http://twi… NA               %23Wed…       162658 Unite… 2.34e7
+##  3 #NetNe… http://twi… NA               %23Net…        79857 Unite… 2.34e7
+##  4 #Funny… http://twi… NA               %23Fun…           NA Unite… 2.34e7
+##  5 Novart… http://twi… NA               Novart…       139836 Unite… 2.34e7
+##  6 #TWcha… http://twi… NA               %23TWc…           NA Unite… 2.34e7
+##  7 #Outla… http://twi… NA               %23Out…           NA Unite… 2.34e7
+##  8 Haspel  http://twi… NA               Haspel        258046 Unite… 2.34e7
+##  9 Annett… http://twi… NA               %22Ann…           NA Unite… 2.34e7
+## 10 Carlos… http://twi… NA               %22Car…           NA Unite… 2.34e7
+## # ... with 40 more rows, and 2 more variables: as_of <dttm>,
+## #   created_at <dttm>
 ```
 
 ```r
@@ -91,15 +89,15 @@ glimpse(us)
 ```
 ## Observations: 50
 ## Variables: 9
-## $ trend            <chr> "#backtowork", "#TuesdayThoughts", "#Savannah...
-## $ url              <chr> "http://twitter.com/search?q=%23backtowork", ...
+## $ trend            <chr> "Teairra Mari", "#WednesdayWisdom", "#NetNeut...
+## $ url              <chr> "http://twitter.com/search?q=%22Teairra+Mari%...
 ## $ promoted_content <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
-## $ query            <chr> "%23backtowork", "%23TuesdayThoughts", "%23Sa...
-## $ tweet_volume     <int> 27544, 30822, 10279, NA, NA, NA, NA, 12000, N...
+## $ query            <chr> "%22Teairra+Mari%22", "%23WednesdayWisdom", "...
+## $ tweet_volume     <int> NA, 162658, 79857, NA, 139836, NA, NA, 258046...
 ## $ place            <chr> "United States", "United States", "United Sta...
 ## $ woeid            <int> 23424977, 23424977, 23424977, 23424977, 23424...
-## $ as_of            <dttm> 2018-01-02 16:34:11, 2018-01-02 16:34:11, 20...
-## $ created_at       <dttm> 2018-01-02 16:27:46, 2018-01-02 16:27:46, 20...
+## $ as_of            <dttm> 2018-05-09 20:06:44, 2018-05-09 20:06:44, 20...
+## $ created_at       <dttm> 2018-05-09 20:01:03, 2018-05-09 20:01:03, 20...
 ```
 
 Twitter's [documentation](https://developer.twitter.com/en/docs/trends/trends-for-location/api-reference/get-trends-place) states that trends are updated every 5 minutes, which means you should not call the API more frequently than that and their current API rate-limit (Twitter puts some restrictions on how frequently you can call certain API targets) is 75 requests per 15-minute window.
@@ -141,20 +139,20 @@ select(us, trend)
 
 ```
 ## # Source:   lazy query [?? x 1]
-## # Database: sqlite 3.19.3
+## # Database: sqlite 3.22.0
 ## #   [/Users/hrbrmstr/Development/21-recipes/data/us-trends.db]
-##                          trend
-##                          <chr>
-##  1            #TuesdayThoughts
-##  2                 #backtowork
-##  3          #SavannahHodaTODAY
-##  4           Justin Timberlake
+##    trend                      
+##    <chr>                      
+##  1 #TuesdayThoughts           
+##  2 #backtowork                
+##  3 #SavannahHodaTODAY         
+##  4 Justin Timberlake          
 ##  5 #MyTVShowWasCanceledBecause
-##  6                      #AM2DM
-##  7            The Trump Effect
-##  8            Carrie Underwood
-##  9                   Sean Ryan
-## 10               Larry Krasner
+##  6 #AM2DM                     
+##  7 The Trump Effect           
+##  8 Carrie Underwood           
+##  9 Sean Ryan                  
+## 10 Larry Krasner              
 ## # ... with more rows
 ```
 

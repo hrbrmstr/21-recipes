@@ -10,7 +10,7 @@ If the tweet’s `retweet_count` field is greater than `0`, extract name out of 
 
 ## Discussion
 
-Twitter is _pretty darn good_ about <strike>weaponizing</strike>utilizing the data on its platform. There aren't many cases nowadays when you need to parse `RT` or `via` in hand-crafted retweets, but it's good to have the tools in your aresenal when needed. We can pick out all the retweets from `#rstats` (warning: it's a retweet-heavy hashtag) and who they refer to using the `retweet_count` but also looking for a special [regular expression](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html) (regex) and extracting data that way.
+Twitter is _pretty darn good_ about <strike>weaponizing</strike>utilizing the data on its platform. There aren't many cases nowadays when you need to parse `RT` or `via` in hand-crafted retweets, but it's good to have the tools in your arsenal when needed. We can pick out all the retweets from `#rstats` (warning: it's a retweet-heavy hashtag) and who they refer to using the `retweet_count` but also looking for a special [regular expression](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html) (regex) and extracting data that way.
 
 First, the modern, API-centric way:
 
@@ -31,7 +31,7 @@ filter(rstats, retweet_count > 0) %>%
 
 The `text` column was pared down for display brevity. If you run that code snippet you can examine it to see that it identifies the retweets and the first screen name is usually the main reference, but you get all of the screen names from the original tweet for free.
 
-Here's the brute-force way. A regular expression is used that matches the vast majority of retweet formats. The patten looks for them then extracts the first found screen name:
+Here's the brute-force way. A regular expression is used that matches the vast majority of retweet formats. The pattern looks for them then extracts the first found screen name:
 
 ```{r 05_extract_rt_brute, message=FALSE, warning=FALSE, cache=TRUE}
 # regex mod from https://stackoverflow.com/questions/655903/python-regular-expression-for-retweets

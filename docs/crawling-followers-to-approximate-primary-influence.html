@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>21 Recipes for Mining Twitter Data with rtweet</title>
   <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
-  <meta name="generator" content="bookdown 0.5.10 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Bob Rudis">
 
 
-<meta name="date" content="2018-01-05">
+<meta name="date" content="2018-05-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,57 +50,69 @@
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
+pre.numberSource a.sourceLine
   { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
     position: absolute; left: -5em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+a.sourceLine::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -273,415 +285,3841 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </div>
 <div id="discussion-14" class="section level2">
 <h2><span class="header-section-number">16.3</span> Discussion</h2>
-<p>“Influence” is <em>extremely</em> more nuanced than both what the original Python chaper delved into and what this exercise shows. Building “#-removed” total reach counts from a large tree traversal (as the Python version suggests) is worthless on face-value since it doesn’t take into account how many times any of the ‘n-depth’ of followers ever retweeted or even favorited content posted by the seminal user over the course of a certain period. Without gathering such stats, multi-depth “followers-of-followers” is nigh meaningliess.</p>
-<p><em>However</em>, once-removed (so the follower counts of those directly following the target user) has some merit. Marketing folks have varying names for this statistic, so we’ll just call it “primary influece” since there is legitimate potential of reaching this once-removed audience. Ideally, the retweet- and fav-counts should be factored in, but that can be added on as an exercise.</p>
-<p>Let’s create a helper function that will capture a snapshot of this <em>priamry influence</em> metric. It will take in a user id or name, pull in that user info and the details of their followers and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the “number of followers” distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overriden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the fuction can be modified — as an exercise – to test the distribution and auto-pick scales).</p>
-<pre class="sourceCode r" id="cb83"><code class="sourceCode r"><div class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">library</span>(rtweet)</div>
-<div class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">library</span>(hrbrthemes)</div>
-<div class="sourceLine" id="cb83-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre class="sourceCode r" id="cb84"><code class="sourceCode r"><div class="sourceLine" id="cb84-1" data-line-number="1">influence_snapshot &lt;-<span class="st"> </span><span class="cf">function</span>(user, <span class="dt">trans=</span><span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>)) {</div>
-<div class="sourceLine" id="cb84-2" data-line-number="2">  </div>
-<div class="sourceLine" id="cb84-3" data-line-number="3">  user &lt;-<span class="st"> </span>user[<span class="dv">1</span>]</div>
-<div class="sourceLine" id="cb84-4" data-line-number="4">  trans &lt;-<span class="st"> </span><span class="kw">match.arg</span>(<span class="kw">tolower</span>(<span class="kw">trimws</span>(trans[<span class="dv">1</span>])), <span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>))</div>
-<div class="sourceLine" id="cb84-5" data-line-number="5">  </div>
-<div class="sourceLine" id="cb84-6" data-line-number="6">  user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user)</div>
-<div class="sourceLine" id="cb84-7" data-line-number="7">  </div>
-<div class="sourceLine" id="cb84-8" data-line-number="8">  user_followers &lt;-<span class="st"> </span><span class="kw">get_followers</span>(user_info<span class="op">$</span>user_id)</div>
-<div class="sourceLine" id="cb84-9" data-line-number="9">  uf_details &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user_followers<span class="op">$</span>user_id)</div>
-<div class="sourceLine" id="cb84-10" data-line-number="10">  </div>
-<div class="sourceLine" id="cb84-11" data-line-number="11">  primary_influence &lt;-<span class="st"> </span>scales<span class="op">::</span><span class="kw">comma</span>(<span class="kw">sum</span>(<span class="kw">c</span>(uf_details<span class="op">$</span>followers_count, user_info<span class="op">$</span>followers_count)))</div>
-<div class="sourceLine" id="cb84-12" data-line-number="12">  </div>
-<div class="sourceLine" id="cb84-13" data-line-number="13">  <span class="kw">filter</span>(uf_details, followers_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb84-14" data-line-number="14"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(followers_count)) <span class="op">+</span></div>
-<div class="sourceLine" id="cb84-15" data-line-number="15"><span class="st">    </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..count..), <span class="dt">color=</span><span class="st">&quot;lightslategray&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;lightslategray&quot;</span>,</div>
-<div class="sourceLine" id="cb84-16" data-line-number="16">                 <span class="dt">alpha=</span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></div>
-<div class="sourceLine" id="cb84-17" data-line-number="17"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">trans=</span><span class="st">&quot;log10&quot;</span>, <span class="dt">labels=</span>scales<span class="op">::</span>comma) <span class="op">+</span></div>
-<div class="sourceLine" id="cb84-18" data-line-number="18"><span class="st">    </span><span class="kw">scale_y_comma</span>() <span class="op">+</span></div>
-<div class="sourceLine" id="cb84-19" data-line-number="19"><span class="st">    </span><span class="kw">labs</span>(</div>
-<div class="sourceLine" id="cb84-20" data-line-number="20">      <span class="dt">x=</span><span class="st">&quot;Number of Followers of Followers (log scale)&quot;</span>, </div>
-<div class="sourceLine" id="cb84-21" data-line-number="21">      <span class="dt">y=</span><span class="st">&quot;Number of Followers&quot;</span>,</div>
-<div class="sourceLine" id="cb84-22" data-line-number="22">      <span class="dt">title=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower chain distribution of %s (@%s)&quot;</span>, user_info<span class="op">$</span>name, user_info<span class="op">$</span>screen_name),</div>
-<div class="sourceLine" id="cb84-23" data-line-number="23">      <span class="dt">subtitle=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower count: %s; Primary influence/reach: %s&quot;</span>, </div>
-<div class="sourceLine" id="cb84-24" data-line-number="24">                       scales<span class="op">::</span><span class="kw">comma</span>(user_info<span class="op">$</span>followers_count),</div>
-<div class="sourceLine" id="cb84-25" data-line-number="25">                       scales<span class="op">::</span><span class="kw">comma</span>(primary_influence))</div>
-<div class="sourceLine" id="cb84-26" data-line-number="26">    ) <span class="op">+</span></div>
-<div class="sourceLine" id="cb84-27" data-line-number="27"><span class="st">    </span><span class="kw">theme_ipsum_rc</span>(<span class="dt">grid=</span><span class="st">&quot;XY&quot;</span>) -&gt;<span class="st"> </span>gg</div>
-<div class="sourceLine" id="cb84-28" data-line-number="28">  </div>
-<div class="sourceLine" id="cb84-29" data-line-number="29">  <span class="kw">print</span>(gg)</div>
-<div class="sourceLine" id="cb84-30" data-line-number="30">  </div>
-<div class="sourceLine" id="cb84-31" data-line-number="31">  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">user_info=</span>user_info, <span class="dt">follower_details=</span>uf_details)))</div>
-<div class="sourceLine" id="cb84-32" data-line-number="32">  </div>
-<div class="sourceLine" id="cb84-33" data-line-number="33">}</div></code></pre>
+<p>“Influence” is <em>extremely</em> more nuanced than both what the original Python chapter delved into and what this exercise shows. Building “#-removed” total reach counts from a large tree traversal (as the Python version suggests) is worthless on face-value since it doesn’t take into account how many times any of the ‘n-depth’ of followers ever retweeted or even favorited content posted by the seminal user over the course of a certain period. Without gathering such stats, multi-depth “followers-of-followers” is nigh meaningless.</p>
+<p><em>However</em>, once-removed (so the follower counts of those directly following the target user) has some merit. Marketing folks have varying names for this statistic, so we’ll just call it “primary influence” since there is legitimate potential of reaching this once-removed audience. Ideally, the retweet- and fav-counts should be factored in, but that can be added on as an exercise.</p>
+<p>Let’s create a helper function that will capture a snapshot of this <em>primary influence</em> metric. It will take in a user id or name, pull in that user info and the details of their followers and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the “number of followers” distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overridden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the function can be modified — as an exercise – to test the distribution and auto-pick scales).</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">library</span>(rtweet)</a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">library</span>(hrbrthemes)</a>
+<a class="sourceLine" id="cb83-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">influence_snapshot &lt;-<span class="st"> </span><span class="cf">function</span>(user, <span class="dt">trans=</span><span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>)) {</a>
+<a class="sourceLine" id="cb84-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb84-3" data-line-number="3">  user &lt;-<span class="st"> </span>user[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb84-4" data-line-number="4">  trans &lt;-<span class="st"> </span><span class="kw">match.arg</span>(<span class="kw">tolower</span>(<span class="kw">trimws</span>(trans[<span class="dv">1</span>])), <span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>))</a>
+<a class="sourceLine" id="cb84-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb84-6" data-line-number="6">  user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user)</a>
+<a class="sourceLine" id="cb84-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb84-8" data-line-number="8">  user_followers &lt;-<span class="st"> </span><span class="kw">get_followers</span>(user_info<span class="op">$</span>user_id)</a>
+<a class="sourceLine" id="cb84-9" data-line-number="9">  uf_details &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user_followers<span class="op">$</span>user_id)</a>
+<a class="sourceLine" id="cb84-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb84-11" data-line-number="11">  primary_influence &lt;-<span class="st"> </span>scales<span class="op">::</span><span class="kw">comma</span>(<span class="kw">sum</span>(<span class="kw">c</span>(uf_details<span class="op">$</span>followers_count, user_info<span class="op">$</span>followers_count)))</a>
+<a class="sourceLine" id="cb84-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb84-13" data-line-number="13">  <span class="kw">filter</span>(uf_details, followers_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb84-14" data-line-number="14"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(followers_count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb84-15" data-line-number="15"><span class="st">    </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..count..), <span class="dt">color=</span><span class="st">&quot;lightslategray&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;lightslategray&quot;</span>,</a>
+<a class="sourceLine" id="cb84-16" data-line-number="16">                 <span class="dt">alpha=</span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb84-17" data-line-number="17"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">trans=</span><span class="st">&quot;log10&quot;</span>, <span class="dt">labels=</span>scales<span class="op">::</span>comma) <span class="op">+</span></a>
+<a class="sourceLine" id="cb84-18" data-line-number="18"><span class="st">    </span><span class="kw">scale_y_comma</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb84-19" data-line-number="19"><span class="st">    </span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb84-20" data-line-number="20">      <span class="dt">x=</span><span class="st">&quot;Number of Followers of Followers (log scale)&quot;</span>, </a>
+<a class="sourceLine" id="cb84-21" data-line-number="21">      <span class="dt">y=</span><span class="st">&quot;Number of Followers&quot;</span>,</a>
+<a class="sourceLine" id="cb84-22" data-line-number="22">      <span class="dt">title=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower chain distribution of %s (@%s)&quot;</span>, user_info<span class="op">$</span>name, user_info<span class="op">$</span>screen_name),</a>
+<a class="sourceLine" id="cb84-23" data-line-number="23">      <span class="dt">subtitle=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower count: %s; Primary influence/reach: %s&quot;</span>, </a>
+<a class="sourceLine" id="cb84-24" data-line-number="24">                       scales<span class="op">::</span><span class="kw">comma</span>(user_info<span class="op">$</span>followers_count),</a>
+<a class="sourceLine" id="cb84-25" data-line-number="25">                       scales<span class="op">::</span><span class="kw">comma</span>(primary_influence))</a>
+<a class="sourceLine" id="cb84-26" data-line-number="26">    ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb84-27" data-line-number="27"><span class="st">    </span><span class="kw">theme_ipsum_rc</span>(<span class="dt">grid=</span><span class="st">&quot;XY&quot;</span>) -&gt;<span class="st"> </span>gg</a>
+<a class="sourceLine" id="cb84-28" data-line-number="28">  </a>
+<a class="sourceLine" id="cb84-29" data-line-number="29">  <span class="kw">print</span>(gg)</a>
+<a class="sourceLine" id="cb84-30" data-line-number="30">  </a>
+<a class="sourceLine" id="cb84-31" data-line-number="31">  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">user_info=</span>user_info, <span class="dt">follower_details=</span>uf_details)))</a>
+<a class="sourceLine" id="cb84-32" data-line-number="32">  </a>
+<a class="sourceLine" id="cb84-33" data-line-number="33">}</a></code></pre></div>
 <p>Let’s run it on <a href="https://twitter.com/juliasilge">Julia Silge</a>, an incredibly talented data scientist over at Stack Overflow and co-author of <a href="https://www.tidytextmining.com/">Tidy Text Mining with R</a> — a book that should be on your shelf <em>especially</em> if you’re doing Twitter mining.</p>
-<pre class="sourceCode r" id="cb85"><code class="sourceCode r"><div class="sourceLine" id="cb85-1" data-line-number="1">juliasilge &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;juliasilge&quot;</span>)</div></code></pre>
-<p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html4/16_js-1.png" width="960" /></p>
-<pre class="sourceCode r" id="cb86"><code class="sourceCode r"><div class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">glimpse</span>(juliasilge)</div></code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">juliasilge &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;juliasilge&quot;</span>)</a></code></pre></div>
+<p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html/16_js-1.png" width="960" /></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">glimpse</span>(juliasilge)</a></code></pre></div>
 <pre><code>## List of 2
-##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  20 variables:
-##   ..$ user_id               : chr &quot;13074042&quot;
-##   ..$ name                  : chr &quot;Julia Silge&quot;
-##   ..$ screen_name           : chr &quot;juliasilge&quot;
-##   ..$ location              : chr &quot;Salt Lake City, UT&quot;
-##   ..$ description           : chr &quot;Data science and visualization at Stack Overflow, #rstats, author of Text Mining with R, parenthood, reading, f&quot;| __truncated__
-##   ..$ url                   : chr &quot;https://t.co/0LpY8Ihz2B&quot;
-##   ..$ protected             : logi FALSE
-##   ..$ followers_count       : int 10910
-##   ..$ friends_count         : int 445
-##   ..$ listed_count          : int 410
-##   ..$ statuses_count        : int 16365
-##   ..$ favourites_count      : int 19811
-##   ..$ account_created_at    : POSIXct[1:1], format: &quot;2008-02-05 00:47:07&quot;
-##   ..$ verified              : logi FALSE
-##   ..$ profile_url           : chr &quot;https://t.co/0LpY8Ihz2B&quot;
-##   ..$ profile_expanded_url  : chr &quot;http://juliasilge.com/&quot;
-##   ..$ account_lang          : chr &quot;en&quot;
-##   ..$ profile_banner_url    : chr &quot;https://pbs.twimg.com/profile_banners/13074042/1511394461&quot;
-##   ..$ profile_background_url: chr &quot;http://abs.twimg.com/images/themes/theme13/bg.gif&quot;
-##   ..$ profile_image_url     : chr &quot;http://pbs.twimg.com/profile_images/930639796510244865/D_N-CofS_normal.jpg&quot;
-##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  68 variables:
-##   .. ..$ status_id              : chr &quot;949090073693204480&quot;
-##   .. ..$ created_at             : POSIXct[1:1], format: &quot;2018-01-05 01:28:01&quot;
-##   .. ..$ user_id                : chr &quot;13074042&quot;
-##   .. ..$ screen_name            : chr &quot;juliasilge&quot;
-##   .. ..$ text                   : chr &quot;RT @statwonk: Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable an&quot;| __truncated__
-##   .. ..$ source                 : chr &quot;Twitter for iPhone&quot;
-##   .. ..$ display_text_width     : int NA
-##   .. ..$ reply_to_status_id     : logi NA
-##   .. ..$ reply_to_user_id       : logi NA
-##   .. ..$ reply_to_screen_name   : logi NA
-##   .. ..$ is_quote               : logi FALSE
-##   .. ..$ is_retweet             : logi TRUE
-##   .. ..$ favorite_count         : int 0
-##   .. ..$ retweet_count          : int 6
-##   .. ..$ hashtags               :List of 1
-##   .. ..$ symbols                :List of 1
-##   .. ..$ urls_url               :List of 1
-##   .. ..$ urls_t.co              :List of 1
-##   .. ..$ urls_expanded_url      :List of 1
-##   .. ..$ media_url              :List of 1
-##   .. ..$ media_t.co             :List of 1
-##   .. ..$ media_expanded_url     :List of 1
-##   .. ..$ media_type             :List of 1
-##   .. ..$ ext_media_url          :List of 1
-##   .. ..$ ext_media_t.co         :List of 1
-##   .. ..$ ext_media_expanded_url :List of 1
-##   .. ..$ ext_media_type         : chr NA
-##   .. ..$ mentions_user_id       :List of 1
-##   .. ..$ mentions_screen_name   :List of 1
-##   .. ..$ lang                   : chr &quot;en&quot;
-##   .. ..$ quoted_status_id       : chr NA
-##   .. ..$ quoted_text            : chr NA
-##   .. ..$ quoted_created_at      : POSIXct[1:1], format: NA
-##   .. ..$ quoted_source          : chr NA
-##   .. ..$ quoted_favorite_count  : int NA
-##   .. ..$ quoted_retweet_count   : int NA
-##   .. ..$ quoted_user_id         : chr NA
-##   .. ..$ quoted_screen_name     : chr NA
-##   .. ..$ quoted_name            : chr NA
-##   .. ..$ quoted_followers_count : int NA
-##   .. ..$ quoted_friends_count   : int NA
-##   .. ..$ quoted_statuses_count  : int NA
-##   .. ..$ quoted_location        : chr NA
-##   .. ..$ quoted_description     : chr NA
-##   .. ..$ quoted_verified        : logi NA
-##   .. ..$ retweet_status_id      : chr &quot;949042404455219201&quot;
-##   .. ..$ retweet_text           : chr &quot;Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable and infinite. On&quot;| __truncated__
-##   .. ..$ retweet_created_at     : POSIXct[1:1], format: &quot;2018-01-04 22:18:36&quot;
-##   .. ..$ retweet_source         : chr NA
-##   .. ..$ retweet_favorite_count : int 21
-##   .. ..$ retweet_user_id        : chr NA
-##   .. ..$ retweet_screen_name    : chr NA
-##   .. ..$ retweet_name           : chr NA
-##   .. ..$ retweet_followers_count: int NA
-##   .. ..$ retweet_friends_count  : int NA
-##   .. ..$ retweet_statuses_count : int NA
-##   .. ..$ retweet_location       : chr NA
-##   .. ..$ retweet_description    : chr NA
-##   .. ..$ retweet_verified       : logi NA
-##   .. ..$ place_url              : chr NA
-##   .. ..$ place_name             : chr NA
-##   .. ..$ place_full_name        : chr NA
-##   .. ..$ place_type             : chr NA
-##   .. ..$ country                : chr NA
-##   .. ..$ country_code           : chr NA
-##   .. ..$ geo_coords             :List of 1
-##   .. ..$ coords_coords          :List of 1
-##   .. ..$ bbox_coords            :List of 1
-##  $ follower_details:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  20 variables:
-##   ..$ user_id               : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
-##   ..$ name                  : chr [1:5000] &quot;Surajit Dhar&quot; &quot;Helen Graham&quot; &quot;DouglasiMorgan&quot; &quot;kamex kenneth&quot; ...
-##   ..$ screen_name           : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
-##   ..$ location              : chr [1:5000] &quot;&quot; &quot;Edinburgh&quot; &quot;&quot; &quot;La Canada Flintridge, CA&quot; ...
-##   ..$ description           : chr [1:5000] &quot;&quot; &quot;I torture data for fun and profit. Still a cheesecake enthusiast.&quot; &quot;&quot; &quot;Happy&quot; ...
-##   ..$ url                   : chr [1:5000] NA NA NA NA ...
-##   ..$ protected             : logi [1:5000] TRUE FALSE FALSE FALSE FALSE FALSE ...
-##   ..$ followers_count       : int [1:5000] 18 99 243 155 2 6172 56 215 427 5 ...
-##   ..$ friends_count         : int [1:5000] 248 382 2806 1521 74 4020 284 884 957 179 ...
-##   ..$ listed_count          : int [1:5000] 0 4 0 0 0 201 4 2 53 0 ...
-##   ..$ statuses_count        : int [1:5000] 92 771 0 1 13 9720 152 1026 2394 6 ...
-##   ..$ favourites_count      : int [1:5000] 30 107 0 8 1 13093 259 612 5479 1 ...
-##   ..$ account_created_at    : POSIXct[1:5000], format: &quot;2009-04-10 10:55:17&quot; ...
-##   ..$ verified              : logi [1:5000] FALSE FALSE FALSE FALSE FALSE TRUE ...
-##   ..$ profile_url           : chr [1:5000] NA NA NA NA ...
-##   ..$ profile_expanded_url  : chr [1:5000] NA NA NA NA ...
-##   ..$ account_lang          : chr [1:5000] &quot;en&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
-##   ..$ profile_banner_url    : chr [1:5000] NA &quot;https://pbs.twimg.com/profile_banners/23437966/1362861613&quot; &quot;https://pbs.twimg.com/profile_banners/944279909521911809/1513973832&quot; NA ...
-##   ..$ profile_background_url: chr [1:5000] &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://pbs.twimg.com/profile_background_images/5966931/xmas_002.jpg&quot; NA NA ...
-##   ..$ profile_image_url     : chr [1:5000] &quot;http://pbs.twimg.com/profile_images/3619425574/017e3c69373add7399c0689d70d5e3b5_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/378800000858153027/-lbO7veR_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/944301258415984640/NY--VNaG_normal.jpg&quot; &quot;http://pbs.twimg.com/profile_images/934426923584966657/GJUKnQuG_normal.jpg&quot; ...
-##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  68 variables:
-##   .. ..$ status_id              : chr [1:5000] NA &quot;949208591524945920&quot; NA &quot;934660498246852608&quot; ...
-##   .. ..$ created_at             : POSIXct[1:5000], format: NA ...
-##   .. ..$ user_id                : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
-##   .. ..$ screen_name            : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
-##   .. ..$ text                   : chr [1:5000] NA &quot;Every time you drink raw water, somewhere in the great beyond Darwin does a massive facepalm but also feels a bit vindicated.&quot; NA &quot;@ConnLoraine Lovely&quot; ...
-##   .. ..$ source                 : chr [1:5000] NA &quot;Twitter for Android&quot; NA &quot;Twitter for iPhone&quot; ...
-##   .. ..$ display_text_width     : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ reply_to_status_id     : chr [1:5000] NA NA NA &quot;934643010813358081&quot; ...
-##   .. ..$ reply_to_user_id       : chr [1:5000] NA NA NA &quot;893460901470154752&quot; ...
-##   .. ..$ reply_to_screen_name   : chr [1:5000] NA NA NA &quot;ConnLoraine&quot; ...
-##   .. ..$ is_quote               : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
-##   .. ..$ is_retweet             : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
-##   .. ..$ favorite_count         : int [1:5000] NA 0 NA 46 0 4 1 0 0 0 ...
-##   .. ..$ retweet_count          : int [1:5000] NA 0 NA 7 0 0 0 96 64 0 ...
-##   .. ..$ hashtags               :List of 5000
-##   .. ..$ symbols                :List of 5000
-##   .. ..$ urls_url               :List of 5000
-##   .. ..$ urls_t.co              :List of 5000
-##   .. ..$ urls_expanded_url      :List of 5000
-##   .. ..$ media_url              :List of 5000
-##   .. ..$ media_t.co             :List of 5000
-##   .. ..$ media_expanded_url     :List of 5000
-##   .. ..$ media_type             :List of 5000
-##   .. ..$ ext_media_url          :List of 5000
-##   .. ..$ ext_media_t.co         :List of 5000
-##   .. ..$ ext_media_expanded_url :List of 5000
-##   .. ..$ ext_media_type         : chr [1:5000] NA NA NA NA ...
-##   .. ..$ mentions_user_id       :List of 5000
-##   .. ..$ mentions_screen_name   :List of 5000
-##   .. ..$ lang                   : chr [1:5000] NA &quot;en&quot; NA &quot;en&quot; ...
-##   .. ..$ quoted_status_id       : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_text            : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_created_at      : POSIXct[1:5000], format: NA ...
-##   .. ..$ quoted_source          : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_favorite_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_retweet_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_user_id         : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_screen_name     : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_name            : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_followers_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_friends_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_statuses_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_location        : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_description     : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_verified        : logi [1:5000] NA NA NA NA NA NA ...
-##   .. ..$ retweet_status_id      : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_text           : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_created_at     : POSIXct[1:5000], format: NA ...
-##   .. ..$ retweet_source         : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_favorite_count : int [1:5000] NA NA NA NA NA NA NA 169 162 NA ...
-##   .. ..$ retweet_user_id        : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_screen_name    : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_name           : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_followers_count: int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ retweet_friends_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ retweet_statuses_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ retweet_location       : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_description    : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_verified       : logi [1:5000] NA NA NA NA NA NA ...
-##   .. ..$ place_url              : chr [1:5000] NA NA NA NA ...
-##   .. ..$ place_name             : chr [1:5000] NA NA NA NA ...
-##   .. ..$ place_full_name        : chr [1:5000] NA NA NA NA ...
-##   .. ..$ place_type             : chr [1:5000] NA NA NA NA ...
-##   .. ..$ country                : chr [1:5000] NA NA NA NA ...
-##   .. ..$ country_code           : chr [1:5000] NA NA NA NA ...
-##   .. ..$ geo_coords             :List of 5000
-##   .. ..$ coords_coords          :List of 5000
-##   .. ..$ bbox_coords            :List of 5000</code></pre>
-<p>You’ll see that distribution shape quite a bit given the general nature of the social structure of Twitter. Don’t believe that? Let’s do one more, this time for <a href="https://twitter.com/ma_salmon/">Maëlle Salmon</a>, another incredibly talented data scientist with a <a href="http://www.masalmon.eu/">blog</a> you <em>must</em> follow if you want to learn how to do fun and useful things with R.L</p>
-<pre class="sourceCode r" id="cb88"><code class="sourceCode r"><div class="sourceLine" id="cb88-1" data-line-number="1">ma_salmon &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;ma_salmon&quot;</span>)</div></code></pre>
-<p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html4/16_ms-1.png" width="960" /></p>
-<pre class="sourceCode r" id="cb89"><code class="sourceCode r"><div class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">glimpse</span>(juliasilge)</div></code></pre>
+##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  87 variables:
+##   ..$ user_id                : chr &quot;13074042&quot;
+##   ..$ name                   : chr &quot;Julia Silge&quot;
+##   ..$ screen_name            : chr &quot;juliasilge&quot;
+##   ..$ location               : chr &quot;Salt Lake City, UT&quot;
+##   ..$ description            : chr &quot;Data science and visualization at @StackOverflow, #rstats, author of Text Mining with R, parenthood.&quot;
+##   ..$ url                    : chr &quot;https://t.co/FHvuUC23eg&quot;
+##   ..$ protected              : logi FALSE
+##   ..$ followers_count        : int 15074
+##   ..$ friends_count          : int 494
+##   ..$ listed_count           : int 511
+##   ..$ statuses_count         : int 17473
+##   ..$ favourites_count       : int 23514
+##   ..$ account_created_at     : POSIXct[1:1], format: &quot;2008-02-05 00:47:07&quot;
+##   ..$ verified               : logi FALSE
+##   ..$ profile_url            : chr &quot;https://t.co/FHvuUC23eg&quot;
+##   ..$ profile_expanded_url   : chr &quot;https://juliasilge.com/&quot;
+##   ..$ account_lang           : chr &quot;en&quot;
+##   ..$ profile_banner_url     : chr &quot;https://pbs.twimg.com/profile_banners/13074042/1517974680&quot;
+##   ..$ profile_background_url : chr &quot;http://abs.twimg.com/images/themes/theme13/bg.gif&quot;
+##   ..$ profile_image_url      : chr &quot;http://pbs.twimg.com/profile_images/930639796510244865/D_N-CofS_normal.jpg&quot;
+##   ..$ status_id              : chr &quot;994185929328738305&quot;
+##   ..$ created_at             : POSIXct[1:1], format: &quot;2018-05-09 12:02:51&quot;
+##   ..$ text                   : chr &quot;RT @adamrpearce: *Finally* published my piece on why the subways have slowed down so much since I moved to NYC &quot;| __truncated__
+##   ..$ source                 : chr &quot;Twitter for iPhone&quot;
+##   ..$ display_text_width     : int NA
+##   ..$ reply_to_status_id     : logi NA
+##   ..$ reply_to_user_id       : logi NA
+##   ..$ reply_to_screen_name   : logi NA
+##   ..$ is_quote               : logi FALSE
+##   ..$ is_retweet             : logi TRUE
+##   ..$ favorite_count         : int 0
+##   ..$ retweet_count          : int 291
+##   ..$ hashtags               :List of 1
+##   .. ..$ : chr NA
+##   ..$ symbols                :List of 1
+##   .. ..$ : chr NA
+##   ..$ urls_url               :List of 1
+##   .. ..$ : chr NA
+##   ..$ urls_t.co              :List of 1
+##   .. ..$ : chr NA
+##   ..$ urls_expanded_url      :List of 1
+##   .. ..$ : chr NA
+##   ..$ media_url              :List of 1
+##   .. ..$ : chr NA
+##   ..$ media_t.co             :List of 1
+##   .. ..$ : chr NA
+##   ..$ media_expanded_url     :List of 1
+##   .. ..$ : chr NA
+##   ..$ media_type             :List of 1
+##   .. ..$ : chr NA
+##   ..$ ext_media_url          :List of 1
+##   .. ..$ : chr NA
+##   ..$ ext_media_t.co         :List of 1
+##   .. ..$ : chr NA
+##   ..$ ext_media_expanded_url :List of 1
+##   .. ..$ : chr NA
+##   ..$ ext_media_type         : chr NA
+##   ..$ mentions_user_id       :List of 1
+##   .. ..$ : chr &quot;555102816&quot;
+##   ..$ mentions_screen_name   :List of 1
+##   .. ..$ : chr &quot;adamrpearce&quot;
+##   ..$ lang                   : chr &quot;en&quot;
+##   ..$ quoted_status_id       : chr NA
+##   ..$ quoted_text            : chr NA
+##   ..$ quoted_created_at      : POSIXct[1:1], format: NA
+##   ..$ quoted_source          : chr NA
+##   ..$ quoted_favorite_count  : int NA
+##   ..$ quoted_retweet_count   : int NA
+##   ..$ quoted_user_id         : chr NA
+##   ..$ quoted_screen_name     : chr NA
+##   ..$ quoted_name            : chr NA
+##   ..$ quoted_followers_count : int NA
+##   ..$ quoted_friends_count   : int NA
+##   ..$ quoted_statuses_count  : int NA
+##   ..$ quoted_location        : chr NA
+##   ..$ quoted_description     : chr NA
+##   ..$ quoted_verified        : logi NA
+##   ..$ retweet_status_id      : chr &quot;994180171379957762&quot;
+##   ..$ retweet_text           : chr &quot;*Finally* published my piece on why the subways have slowed down so much since I moved to NYC five years ago.… &quot;| __truncated__
+##   ..$ retweet_created_at     : POSIXct[1:1], format: &quot;2018-05-09 11:39:58&quot;
+##   ..$ retweet_source         : chr NA
+##   ..$ retweet_favorite_count : int 706
+##   ..$ retweet_retweet_count  : int 291
+##   ..$ retweet_user_id        : chr NA
+##   ..$ retweet_screen_name    : chr NA
+##   ..$ retweet_name           : chr NA
+##   ..$ retweet_followers_count: int NA
+##   ..$ retweet_friends_count  : int NA
+##   ..$ retweet_statuses_count : int NA
+##   ..$ retweet_location       : chr NA
+##   ..$ retweet_description    : chr NA
+##   ..$ retweet_verified       : logi NA
+##   ..$ place_url              : chr NA
+##   ..$ place_name             : chr NA
+##   ..$ place_full_name        : chr NA
+##   ..$ place_type             : chr NA
+##   ..$ country                : chr NA
+##   ..$ country_code           : chr NA
+##   ..$ geo_coords             :List of 1
+##   .. ..$ : num [1:2] NA NA
+##   ..$ coords_coords          :List of 1
+##   .. ..$ : num [1:2] NA NA
+##   ..$ bbox_coords            :List of 1
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##  $ follower_details:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    4336 obs. of  87 variables:
+##   ..$ user_id                : chr [1:4336] &quot;5511242&quot; &quot;18176555&quot; &quot;15769985&quot; &quot;23010579&quot; ...
+##   ..$ name                   : chr [1:4336] &quot;John Mulligan \U0001f4ca&quot; &quot;nathanetaylor&quot; &quot;naseers&quot; &quot;Vinay Yadappanavar&quot; ...
+##   ..$ screen_name            : chr [1:4336] &quot;jpmulligan&quot; &quot;nathanetaylor&quot; &quot;naseers&quot; &quot;vinaymy&quot; ...
+##   ..$ location               : chr [1:4336] &quot;United States&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##   ..$ description            : chr [1:4336] &quot;Engineer.&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##   ..$ url                    : chr [1:4336] NA NA NA NA ...
+##   ..$ protected              : logi [1:4336] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ followers_count        : int [1:4336] 7 9 20 176 6 6 59 14 6 81 ...
+##   ..$ friends_count          : int [1:4336] 46 33 511 441 27 37 293 27 204 2153 ...
+##   ..$ listed_count           : int [1:4336] 0 0 0 0 0 0 0 0 0 1 ...
+##   ..$ statuses_count         : int [1:4336] 1 1 3 47 4 1 80 1 7 2 ...
+##   ..$ favourites_count       : int [1:4336] 25 1 17 0 0 1 0 0 3 7 ...
+##   ..$ account_created_at     : POSIXct[1:4336], format: &quot;2007-04-25 23:41:10&quot; ...
+##   ..$ verified               : logi [1:4336] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ profile_url            : chr [1:4336] NA NA NA NA ...
+##   ..$ profile_expanded_url   : chr [1:4336] NA NA NA NA ...
+##   ..$ account_lang           : chr [1:4336] &quot;en&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
+##   ..$ profile_banner_url     : chr [1:4336] &quot;https://pbs.twimg.com/profile_banners/5511242/1512875378&quot; NA NA NA ...
+##   ..$ profile_background_url : chr [1:4336] &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; ...
+##   ..$ profile_image_url      : chr [1:4336] &quot;http://pbs.twimg.com/profile_images/939692761544052737/MSBrvC9x_normal.jpg&quot; &quot;http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png&quot; &quot;http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png&quot; &quot;http://pbs.twimg.com/profile_images/110990915/74201849608_0_ALB_normal.jpg&quot; ...
+##   ..$ status_id              : chr [1:4336] &quot;39976742&quot; &quot;1061742772&quot; &quot;1481373987&quot; &quot;3518977454&quot; ...
+##   ..$ created_at             : POSIXct[1:4336], format: &quot;2007-04-25 23:41:00&quot; ...
+##   ..$ text                   : chr [1:4336] &quot;Signing up for Twitter!&quot; &quot;I have finished my Christmas shopping&quot; &quot;@emilysiddique booooooooooooooooooo!&quot; &quot;@amitseshan Thanks for recos, will check them out. Meanwhile go back follow discussion on my blog and @lakshmia&quot;| __truncated__ ...
+##   ..$ source                 : chr [1:4336] &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; ...
+##   ..$ display_text_width     : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ reply_to_status_id     : chr [1:4336] NA NA NA NA ...
+##   ..$ reply_to_user_id       : chr [1:4336] NA NA &quot;29775417&quot; &quot;16119053&quot; ...
+##   ..$ reply_to_screen_name   : chr [1:4336] NA NA &quot;emilysiddique&quot; &quot;amitseshan&quot; ...
+##   ..$ is_quote               : logi [1:4336] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ is_retweet             : logi [1:4336] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ favorite_count         : int [1:4336] 0 3 0 3 0 2 0 0 2 27 ...
+##   ..$ retweet_count          : int [1:4336] 0 3 0 0 0 0 0 0 5 5 ...
+##   ..$ hashtags               :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;fb&quot;
+##   .. ..$ : chr &quot;Illini&quot;
+##   .. ..$ : chr &quot;mtv&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;coolerthanme&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:6] &quot;Stanford&quot; &quot;ND&quot; &quot;fightingirish&quot; &quot;fearthetree&quot; ...
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;PS3&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;myfirstTweet&quot;
+##   .. ..$ : chr &quot;RunKeeper&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;tripleganchosolidario&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;kzone&quot;
+##   .. ..$ : chr [1:3] &quot;Kazan&quot; &quot;Russia&quot; &quot;Scorpions&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;laundry&quot; &quot;hackathons&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;ChennaiFloods&quot;
+##   .. ..$ : chr &quot;BioInfoSummer2015&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;ZOZOTOWN福引&quot;
+##   .. ..$ : chr [1:2] &quot;AWSomeDay&quot; &quot;AmazonGlacier&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;hacksummit&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;AnnabelleFashionStar&quot; &quot;WhatIsSexy&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;awwneversorry&quot;
+##   .. ..$ : chr [1:2] &quot;MSSQL&quot; &quot;sqlserver&quot;
+##   .. ..$ : chr &quot;slitherio&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;halfkgoulu&quot;
+##   .. ..$ : chr [1:2] &quot;الإمارات&quot; &quot;الحمدلله_على_نعمة_الإمارات&quot;
+##   .. ..$ : chr &quot;esf16&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;zdfemlive&quot;
+##   .. ..$ : chr &quot;EURO2016&quot;
+##   .. ..$ : chr &quot;EURefResults&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;خرجوا_مالك_عدلي&quot;
+##   .. .. [list output truncated]
+##   ..$ symbols                :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ urls_url               :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;emacswiki.org/emacs/Twitteri…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;lnkd.in/YTdTsM&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;wapo.st/VJqYXt&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;huff.to/15BvVGT&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;politiken.dk/debat/kroniken…&quot;
+##   .. ..$ : chr &quot;bankier.pl/wiadomosc/Kied…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;rnkpr.com/a6b4c2y&quot;
+##   .. ..$ : chr &quot;instagram.com/p/qJYNl1OxIk/&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;wapo.st/1kHGUuh&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;wp.me/p4sXQo-11&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/WojYahooNBA/st…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;embank.tk/?t.co=@chadewa…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;goo.gl/t5pWcg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;bit.ly/1WO2qBO?yrukyp…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/josh_wills/sta…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;t.zozo.jp/crsu9&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;bit.ly/1MpKwtr&quot;
+##   .. ..$ : chr &quot;bit.ly/20H17kD&quot;
+##   .. ..$ : chr &quot;stacksocial.com/sales/git-trai…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;i.victoria.com/wis&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;macsqlclient.com&quot;
+##   .. ..$ : chr &quot;slither.io&quot;
+##   .. ..$ : chr &quot;lnkd.in/e3S3gdK&quot;
+##   .. ..$ : chr &quot;ctt.ec/A4ptI+&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/intlspectator/…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;dlvr.it/Lm0hgw&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ urls_t.co              :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/Sw1oPYhj&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/ged3mmRB&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/9E9Mpny0&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/qGqtJykA4Q&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/uJtGyKJSBX&quot;
+##   .. ..$ : chr &quot;http://t.co/Jo2Eiuw8Td&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/LZE8GeswZT&quot;
+##   .. ..$ : chr &quot;http://t.co/Iaf8JzPOHk&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/pkBQA8F0wm&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/rCfBzWGW9s&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/tNcJ0eXm2l&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/hD6nXmPKuP&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/RNbH56sg45&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/jYSnt9nN0x&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/lSlUTIVh3p&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/B0s8kTfBpQ&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/rX1AjWQwqG&quot;
+##   .. ..$ : chr &quot;https://t.co/bUvmeZytSe&quot;
+##   .. ..$ : chr &quot;https://t.co/Ws4ohrXKNF&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/ADrCmZcoxT&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/8D5xt5Xsyg&quot;
+##   .. ..$ : chr &quot;https://t.co/8MaJpffBE0&quot;
+##   .. ..$ : chr &quot;https://t.co/tuWYFTXyKD&quot;
+##   .. ..$ : chr &quot;https://t.co/LumtoKCzjP&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/UWGaAjJ66X&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/3RM42A9GUQ&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ urls_expanded_url      :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://www.emacswiki.org/emacs/TwitteringMode&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://lnkd.in/YTdTsM&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://wapo.st/VJqYXt&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://huff.to/15BvVGT&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://politiken.dk/debat/kroniken/ECE2249036/da-jeg-fik-en-tumor-paa-stoerrelse-med-en-mandarin-i-hjernen/&quot;
+##   .. ..$ : chr &quot;http://www.bankier.pl/wiadomosc/Kiedy-najlepiej-kupic-akcje-3098262.html&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://rnkpr.com/a6b4c2y&quot;
+##   .. ..$ : chr &quot;http://instagram.com/p/qJYNl1OxIk/&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://wapo.st/1kHGUuh&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://wp.me/p4sXQo-11&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/WojYahooNBA/status/618231787114749952&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://embank.tk?t.co=@chadewalker72&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://goo.gl/t5pWcg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://bit.ly/1WO2qBO?yrukypuw47443&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/josh_wills/status/198093512149958656&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.zozo.jp/crsu9&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://bit.ly/1MpKwtr&quot;
+##   .. ..$ : chr &quot;http://bit.ly/20H17kD&quot;
+##   .. ..$ : chr &quot;https://stacksocial.com/sales/git-training-course?rid=2825938&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://i.victoria.com/wis&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://macsqlclient.com&quot;
+##   .. ..$ : chr &quot;http://slither.io&quot;
+##   .. ..$ : chr &quot;https://lnkd.in/e3S3gdK&quot;
+##   .. ..$ : chr &quot;http://ctt.ec/A4ptI+&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/intlspectator/status/722122708696236033&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://dlvr.it/Lm0hgw&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ media_url              :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/BlKt7s8CIAASE6z.png&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CGQ6EdSUQAAMVPI.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CV0-mp1VEAADXd8.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CiOlw8cUUAAnzHG.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/ext_tw_video_thumb/744600189999128577/pu/img/dwIMM95y4tO6_tG0.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ media_t.co             :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/mvvXi6Zd61&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/9OhiX5j8Qs&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/TjeITQjRg4&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/XPEzwcX4FA&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/i7f2Pmhw2j&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ media_expanded_url     :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/piotrlonczak1/status/455617753496297472/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/scorpions/status/604672104617910272/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/shazanfar/status/674764370107170816/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/BriceBachon/status/744600246769098753/video/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ media_type             :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_url          :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/BlKt7s8CIAASE6z.png&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CGQ6EdSUQAAMVPI.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CV0-mp1VEAADXd8.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;http://pbs.twimg.com/media/CiOlw8cUUAAnzHG.jpg&quot; &quot;http://pbs.twimg.com/media/CiOlwvPUUAArQzg.jpg&quot; &quot;http://pbs.twimg.com/media/CiOlzFhUUAATShq.jpg&quot; &quot;http://pbs.twimg.com/media/CiOlzFiU4AA3SvM.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/ext_tw_video_thumb/744600189999128577/pu/img/dwIMM95y4tO6_tG0.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_t.co         :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/mvvXi6Zd61&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/9OhiX5j8Qs&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/TjeITQjRg4&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;https://t.co/XPEzwcX4FA&quot; &quot;https://t.co/XPEzwcX4FA&quot; &quot;https://t.co/XPEzwcX4FA&quot; &quot;https://t.co/XPEzwcX4FA&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/i7f2Pmhw2j&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_expanded_url :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/piotrlonczak1/status/455617753496297472/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/scorpions/status/604672104617910272/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/shazanfar/status/674764370107170816/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot; &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot; &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot; &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/BriceBachon/status/744600246769098753/video/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_type         : chr [1:4336] NA NA NA NA ...
+##   ..$ mentions_user_id       :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;29775417&quot;
+##   .. ..$ : chr [1:2] &quot;16119053&quot; &quot;28686579&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;87855391&quot;
+##   .. ..$ : chr &quot;10533432&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;16095150&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;35388404&quot;
+##   .. ..$ : chr [1:2] &quot;424472595&quot; &quot;231305417&quot;
+##   .. ..$ : chr &quot;84971762&quot;
+##   .. ..$ : chr [1:2] &quot;17179368&quot; &quot;2467791&quot;
+##   .. ..$ : chr &quot;19002481&quot;
+##   .. ..$ : chr &quot;750683096643624964&quot;
+##   .. ..$ : chr [1:2] &quot;1175221&quot; &quot;822911848198668290&quot;
+##   .. ..$ : chr &quot;25537462&quot;
+##   .. ..$ : chr &quot;21091570&quot;
+##   .. ..$ : chr &quot;764468148&quot;
+##   .. ..$ : chr &quot;19257569&quot;
+##   .. ..$ : chr &quot;22864398&quot;
+##   .. ..$ : chr [1:4] &quot;874916178&quot; &quot;28204284&quot; &quot;1155475272&quot; &quot;377505387&quot;
+##   .. ..$ : chr [1:6] &quot;39092174&quot; &quot;14104847&quot; &quot;14996251&quot; &quot;89587925&quot; ...
+##   .. ..$ : chr [1:4] &quot;24251248&quot; &quot;119728086&quot; &quot;62490772&quot; &quot;119728086&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;1323117829&quot;
+##   .. ..$ : chr &quot;2289756346&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;15445811&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;23372773&quot;
+##   .. ..$ : chr &quot;281368876&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;2467791&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;17502224&quot;
+##   .. ..$ : chr &quot;389773164&quot;
+##   .. ..$ : chr &quot;1891806212&quot;
+##   .. ..$ : chr &quot;2557521&quot;
+##   .. ..$ : chr &quot;337789021&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;12398782&quot;
+##   .. ..$ : chr &quot;979305451&quot;
+##   .. ..$ : chr &quot;59164949&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;2273061926&quot; &quot;245871795&quot; &quot;89084561&quot; &quot;18534190&quot;
+##   .. ..$ : chr &quot;485397054&quot;
+##   .. ..$ : chr &quot;3462072440&quot;
+##   .. ..$ : chr [1:2] &quot;849185080165662720&quot; &quot;552803420&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;835335186&quot;
+##   .. ..$ : chr &quot;82505537&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;917555706&quot; &quot;6446742&quot; &quot;1877252551&quot; &quot;40945238&quot;
+##   .. ..$ : chr [1:2] &quot;3165102498&quot; &quot;33868638&quot;
+##   .. ..$ : chr [1:2] &quot;2848551188&quot; &quot;1859123587&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;989583160538263553&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;27743648&quot; &quot;38660877&quot; &quot;526316060&quot;
+##   .. ..$ : chr &quot;58569513&quot;
+##   .. ..$ : chr &quot;137390625&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;243742269&quot;
+##   .. ..$ : chr &quot;24488318&quot;
+##   .. ..$ : chr &quot;15492359&quot;
+##   .. ..$ : chr &quot;16193578&quot;
+##   .. ..$ : chr &quot;31301354&quot;
+##   .. ..$ : chr &quot;24600452&quot;
+##   .. ..$ : chr &quot;1094968022&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;763371275960147968&quot;
+##   .. ..$ : chr &quot;44644062&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;707349612&quot;
+##   .. ..$ : chr &quot;493127463&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;22503279&quot;
+##   .. ..$ : chr &quot;18953259&quot;
+##   .. ..$ : chr &quot;160182741&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;20113713&quot;
+##   .. ..$ : chr &quot;18335375&quot;
+##   .. ..$ : chr [1:3] &quot;13507972&quot; &quot;1339740637&quot; &quot;2720868859&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ mentions_screen_name   :List of 4336
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;emilysiddique&quot;
+##   .. ..$ : chr [1:2] &quot;amitseshan&quot; &quot;LakshmiA&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;Cisco_Support&quot;
+##   .. ..$ : chr &quot;olyapka&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;visarz&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;AdventureSam&quot;
+##   .. ..$ : chr [1:2] &quot;metricjulie&quot; &quot;S_sants&quot;
+##   .. ..$ : chr &quot;khyentsenorbu&quot;
+##   .. ..$ : chr [1:2] &quot;Richard_Florida&quot; &quot;washingtonpost&quot;
+##   .. ..$ : chr &quot;googlereader&quot;
+##   .. ..$ : chr &quot;TomCoburn&quot;
+##   .. ..$ : chr [1:2] &quot;digiphile&quot; &quot;CraigatFEMA&quot;
+##   .. ..$ : chr &quot;markcrilley&quot;
+##   .. ..$ : chr &quot;IreneOlivas&quot;
+##   .. ..$ : chr &quot;MuseuArteRio&quot;
+##   .. ..$ : chr &quot;BillyonBass&quot;
+##   .. ..$ : chr &quot;jaswani&quot;
+##   .. ..$ : chr [1:4] &quot;BeschlossDC&quot; &quot;kayniine&quot; &quot;instalanigram&quot; &quot;kelley_ec&quot;
+##   .. ..$ : chr [1:6] &quot;dwlaratta&quot; &quot;comcastcares&quot; &quot;XFINITY&quot; &quot;comcast&quot; ...
+##   .. ..$ : chr [1:4] &quot;AndersBreinholt&quot; &quot;NielsFrid&quot; &quot;Geocomedy&quot; &quot;NielsFrid&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;FW312&quot;
+##   .. ..$ : chr &quot;ahmdswat&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;Runkeeper&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;skottieyoung&quot;
+##   .. ..$ : chr &quot;BrevilleAus&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;washingtonpost&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;wobster&quot;
+##   .. ..$ : chr &quot;TripleGancho&quot;
+##   .. ..$ : chr &quot;AcademicsSay&quot;
+##   .. ..$ : chr &quot;espn&quot;
+##   .. ..$ : chr &quot;scorpions&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;netw3rk&quot;
+##   .. ..$ : chr &quot;D3Centre&quot;
+##   .. ..$ : chr &quot;ShopandShip&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;KatieFettig&quot; &quot;JaimeDee1123&quot; &quot;Target&quot; &quot;DiversityWoman&quot;
+##   .. ..$ : chr &quot;LikeMyWomen1&quot;
+##   .. ..$ : chr &quot;PET_SMlLES&quot;
+##   .. ..$ : chr [1:2] &quot;tsbible&quot; &quot;GetFootballNews&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;vimukthisanjaya&quot;
+##   .. ..$ : chr &quot;kmkelley2&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;UFCNews&quot; &quot;ufc&quot; &quot;BuscapeMMA&quot; &quot;effyescudero&quot;
+##   .. ..$ : chr [1:2] &quot;bharathshruti&quot; &quot;shrutihaasan&quot;
+##   .. ..$ : chr [1:2] &quot;shazanfar&quot; &quot;combine_au&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;EggYung&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;Ticketmaster&quot; &quot;TicketmasterCA&quot; &quot;DaveChappelle&quot;
+##   .. ..$ : chr &quot;DPRK_News&quot;
+##   .. ..$ : chr &quot;bondbryanBIM&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;StackSocial&quot;
+##   .. ..$ : chr &quot;MartaC17&quot;
+##   .. ..$ : chr &quot;TEDTalks&quot;
+##   .. ..$ : chr &quot;VictoriasSecret&quot;
+##   .. ..$ : chr &quot;ashwinsuresh&quot;
+##   .. ..$ : chr &quot;SaintFrankly&quot;
+##   .. ..$ : chr &quot;SQLProApp&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;toptalllc&quot;
+##   .. ..$ : chr &quot;AchaSetiarso&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;chasm_99&quot;
+##   .. ..$ : chr &quot;carras16&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;dreamteamfc&quot;
+##   .. ..$ : chr &quot;Schofe&quot;
+##   .. ..$ : chr &quot;tigrillodelsur&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;WezSiddons&quot;
+##   .. ..$ : chr &quot;Twittociate&quot;
+##   .. ..$ : chr [1:3] &quot;rajeshkalra&quot; &quot;srikidambi&quot; &quot;Pvsindhu1&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ lang                   : chr [1:4336] &quot;en&quot; &quot;en&quot; &quot;und&quot; &quot;en&quot; ...
+##   ..$ quoted_status_id       : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_text            : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_created_at      : POSIXct[1:4336], format: NA ...
+##   ..$ quoted_source          : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_favorite_count  : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_retweet_count   : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_user_id         : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_screen_name     : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_name            : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_followers_count : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_friends_count   : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_statuses_count  : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_location        : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_description     : chr [1:4336] NA NA NA NA ...
+##   ..$ quoted_verified        : logi [1:4336] NA NA NA NA NA NA ...
+##   ..$ retweet_status_id      : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_text           : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_created_at     : POSIXct[1:4336], format: NA ...
+##   ..$ retweet_source         : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_favorite_count : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_retweet_count  : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_user_id        : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_screen_name    : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_name           : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_followers_count: int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_friends_count  : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_statuses_count : int [1:4336] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_location       : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_description    : chr [1:4336] NA NA NA NA ...
+##   ..$ retweet_verified       : logi [1:4336] NA NA NA NA NA NA ...
+##   ..$ place_url              : chr [1:4336] NA NA NA NA ...
+##   ..$ place_name             : chr [1:4336] NA NA NA NA ...
+##   ..$ place_full_name        : chr [1:4336] NA NA NA NA ...
+##   ..$ place_type             : chr [1:4336] NA NA NA NA ...
+##   ..$ country                : chr [1:4336] NA NA NA NA ...
+##   ..$ country_code           : chr [1:4336] NA NA NA NA ...
+##   ..$ geo_coords             :List of 4336
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. .. [list output truncated]
+##   ..$ coords_coords          :List of 4336
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. .. [list output truncated]
+##   ..$ bbox_coords            :List of 4336
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. .. [list output truncated]</code></pre>
+<p>You’ll see that distribution shape quite a bit given the general nature of the social structure of Twitter. Don’t believe that? Let’s do one more, this time for <a href="https://twitter.com/ma_salmon/">Maëlle Salmon</a>, another incredibly talented data scientist with a <a href="http://www.masalmon.eu/">blog</a> you <em>must</em> follow if you want to learn how to do fun and useful things with R.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">ma_salmon &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;ma_salmon&quot;</span>)</a></code></pre></div>
+<p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html/16_ms-1.png" width="960" /></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">glimpse</span>(ma_salmon)</a></code></pre></div>
 <pre><code>## List of 2
-##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  20 variables:
-##   ..$ user_id               : chr &quot;13074042&quot;
-##   ..$ name                  : chr &quot;Julia Silge&quot;
-##   ..$ screen_name           : chr &quot;juliasilge&quot;
-##   ..$ location              : chr &quot;Salt Lake City, UT&quot;
-##   ..$ description           : chr &quot;Data science and visualization at Stack Overflow, #rstats, author of Text Mining with R, parenthood, reading, f&quot;| __truncated__
-##   ..$ url                   : chr &quot;https://t.co/0LpY8Ihz2B&quot;
-##   ..$ protected             : logi FALSE
-##   ..$ followers_count       : int 10910
-##   ..$ friends_count         : int 445
-##   ..$ listed_count          : int 410
-##   ..$ statuses_count        : int 16365
-##   ..$ favourites_count      : int 19811
-##   ..$ account_created_at    : POSIXct[1:1], format: &quot;2008-02-05 00:47:07&quot;
-##   ..$ verified              : logi FALSE
-##   ..$ profile_url           : chr &quot;https://t.co/0LpY8Ihz2B&quot;
-##   ..$ profile_expanded_url  : chr &quot;http://juliasilge.com/&quot;
-##   ..$ account_lang          : chr &quot;en&quot;
-##   ..$ profile_banner_url    : chr &quot;https://pbs.twimg.com/profile_banners/13074042/1511394461&quot;
-##   ..$ profile_background_url: chr &quot;http://abs.twimg.com/images/themes/theme13/bg.gif&quot;
-##   ..$ profile_image_url     : chr &quot;http://pbs.twimg.com/profile_images/930639796510244865/D_N-CofS_normal.jpg&quot;
-##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  68 variables:
-##   .. ..$ status_id              : chr &quot;949090073693204480&quot;
-##   .. ..$ created_at             : POSIXct[1:1], format: &quot;2018-01-05 01:28:01&quot;
-##   .. ..$ user_id                : chr &quot;13074042&quot;
-##   .. ..$ screen_name            : chr &quot;juliasilge&quot;
-##   .. ..$ text                   : chr &quot;RT @statwonk: Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable an&quot;| __truncated__
-##   .. ..$ source                 : chr &quot;Twitter for iPhone&quot;
-##   .. ..$ display_text_width     : int NA
-##   .. ..$ reply_to_status_id     : logi NA
-##   .. ..$ reply_to_user_id       : logi NA
-##   .. ..$ reply_to_screen_name   : logi NA
-##   .. ..$ is_quote               : logi FALSE
-##   .. ..$ is_retweet             : logi TRUE
-##   .. ..$ favorite_count         : int 0
-##   .. ..$ retweet_count          : int 6
-##   .. ..$ hashtags               :List of 1
-##   .. ..$ symbols                :List of 1
-##   .. ..$ urls_url               :List of 1
-##   .. ..$ urls_t.co              :List of 1
-##   .. ..$ urls_expanded_url      :List of 1
-##   .. ..$ media_url              :List of 1
-##   .. ..$ media_t.co             :List of 1
-##   .. ..$ media_expanded_url     :List of 1
-##   .. ..$ media_type             :List of 1
-##   .. ..$ ext_media_url          :List of 1
-##   .. ..$ ext_media_t.co         :List of 1
-##   .. ..$ ext_media_expanded_url :List of 1
-##   .. ..$ ext_media_type         : chr NA
-##   .. ..$ mentions_user_id       :List of 1
-##   .. ..$ mentions_screen_name   :List of 1
-##   .. ..$ lang                   : chr &quot;en&quot;
-##   .. ..$ quoted_status_id       : chr NA
-##   .. ..$ quoted_text            : chr NA
-##   .. ..$ quoted_created_at      : POSIXct[1:1], format: NA
-##   .. ..$ quoted_source          : chr NA
-##   .. ..$ quoted_favorite_count  : int NA
-##   .. ..$ quoted_retweet_count   : int NA
-##   .. ..$ quoted_user_id         : chr NA
-##   .. ..$ quoted_screen_name     : chr NA
-##   .. ..$ quoted_name            : chr NA
-##   .. ..$ quoted_followers_count : int NA
-##   .. ..$ quoted_friends_count   : int NA
-##   .. ..$ quoted_statuses_count  : int NA
-##   .. ..$ quoted_location        : chr NA
-##   .. ..$ quoted_description     : chr NA
-##   .. ..$ quoted_verified        : logi NA
-##   .. ..$ retweet_status_id      : chr &quot;949042404455219201&quot;
-##   .. ..$ retweet_text           : chr &quot;Analysts, scientists and statisticians know that #bigdata is a joke. Why? Data are uncountable and infinite. On&quot;| __truncated__
-##   .. ..$ retweet_created_at     : POSIXct[1:1], format: &quot;2018-01-04 22:18:36&quot;
-##   .. ..$ retweet_source         : chr NA
-##   .. ..$ retweet_favorite_count : int 21
-##   .. ..$ retweet_user_id        : chr NA
-##   .. ..$ retweet_screen_name    : chr NA
-##   .. ..$ retweet_name           : chr NA
-##   .. ..$ retweet_followers_count: int NA
-##   .. ..$ retweet_friends_count  : int NA
-##   .. ..$ retweet_statuses_count : int NA
-##   .. ..$ retweet_location       : chr NA
-##   .. ..$ retweet_description    : chr NA
-##   .. ..$ retweet_verified       : logi NA
-##   .. ..$ place_url              : chr NA
-##   .. ..$ place_name             : chr NA
-##   .. ..$ place_full_name        : chr NA
-##   .. ..$ place_type             : chr NA
-##   .. ..$ country                : chr NA
-##   .. ..$ country_code           : chr NA
-##   .. ..$ geo_coords             :List of 1
-##   .. ..$ coords_coords          :List of 1
-##   .. ..$ bbox_coords            :List of 1
-##  $ follower_details:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  20 variables:
-##   ..$ user_id               : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
-##   ..$ name                  : chr [1:5000] &quot;Surajit Dhar&quot; &quot;Helen Graham&quot; &quot;DouglasiMorgan&quot; &quot;kamex kenneth&quot; ...
-##   ..$ screen_name           : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
-##   ..$ location              : chr [1:5000] &quot;&quot; &quot;Edinburgh&quot; &quot;&quot; &quot;La Canada Flintridge, CA&quot; ...
-##   ..$ description           : chr [1:5000] &quot;&quot; &quot;I torture data for fun and profit. Still a cheesecake enthusiast.&quot; &quot;&quot; &quot;Happy&quot; ...
-##   ..$ url                   : chr [1:5000] NA NA NA NA ...
-##   ..$ protected             : logi [1:5000] TRUE FALSE FALSE FALSE FALSE FALSE ...
-##   ..$ followers_count       : int [1:5000] 18 99 243 155 2 6172 56 215 427 5 ...
-##   ..$ friends_count         : int [1:5000] 248 382 2806 1521 74 4020 284 884 957 179 ...
-##   ..$ listed_count          : int [1:5000] 0 4 0 0 0 201 4 2 53 0 ...
-##   ..$ statuses_count        : int [1:5000] 92 771 0 1 13 9720 152 1026 2394 6 ...
-##   ..$ favourites_count      : int [1:5000] 30 107 0 8 1 13093 259 612 5479 1 ...
-##   ..$ account_created_at    : POSIXct[1:5000], format: &quot;2009-04-10 10:55:17&quot; ...
-##   ..$ verified              : logi [1:5000] FALSE FALSE FALSE FALSE FALSE TRUE ...
-##   ..$ profile_url           : chr [1:5000] NA NA NA NA ...
-##   ..$ profile_expanded_url  : chr [1:5000] NA NA NA NA ...
-##   ..$ account_lang          : chr [1:5000] &quot;en&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
-##   ..$ profile_banner_url    : chr [1:5000] NA &quot;https://pbs.twimg.com/profile_banners/23437966/1362861613&quot; &quot;https://pbs.twimg.com/profile_banners/944279909521911809/1513973832&quot; NA ...
-##   ..$ profile_background_url: chr [1:5000] &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://pbs.twimg.com/profile_background_images/5966931/xmas_002.jpg&quot; NA NA ...
-##   ..$ profile_image_url     : chr [1:5000] &quot;http://pbs.twimg.com/profile_images/3619425574/017e3c69373add7399c0689d70d5e3b5_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/378800000858153027/-lbO7veR_normal.jpeg&quot; &quot;http://pbs.twimg.com/profile_images/944301258415984640/NY--VNaG_normal.jpg&quot; &quot;http://pbs.twimg.com/profile_images/934426923584966657/GJUKnQuG_normal.jpg&quot; ...
-##   ..- attr(*, &quot;tweets&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    5000 obs. of  68 variables:
-##   .. ..$ status_id              : chr [1:5000] NA &quot;949208591524945920&quot; NA &quot;934660498246852608&quot; ...
-##   .. ..$ created_at             : POSIXct[1:5000], format: NA ...
-##   .. ..$ user_id                : chr [1:5000] &quot;30197167&quot; &quot;23437966&quot; &quot;944279909521911809&quot; &quot;934426253708464128&quot; ...
-##   .. ..$ screen_name            : chr [1:5000] &quot;nagasuraj&quot; &quot;helngram&quot; &quot;Douglas2Morgan&quot; &quot;KamexKenneth&quot; ...
-##   .. ..$ text                   : chr [1:5000] NA &quot;Every time you drink raw water, somewhere in the great beyond Darwin does a massive facepalm but also feels a bit vindicated.&quot; NA &quot;@ConnLoraine Lovely&quot; ...
-##   .. ..$ source                 : chr [1:5000] NA &quot;Twitter for Android&quot; NA &quot;Twitter for iPhone&quot; ...
-##   .. ..$ display_text_width     : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ reply_to_status_id     : chr [1:5000] NA NA NA &quot;934643010813358081&quot; ...
-##   .. ..$ reply_to_user_id       : chr [1:5000] NA NA NA &quot;893460901470154752&quot; ...
-##   .. ..$ reply_to_screen_name   : chr [1:5000] NA NA NA &quot;ConnLoraine&quot; ...
-##   .. ..$ is_quote               : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
-##   .. ..$ is_retweet             : logi [1:5000] FALSE FALSE FALSE FALSE FALSE FALSE ...
-##   .. ..$ favorite_count         : int [1:5000] NA 0 NA 46 0 4 1 0 0 0 ...
-##   .. ..$ retweet_count          : int [1:5000] NA 0 NA 7 0 0 0 96 64 0 ...
-##   .. ..$ hashtags               :List of 5000
-##   .. ..$ symbols                :List of 5000
-##   .. ..$ urls_url               :List of 5000
-##   .. ..$ urls_t.co              :List of 5000
-##   .. ..$ urls_expanded_url      :List of 5000
-##   .. ..$ media_url              :List of 5000
-##   .. ..$ media_t.co             :List of 5000
-##   .. ..$ media_expanded_url     :List of 5000
-##   .. ..$ media_type             :List of 5000
-##   .. ..$ ext_media_url          :List of 5000
-##   .. ..$ ext_media_t.co         :List of 5000
-##   .. ..$ ext_media_expanded_url :List of 5000
-##   .. ..$ ext_media_type         : chr [1:5000] NA NA NA NA ...
-##   .. ..$ mentions_user_id       :List of 5000
-##   .. ..$ mentions_screen_name   :List of 5000
-##   .. ..$ lang                   : chr [1:5000] NA &quot;en&quot; NA &quot;en&quot; ...
-##   .. ..$ quoted_status_id       : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_text            : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_created_at      : POSIXct[1:5000], format: NA ...
-##   .. ..$ quoted_source          : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_favorite_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_retweet_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_user_id         : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_screen_name     : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_name            : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_followers_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_friends_count   : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_statuses_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ quoted_location        : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_description     : chr [1:5000] NA NA NA NA ...
-##   .. ..$ quoted_verified        : logi [1:5000] NA NA NA NA NA NA ...
-##   .. ..$ retweet_status_id      : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_text           : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_created_at     : POSIXct[1:5000], format: NA ...
-##   .. ..$ retweet_source         : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_favorite_count : int [1:5000] NA NA NA NA NA NA NA 169 162 NA ...
-##   .. ..$ retweet_user_id        : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_screen_name    : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_name           : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_followers_count: int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ retweet_friends_count  : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ retweet_statuses_count : int [1:5000] NA NA NA NA NA NA NA NA NA NA ...
-##   .. ..$ retweet_location       : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_description    : chr [1:5000] NA NA NA NA ...
-##   .. ..$ retweet_verified       : logi [1:5000] NA NA NA NA NA NA ...
-##   .. ..$ place_url              : chr [1:5000] NA NA NA NA ...
-##   .. ..$ place_name             : chr [1:5000] NA NA NA NA ...
-##   .. ..$ place_full_name        : chr [1:5000] NA NA NA NA ...
-##   .. ..$ place_type             : chr [1:5000] NA NA NA NA ...
-##   .. ..$ country                : chr [1:5000] NA NA NA NA ...
-##   .. ..$ country_code           : chr [1:5000] NA NA NA NA ...
-##   .. ..$ geo_coords             :List of 5000
-##   .. ..$ coords_coords          :List of 5000
-##   .. ..$ bbox_coords            :List of 5000</code></pre>
+##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  87 variables:
+##   ..$ user_id                : chr &quot;2865404679&quot;
+##   ..$ name                   : chr &quot;Maëlle Salmon \U0001f41f&quot;
+##   ..$ screen_name            : chr &quot;ma_salmon&quot;
+##   ..$ location               : chr &quot;Nancy, France&quot;
+##   ..$ description            : chr &quot;PhD in statistics. \U0001f499#rstats. Living the FOSS dream working for @rOpenSci &amp; @LockeData. Onboarding co-e&quot;| __truncated__
+##   ..$ url                    : chr &quot;https://t.co/jaetRA6y4P&quot;
+##   ..$ protected              : logi FALSE
+##   ..$ followers_count        : int 4825
+##   ..$ friends_count          : int 382
+##   ..$ listed_count           : int 158
+##   ..$ statuses_count         : int 12625
+##   ..$ favourites_count       : int 27434
+##   ..$ account_created_at     : POSIXct[1:1], format: &quot;2014-11-07 10:24:36&quot;
+##   ..$ verified               : logi FALSE
+##   ..$ profile_url            : chr &quot;https://t.co/jaetRA6y4P&quot;
+##   ..$ profile_expanded_url   : chr &quot;http://www.masalmon.eu/&quot;
+##   ..$ account_lang           : chr &quot;ca&quot;
+##   ..$ profile_banner_url     : chr &quot;https://pbs.twimg.com/profile_banners/2865404679/1471789668&quot;
+##   ..$ profile_background_url : chr &quot;http://pbs.twimg.com/profile_background_images/668084534081167360/yaV5nFT9.jpg&quot;
+##   ..$ profile_image_url      : chr &quot;http://pbs.twimg.com/profile_images/703319700235808768/IOlpUXDQ_normal.jpg&quot;
+##   ..$ status_id              : chr &quot;994297244026273792&quot;
+##   ..$ created_at             : POSIXct[1:1], format: &quot;2018-05-09 19:25:10&quot;
+##   ..$ text                   : chr &quot;@thomasp85 Actual #rstats hero logo credit @alice_data in https://t.co/zCre4ZWyGG ☺ https://t.co/Gg4KIfj7DD&quot;
+##   ..$ source                 : chr &quot;Twitter for Android&quot;
+##   ..$ display_text_width     : int NA
+##   ..$ reply_to_status_id     : chr &quot;994295468388765697&quot;
+##   ..$ reply_to_user_id       : chr &quot;611597719&quot;
+##   ..$ reply_to_screen_name   : chr &quot;thomasp85&quot;
+##   ..$ is_quote               : logi FALSE
+##   ..$ is_retweet             : logi FALSE
+##   ..$ favorite_count         : int 4
+##   ..$ retweet_count          : int 1
+##   ..$ hashtags               :List of 1
+##   .. ..$ : chr &quot;rstats&quot;
+##   ..$ symbols                :List of 1
+##   .. ..$ : chr NA
+##   ..$ urls_url               :List of 1
+##   .. ..$ : chr &quot;github.com/adaish/R_hero&quot;
+##   ..$ urls_t.co              :List of 1
+##   .. ..$ : chr &quot;https://t.co/zCre4ZWyGG&quot;
+##   ..$ urls_expanded_url      :List of 1
+##   .. ..$ : chr &quot;https://github.com/adaish/R_hero&quot;
+##   ..$ media_url              :List of 1
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/Dcx0EoRX4AAnFZk.jpg&quot;
+##   ..$ media_t.co             :List of 1
+##   .. ..$ : chr &quot;https://t.co/Gg4KIfj7DD&quot;
+##   ..$ media_expanded_url     :List of 1
+##   .. ..$ : chr &quot;https://twitter.com/ma_salmon/status/994297244026273792/photo/1&quot;
+##   ..$ media_type             :List of 1
+##   .. ..$ : chr &quot;photo&quot;
+##   ..$ ext_media_url          :List of 1
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/Dcx0EoRX4AAnFZk.jpg&quot;
+##   ..$ ext_media_t.co         :List of 1
+##   .. ..$ : chr &quot;https://t.co/Gg4KIfj7DD&quot;
+##   ..$ ext_media_expanded_url :List of 1
+##   .. ..$ : chr &quot;https://twitter.com/ma_salmon/status/994297244026273792/photo/1&quot;
+##   ..$ ext_media_type         : chr NA
+##   ..$ mentions_user_id       :List of 1
+##   .. ..$ : chr [1:2] &quot;611597719&quot; &quot;474823395&quot;
+##   ..$ mentions_screen_name   :List of 1
+##   .. ..$ : chr [1:2] &quot;thomasp85&quot; &quot;alice_data&quot;
+##   ..$ lang                   : chr &quot;en&quot;
+##   ..$ quoted_status_id       : chr NA
+##   ..$ quoted_text            : chr NA
+##   ..$ quoted_created_at      : POSIXct[1:1], format: NA
+##   ..$ quoted_source          : chr NA
+##   ..$ quoted_favorite_count  : int NA
+##   ..$ quoted_retweet_count   : int NA
+##   ..$ quoted_user_id         : chr NA
+##   ..$ quoted_screen_name     : chr NA
+##   ..$ quoted_name            : chr NA
+##   ..$ quoted_followers_count : int NA
+##   ..$ quoted_friends_count   : int NA
+##   ..$ quoted_statuses_count  : int NA
+##   ..$ quoted_location        : chr NA
+##   ..$ quoted_description     : chr NA
+##   ..$ quoted_verified        : logi NA
+##   ..$ retweet_status_id      : chr NA
+##   ..$ retweet_text           : chr NA
+##   ..$ retweet_created_at     : POSIXct[1:1], format: NA
+##   ..$ retweet_source         : chr NA
+##   ..$ retweet_favorite_count : int NA
+##   ..$ retweet_retweet_count  : int NA
+##   ..$ retweet_user_id        : chr NA
+##   ..$ retweet_screen_name    : chr NA
+##   ..$ retweet_name           : chr NA
+##   ..$ retweet_followers_count: int NA
+##   ..$ retweet_friends_count  : int NA
+##   ..$ retweet_statuses_count : int NA
+##   ..$ retweet_location       : chr NA
+##   ..$ retweet_description    : chr NA
+##   ..$ retweet_verified       : logi NA
+##   ..$ place_url              : chr NA
+##   ..$ place_name             : chr NA
+##   ..$ place_full_name        : chr NA
+##   ..$ place_type             : chr NA
+##   ..$ country                : chr NA
+##   ..$ country_code           : chr NA
+##   ..$ geo_coords             :List of 1
+##   .. ..$ : num [1:2] NA NA
+##   ..$ coords_coords          :List of 1
+##   .. ..$ : num [1:2] NA NA
+##   ..$ bbox_coords            :List of 1
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##  $ follower_details:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    4421 obs. of  87 variables:
+##   ..$ user_id                : chr [1:4421] &quot;23186340&quot; &quot;28945753&quot; &quot;48975851&quot; &quot;44918206&quot; ...
+##   ..$ name                   : chr [1:4421] &quot;Johan Reventlow&quot; &quot;Katja&quot; &quot;Puneet Vats&quot; &quot;Allen Cooper&quot; ...
+##   ..$ screen_name            : chr [1:4421] &quot;johanreventlow&quot; &quot;dzepina&quot; &quot;vats_puneet&quot; &quot;ACintheIE&quot; ...
+##   ..$ location               : chr [1:4421] &quot;Copenhagen&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##   ..$ description            : chr [1:4421] &quot;Datanørd på Bispebjerg og Frederiksberg Hospital. #rstats #datascience #dataviz #healthcare #sundpol&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##   ..$ url                    : chr [1:4421] NA NA NA NA ...
+##   ..$ protected              : logi [1:4421] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ followers_count        : int [1:4421] 86 7 9 6 280 82 4 179 19 5 ...
+##   ..$ friends_count          : int [1:4421] 880 6 43 204 5000 1581 32 3319 912 146 ...
+##   ..$ listed_count           : int [1:4421] 0 1 0 0 2 1 0 0 0 0 ...
+##   ..$ statuses_count         : int [1:4421] 2 1 1 7 6 7 3 2 2 1 ...
+##   ..$ favourites_count       : int [1:4421] 199 0 0 3 53 7 3 8 80 65 ...
+##   ..$ account_created_at     : POSIXct[1:4421], format: &quot;2009-03-07 11:47:16&quot; ...
+##   ..$ verified               : logi [1:4421] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ profile_url            : chr [1:4421] NA NA NA NA ...
+##   ..$ profile_expanded_url   : chr [1:4421] NA NA NA NA ...
+##   ..$ account_lang           : chr [1:4421] &quot;da&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
+##   ..$ profile_banner_url     : chr [1:4421] &quot;https://pbs.twimg.com/profile_banners/23186340/1514984015&quot; &quot;https://pbs.twimg.com/profile_banners/28945753/1484856145&quot; NA NA ...
+##   ..$ profile_background_url : chr [1:4421] &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; &quot;http://abs.twimg.com/images/themes/theme1/bg.png&quot; ...
+##   ..$ profile_image_url      : chr [1:4421] &quot;http://pbs.twimg.com/profile_images/90282133/johan__001_normal.jpg&quot; &quot;http://pbs.twimg.com/profile_images/822173347106660352/PePDCqPJ_normal.jpg&quot; &quot;http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png&quot; &quot;http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png&quot; ...
+##   ..$ status_id              : chr [1:4421] &quot;1295968251&quot; &quot;4032034159&quot; &quot;13519314130&quot; &quot;26410004295&quot; ...
+##   ..$ created_at             : POSIXct[1:4421], format: &quot;2009-03-08 10:21:26&quot; ...
+##   ..$ text                   : chr [1:4421] &quot;drinking coffee in bed - AGAIN&quot; &quot;I need to start Tweeting!&quot; &quot;@hrishigads Come on facebook????&quot; &quot;Quote of the day: \&quot;With the oven mitts of science fiction we can grasp the red-hot casserole of the now.\&quot; -- &quot;| __truncated__ ...
+##   ..$ source                 : chr [1:4421] &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; ...
+##   ..$ display_text_width     : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ reply_to_status_id     : chr [1:4421] NA NA &quot;13461206914&quot; NA ...
+##   ..$ reply_to_user_id       : chr [1:4421] NA NA &quot;45292558&quot; NA ...
+##   ..$ reply_to_screen_name   : chr [1:4421] NA NA &quot;hrishigads&quot; NA ...
+##   ..$ is_quote               : logi [1:4421] FALSE FALSE FALSE FALSE FALSE FALSE ...
+##   ..$ is_retweet             : logi [1:4421] FALSE FALSE FALSE FALSE FALSE TRUE ...
+##   ..$ favorite_count         : int [1:4421] 30 0 0 2 2 0 0 4 3 0 ...
+##   ..$ retweet_count          : int [1:4421] 14 0 0 5 12 2 1 2 0 35 ...
+##   ..$ hashtags               :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;fb&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;NLProc&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;HangoutFest&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;Maghrenov&quot;
+##   .. ..$ : chr &quot;RunKeeper&quot;
+##   .. ..$ : chr &quot;attpark&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;myfirstTweet&quot;
+##   .. ..$ : chr &quot;rstats&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;YoutubeConnexionInternationaleNarvalo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;MicrosoftAzure&quot;
+##   .. ..$ : chr [1:2] &quot;fintech&quot; &quot;EFTA16&quot;
+##   .. ..$ : chr &quot;Addo2016&quot;
+##   .. ..$ : chr &quot;EnUnaSociedadSana&quot;
+##   .. ..$ : chr [1:3] &quot;ECE&quot; &quot;investinkids&quot; &quot;edchat&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;SDGs&quot; &quot;ICT&quot;
+##   .. ..$ : chr &quot;HTownTakeover&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;WorldToiletDay&quot; &quot;TheLastMile&quot; &quot;GlobalCitizenIndia&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;vaccines&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;edtech&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;OlaDeFrioPolar&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;rstats&quot;
+##   .. ..$ : chr &quot;RLadiesSuperPower&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;MappingTheCommons&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;babynames&quot; &quot;pregnancypic&quot;
+##   .. ..$ : chr &quot;makeovermonday&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;EarthDay2017&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;donate&quot; &quot;cancerresearchuk&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;onetablerestaurant&quot; &quot;onetable&quot; &quot;goodfood&quot; &quot;bestplace&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;myfirstTweet&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;CampoGrande&quot;
+##   .. ..$ : chr &quot;runconf17&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ symbols                :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ urls_url               :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;emacswiki.org/emacs/Twitteri…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;bl0ggy.bl0ggy.in/kristine&quot;
+##   .. ..$ : chr &quot;on.mtv.com/14ioXbr&quot;
+##   .. ..$ : chr &quot;fw.to/yF0gyMD&quot;
+##   .. ..$ : chr &quot;politiken.dk/debat/kroniken…&quot;
+##   .. ..$ : chr &quot;goo.gl/4acWE5&quot;
+##   .. ..$ : chr &quot;rnkpr.com/a6b4c2y&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;shar.es/1Xbfx3&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;computerworld.com/article/248642…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;embank.tk/?t.co=@chadewa…&quot;
+##   .. ..$ : chr &quot;stats.stackexchange.com/questions/7386…&quot;
+##   .. ..$ : chr &quot;goo.gl/t5pWcg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;100.fintech.nl/finexkap&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;heckmanequation.org&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/AmstatNews/sta…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;vox.com/2016/8/4/12376…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;youtu.be/qGUYGcGSWao&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;assessingpsyche.wordpress.com/2016/10/26/a-r…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;bit.ly/2f8MEyc&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;bit.ly/tinderbonfire&quot;
+##   .. ..$ : chr &quot;info.extensionengine.com/open-edx-for-r…&quot;
+##   .. ..$ : chr &quot;twitter.com/Paul_Yuhnovich…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;wahoofitness.com/tickrx7minute&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;coursera.org/specialization…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;rit.edu/science/up-stat&quot; &quot;rit.edu/science/datafe…&quot;
+##   .. ..$ : chr &quot;twitter.com/i/web/status/8…&quot;
+##   .. ..$ : chr &quot;medium.com/@openaq/bih-u-…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;producthunt.com/posts/textbot&quot;
+##   .. ..$ : chr &quot;wired.com/2017/03/biolog…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/jamesrbuk/stat…&quot;
+##   .. ..$ : chr &quot;twitter.com/i/web/status/8…&quot;
+##   .. ..$ : chr &quot;twitter.com/i/web/status/8…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;ow.ly/AZ6930aJyBm&quot;
+##   .. ..$ : chr &quot;public.tableau.com/profile/nichol…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/i/web/status/8…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/i/web/status/8…&quot;
+##   .. ..$ : chr &quot;manchestereveningnews.co.uk/news/greater-m…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;instagram.com/p/BToILvNlDQU/&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;twitter.com/meandertail/st…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;80000hours.org/problem-profil…&quot;
+##   .. ..$ : chr &quot;twitter.com/zack_almquist/…&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;github.com/ropenscilabs/s…&quot;
+##   .. ..$ : chr &quot;journals.plos.org/plosone/articl…&quot;
+##   .. .. [list output truncated]
+##   ..$ urls_t.co              :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/Sw1oPYhj&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/ShQ2HgofoG&quot;
+##   .. ..$ : chr &quot;http://t.co/3UOeAYCOug&quot;
+##   .. ..$ : chr &quot;http://t.co/xZR2cKtB7s&quot;
+##   .. ..$ : chr &quot;http://t.co/uJtGyKJSBX&quot;
+##   .. ..$ : chr &quot;http://t.co/y1RZaV7DL1&quot;
+##   .. ..$ : chr &quot;http://t.co/LZE8GeswZT&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/Q6rhUYWaEz&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/cLZQPE2E9w&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/hD6nXmPKuP&quot;
+##   .. ..$ : chr &quot;http://t.co/QwguefTRpO&quot;
+##   .. ..$ : chr &quot;https://t.co/RNbH56sg45&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/lksq19xXzp&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/Gf0UYHlU5m&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/CMPglzyyTs&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/3xeKbZSNBJ&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/hrRud8FIE4&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/eXbplyb9nw&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/8NTjxvG66i&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/FOKXdMgZlg&quot;
+##   .. ..$ : chr &quot;https://t.co/PJeVFdCeeC&quot;
+##   .. ..$ : chr &quot;https://t.co/XuRFdHoKIG&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/20enDa8vyA&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/OILplhC0jU&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;https://t.co/GzrzvuCPfn&quot; &quot;https://t.co/zw8ZQTFam3&quot;
+##   .. ..$ : chr &quot;https://t.co/aACRq6ZzTg&quot;
+##   .. ..$ : chr &quot;https://t.co/WbqW2Xg4s8&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/yHGd5u93W0&quot;
+##   .. ..$ : chr &quot;https://t.co/7s0fcbpBS1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/auubS14nC1&quot;
+##   .. ..$ : chr &quot;https://t.co/jTWp17RWVa&quot;
+##   .. ..$ : chr &quot;https://t.co/P9S1TyYRNc&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/7td8FbUneC&quot;
+##   .. ..$ : chr &quot;https://t.co/DqnT53BrbB&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/3yjK72XnyE&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/ILNGdgMfAt&quot;
+##   .. ..$ : chr &quot;https://t.co/1inZH0aXv6&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/GznGeVjTHy&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/akQ9qPhhQS&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/hN0U0z3MKn&quot;
+##   .. ..$ : chr &quot;https://t.co/wKnsjBGESd&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/8mr9rKX2Yk&quot;
+##   .. ..$ : chr &quot;https://t.co/hESWVg4xQI&quot;
+##   .. .. [list output truncated]
+##   ..$ urls_expanded_url      :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://www.emacswiki.org/emacs/TwitteringMode&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://bl0ggy.bl0ggy.in/kristine&quot;
+##   .. ..$ : chr &quot;http://on.mtv.com/14ioXbr&quot;
+##   .. ..$ : chr &quot;http://fw.to/yF0gyMD&quot;
+##   .. ..$ : chr &quot;http://politiken.dk/debat/kroniken/ECE2249036/da-jeg-fik-en-tumor-paa-stoerrelse-med-en-mandarin-i-hjernen/&quot;
+##   .. ..$ : chr &quot;http://goo.gl/4acWE5&quot;
+##   .. ..$ : chr &quot;http://rnkpr.com/a6b4c2y&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://shar.es/1Xbfx3&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://www.computerworld.com/article/2486425/business-intelligence-4-data-wrangling-tasks-in-r-for-advanced-beginners.html&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://embank.tk?t.co=@chadewalker72&quot;
+##   .. ..$ : chr &quot;http://stats.stackexchange.com/questions/73869/suppression-effect-in-regression-definition-and-visual-explanati&quot;| __truncated__
+##   .. ..$ : chr &quot;http://goo.gl/t5pWcg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://100.fintech.nl/finexkap&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://heckmanequation.org&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/AmstatNews/status/750793972973309952&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://www.vox.com/2016/8/4/12376522/political-idealism-enemy?utm_campaign=vox&amp;utm_content=article%3Abottom&amp;utm&quot;| __truncated__
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://youtu.be/qGUYGcGSWao&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://assessingpsyche.wordpress.com/2016/10/26/a-review-of-the-receptive-expressive-social-communication-asse&quot;| __truncated__
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://bit.ly/2f8MEyc&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://bit.ly/tinderbonfire&quot;
+##   .. ..$ : chr &quot;http://info.extensionengine.com/open-edx-for-revenue-generating-online-education&quot;
+##   .. ..$ : chr &quot;https://twitter.com/Paul_Yuhnovich/status/751034791882006528&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://www.wahoofitness.com/tickrx7minute&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://coursera.org/specializations/ruby-on-rails&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;https://www.rit.edu/science/up-stat&quot; &quot;https://www.rit.edu/science/datafest/&quot;
+##   .. ..$ : chr &quot;https://twitter.com/i/web/status/838702836238151681&quot;
+##   .. ..$ : chr &quot;https://medium.com/@openaq/bih-u-svjetskom-vrhu-zemalja-opasno-ugro%C5%BEenih-zaga%C4%91enjem-zraka-vrijeme-je-&quot;| __truncated__
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://www.producthunt.com/posts/textbot&quot;
+##   .. ..$ : chr &quot;https://www.wired.com/2017/03/biologists-teaching-code-survive/?mbid=social_twitter_onsiteshare&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/jamesrbuk/status/844157483056881664&quot;
+##   .. ..$ : chr &quot;https://twitter.com/i/web/status/845843186849263616&quot;
+##   .. ..$ : chr &quot;https://twitter.com/i/web/status/845847192581505025&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://ow.ly/AZ6930aJyBm&quot;
+##   .. ..$ : chr &quot;https://public.tableau.com/profile/nicholas.denaro#!/vizhome/Week15-OilandGold/Dashboard1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/i/web/status/855298673634299904&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/i/web/status/856944427683762176&quot;
+##   .. ..$ : chr &quot;http://www.manchestereveningnews.co.uk/news/greater-manchester-news/christie-touched-lives-now-need-12956060&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://www.instagram.com/p/BToILvNlDQU/&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/meandertail/status/865696426046738432&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://80000hours.org/problem-profiles/positively-shaping-artificial-intelligence/&quot;
+##   .. ..$ : chr &quot;https://twitter.com/zack_almquist/status/864322895220056065&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://github.com/ropenscilabs/skimr&quot;
+##   .. ..$ : chr &quot;http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0085047&quot;
+##   .. .. [list output truncated]
+##   ..$ media_url              :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/BwVHXDMIMAA73Iw.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CIqN_yzUMAARGF9.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CcN2K65UkAEyUGL.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CiOlw8cUUAAnzHG.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/tweet_video_thumb/Csff5d9VIAEJMBp.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/tweet_video_thumb/C2aUEsHXcAAu4d4.jpg&quot;
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C3VPem7W8AA5RUq.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C5XAov8WcAEi9Dt.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C8BfI4CVAAA4bk6.jpg&quot;
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C8FI8JUW0AQrrxG.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C9pjMfMUIAA-6xs.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/DAy2sqgVoAE0vvT.jpg&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ media_t.co             :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/wu1nkYoLvV&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/QRySTkxYR3&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/mXF4XapXkX&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/XPEzwcX4FA&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/r5B5uoADAk&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/KiaUs1XTHm&quot;
+##   .. ..$ : chr &quot;https://t.co/QrJLhkSINk&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/DcsT1s9p7k&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/RkV6PkwXaD&quot;
+##   .. ..$ : chr &quot;https://t.co/zkflnFWajq&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/HOT1J2GIfO&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/g739bXD2aZ&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ media_expanded_url     :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/swimcoach_larry/status/505889004496379904/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/MisterVonline/status/615460496053960704/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/nicmarsh101/status/703535931119308800/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/silentmoviegifs/status/776836094272737281/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/Manu_Corleone/status/821506861300088833/photo/1&quot;
+##   .. ..$ : chr &quot;https://twitter.com/kingcook1986/status/825653495575502849/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/BloomsburyBooks/status/834785171362684929/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/mcuban/status/846781342083923969/photo/1&quot;
+##   .. ..$ : chr &quot;https://twitter.com/BelgiqueMDE/status/847038445381996544/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/ncd8712/status/854104215521824770/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/_inundata/status/868269709996707840/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ media_type             :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;photo&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_url          :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/BwVHXDMIMAA73Iw.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CIqN_yzUMAARGF9.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/CcN2K65UkAEyUGL.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;http://pbs.twimg.com/media/CiOlw8cUUAAnzHG.jpg&quot; &quot;http://pbs.twimg.com/media/CiOlwvPUUAArQzg.jpg&quot; &quot;http://pbs.twimg.com/media/CiOlzFhUUAATShq.jpg&quot; &quot;http://pbs.twimg.com/media/CiOlzFiU4AA3SvM.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/tweet_video_thumb/Csff5d9VIAEJMBp.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/tweet_video_thumb/C2aUEsHXcAAu4d4.jpg&quot;
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C3VPem7W8AA5RUq.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C5XAov8WcAEi9Dt.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C8BfI4CVAAA4bk6.jpg&quot;
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C8FI8JUW0AQrrxG.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/C9pjMfMUIAA-6xs.jpg&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://pbs.twimg.com/media/DAy2sqgVoAE0vvT.jpg&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_t.co         :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/wu1nkYoLvV&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;http://t.co/QRySTkxYR3&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/mXF4XapXkX&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;https://t.co/XPEzwcX4FA&quot; &quot;https://t.co/XPEzwcX4FA&quot; &quot;https://t.co/XPEzwcX4FA&quot; &quot;https://t.co/XPEzwcX4FA&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/r5B5uoADAk&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/KiaUs1XTHm&quot;
+##   .. ..$ : chr &quot;https://t.co/QrJLhkSINk&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/DcsT1s9p7k&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/RkV6PkwXaD&quot;
+##   .. ..$ : chr &quot;https://t.co/zkflnFWajq&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/HOT1J2GIfO&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://t.co/g739bXD2aZ&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_expanded_url :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/swimcoach_larry/status/505889004496379904/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/MisterVonline/status/615460496053960704/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/nicmarsh101/status/703535931119308800/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot; &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot; &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot; &quot;https://twitter.com/TaoYANLogos/status/730609870357962753/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/silentmoviegifs/status/776836094272737281/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/Manu_Corleone/status/821506861300088833/photo/1&quot;
+##   .. ..$ : chr &quot;https://twitter.com/kingcook1986/status/825653495575502849/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/BloomsburyBooks/status/834785171362684929/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/mcuban/status/846781342083923969/photo/1&quot;
+##   .. ..$ : chr &quot;https://twitter.com/BelgiqueMDE/status/847038445381996544/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/ncd8712/status/854104215521824770/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;https://twitter.com/_inundata/status/868269709996707840/photo/1&quot;
+##   .. ..$ : chr NA
+##   .. .. [list output truncated]
+##   ..$ ext_media_type         : chr [1:4421] NA NA NA NA ...
+##   ..$ mentions_user_id       :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;45292558&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;164194146&quot;
+##   .. ..$ : chr &quot;16095150&quot;
+##   .. ..$ : chr &quot;18318677&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;2367911&quot; &quot;18159470&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;24251248&quot; &quot;119728086&quot; &quot;62490772&quot; &quot;119728086&quot;
+##   .. ..$ : chr &quot;2150919206&quot;
+##   .. ..$ : chr &quot;15445811&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;16399949&quot;
+##   .. ..$ : chr &quot;14116807&quot;
+##   .. ..$ : chr &quot;339003677&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;1891806212&quot;
+##   .. ..$ : chr [1:2] &quot;25069929&quot; &quot;216430965&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;3462072440&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;305244640&quot; &quot;845992842&quot; &quot;2920995179&quot;
+##   .. ..$ : chr [1:2] &quot;2646262723&quot; &quot;136290059&quot;
+##   .. ..$ : chr &quot;102095809&quot;
+##   .. ..$ : chr &quot;115754120&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;15601251&quot;
+##   .. ..$ : chr &quot;493127463&quot;
+##   .. ..$ : chr &quot;286622708&quot;
+##   .. ..$ : chr [1:2] &quot;43878033&quot; &quot;49413866&quot;
+##   .. ..$ : chr &quot;4104122234&quot;
+##   .. ..$ : chr &quot;160182741&quot;
+##   .. ..$ : chr &quot;2347049341&quot;
+##   .. ..$ : chr &quot;869884326&quot;
+##   .. ..$ : chr &quot;168658290&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;847112444&quot;
+##   .. ..$ : chr [1:2] &quot;2707179805&quot; &quot;2157479071&quot;
+##   .. ..$ : chr &quot;2993751197&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;102322045&quot; &quot;14273050&quot;
+##   .. ..$ : chr &quot;3405997451&quot;
+##   .. ..$ : chr &quot;5520952&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;48246564&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;294729093&quot; &quot;239352928&quot; &quot;1545976987&quot;
+##   .. ..$ : chr [1:2] &quot;743432061088899073&quot; &quot;1682801258&quot;
+##   .. ..$ : chr &quot;860173029384564737&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;5685812&quot; &quot;245217900&quot;
+##   .. ..$ : chr &quot;725757833178914817&quot;
+##   .. ..$ : chr &quot;499153417&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;18804364&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;69133574&quot; &quot;144529492&quot; &quot;2841558748&quot;
+##   .. ..$ : chr [1:3] &quot;159846289&quot; &quot;804027517506093057&quot; &quot;770490229769789440&quot;
+##   .. ..$ : chr &quot;2208027565&quot;
+##   .. ..$ : chr &quot;1344951&quot;
+##   .. ..$ : chr &quot;40578249&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;16228398&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;54300379&quot;
+##   .. ..$ : chr &quot;11348282&quot;
+##   .. ..$ : chr &quot;2864661851&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;26096131&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;341413775&quot;
+##   .. ..$ : chr &quot;19697415&quot;
+##   .. ..$ : chr &quot;16186995&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;109989715&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;90721862&quot; &quot;74725264&quot;
+##   .. ..$ : chr &quot;296798997&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;37495434&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;18839785&quot;
+##   .. ..$ : chr &quot;110688280&quot;
+##   .. ..$ : chr &quot;1282121312&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;4861027519&quot; &quot;52267508&quot;
+##   .. ..$ : chr [1:2] &quot;267256091&quot; &quot;19520842&quot;
+##   .. ..$ : chr [1:2] &quot;69133574&quot; &quot;222618390&quot;
+##   .. .. [list output truncated]
+##   ..$ mentions_screen_name   :List of 4421
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;hrishigads&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;quant_strat&quot;
+##   .. ..$ : chr &quot;visarz&quot;
+##   .. ..$ : chr &quot;bigdata&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;MTV&quot; &quot;macklemore&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:4] &quot;AndersBreinholt&quot; &quot;NielsFrid&quot; &quot;Geocomedy&quot; &quot;NielsFrid&quot;
+##   .. ..$ : chr &quot;maghrenov&quot;
+##   .. ..$ : chr &quot;Runkeeper&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;felixsalmon&quot;
+##   .. ..$ : chr &quot;ShareThis&quot;
+##   .. ..$ : chr &quot;FrontierMarkets&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;AcademicsSay&quot;
+##   .. ..$ : chr [1:2] &quot;MisterVonline&quot; &quot;Caspar_Lee&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;PET_SMlLES&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;Leaveran&quot; &quot;Finexkap&quot; &quot;FinTechNL&quot;
+##   .. ..$ : chr [1:2] &quot;kamarshall14&quot; &quot;Salomon_SA&quot;
+##   .. ..$ : chr &quot;AdaColau&quot;
+##   .. ..$ : chr &quot;heckmanequation&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;nickvujicic&quot;
+##   .. ..$ : chr &quot;carras16&quot;
+##   .. ..$ : chr &quot;PITFAR&quot;
+##   .. ..$ : chr [1:2] &quot;jburnmurdoch&quot; &quot;randal_olson&quot;
+##   .. ..$ : chr &quot;JdelpilarPhD&quot;
+##   .. ..$ : chr &quot;tigrillodelsur&quot;
+##   .. ..$ : chr &quot;voxdotcom&quot;
+##   .. ..$ : chr &quot;CloseTheGapInt&quot;
+##   .. ..$ : chr &quot;UHCougarFB&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;windsorhm&quot;
+##   .. ..$ : chr [1:2] &quot;vijayanpinarayi&quot; &quot;drthomasisaac&quot;
+##   .. ..$ : chr &quot;silentmoviegifs&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;jbschnittstelle&quot; &quot;NZZ&quot;
+##   .. ..$ : chr &quot;mchi_mcgill&quot;
+##   .. ..$ : chr &quot;paulocoelho&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;ExtensionEngine&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;ISGLOBALorg&quot; &quot;Patipatosa&quot; &quot;ISGlobal_Rad&quot;
+##   .. ..$ : chr [1:2] &quot;Qofficiel&quot; &quot;ericetquentin&quot;
+##   .. ..$ : chr &quot;Manu_Corleone&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;hrbrmstr&quot; &quot;timelyportfolio&quot;
+##   .. ..$ : chr &quot;randombox_es&quot;
+##   .. ..$ : chr &quot;StineNielsenEPI&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;BloomsburyBooks&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:3] &quot;hadleywickham&quot; &quot;kyle_e_walker&quot; &quot;hannah_recht&quot;
+##   .. ..$ : chr [1:3] &quot;pacocuak&quot; &quot;RLadiesAmes&quot; &quot;RLadiesGlobal&quot;
+##   .. ..$ : chr &quot;ProductHunt&quot;
+##   .. ..$ : chr &quot;WIRED&quot;
+##   .. ..$ : chr &quot;Cryptoterra&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;mcuban&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;juliathibaud&quot;
+##   .. ..$ : chr &quot;NASA&quot;
+##   .. ..$ : chr &quot;ExpectingMamas&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;COSportsNut&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;MacarenaEstevez&quot;
+##   .. ..$ : chr &quot;billmaher&quot;
+##   .. ..$ : chr &quot;kickstarter&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;metinfeyzioglu&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;ColumbiaLaw&quot; &quot;ColumbiaClimate&quot;
+##   .. ..$ : chr &quot;fukusima88&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;mrcroissant&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr &quot;narendramodi&quot;
+##   .. ..$ : chr &quot;MatterOfStats&quot;
+##   .. ..$ : chr &quot;waitbutwhy&quot;
+##   .. ..$ : chr NA
+##   .. ..$ : chr [1:2] &quot;nousegonsevoo&quot; &quot;Chef_Paulo&quot;
+##   .. ..$ : chr [1:2] &quot;_inundata&quot; &quot;AmeliaMN&quot;
+##   .. ..$ : chr [1:2] &quot;hadleywickham&quot; &quot;benmschmidt&quot;
+##   .. .. [list output truncated]
+##   ..$ lang                   : chr [1:4421] &quot;en&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
+##   ..$ quoted_status_id       : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_text            : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_created_at      : POSIXct[1:4421], format: NA ...
+##   ..$ quoted_source          : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_favorite_count  : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_retweet_count   : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_user_id         : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_screen_name     : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_name            : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_followers_count : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_friends_count   : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_statuses_count  : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ quoted_location        : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_description     : chr [1:4421] NA NA NA NA ...
+##   ..$ quoted_verified        : logi [1:4421] NA NA NA NA NA NA ...
+##   ..$ retweet_status_id      : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_text           : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_created_at     : POSIXct[1:4421], format: NA ...
+##   ..$ retweet_source         : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_favorite_count : int [1:4421] NA NA NA NA NA 16 4 NA NA 25 ...
+##   ..$ retweet_retweet_count  : int [1:4421] NA NA NA NA NA 2 1 NA NA 35 ...
+##   ..$ retweet_user_id        : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_screen_name    : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_name           : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_followers_count: int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_friends_count  : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_statuses_count : int [1:4421] NA NA NA NA NA NA NA NA NA NA ...
+##   ..$ retweet_location       : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_description    : chr [1:4421] NA NA NA NA ...
+##   ..$ retweet_verified       : logi [1:4421] NA NA NA NA NA NA ...
+##   ..$ place_url              : chr [1:4421] NA NA NA NA ...
+##   ..$ place_name             : chr [1:4421] NA NA NA NA ...
+##   ..$ place_full_name        : chr [1:4421] NA NA NA NA ...
+##   ..$ place_type             : chr [1:4421] NA NA NA NA ...
+##   ..$ country                : chr [1:4421] NA NA NA NA ...
+##   ..$ country_code           : chr [1:4421] NA NA NA NA ...
+##   ..$ geo_coords             :List of 4421
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. .. [list output truncated]
+##   ..$ coords_coords          :List of 4421
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. ..$ : num [1:2] NA NA
+##   .. .. [list output truncated]
+##   ..$ bbox_coords            :List of 4421
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] -93.7 -93.6 -93.6 -93.7 42 ...
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
+##   .. .. [list output truncated]</code></pre>
 </div>
 <div id="see-also-13" class="section level2">
 <h2><span class="header-section-number">16.4</span> See Also</h2>
@@ -715,10 +4153,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
