@@ -12,3 +12,6 @@ epub:
 
 word:
 	Rscript -e 'bookdown::render_book("index.Rmd", "bookdown::word_document2", quiet=FALSE)' 
+
+sync:
+	rsync -azP --delete docs/ bob@rud.is:/var/sites/rud.is/books/21-recipes/

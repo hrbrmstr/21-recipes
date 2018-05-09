@@ -1,3 +1,12 @@
-# About the Author {-}
+# About the Authors {-}
 
-Bob Rudis is a cybersecurity researcher and R afficionado presently thwarting cyber evildoers as [Master] Chief Data Scientist at Rapid7. He was formerly a Security Data Scientist & Managing Principal at Verizon, overseeing the team that produces the annual Data Breach Investigations Report. Bob is a serial tweeter (<https://twitter.com/hrbrmstr>), avid blogger (<https://rud.is/b>), author (Data-Driven Security — [<http://amzn.to/2CKvrqX>]), Stack Overflow contributor (<https://stackoverflow.com/users/1457051/hrbrmstr>), speaker, and regular contributor to the open source community (<https://github.com/hrbrmstr>). He is the author of several packages on CRAN including **ggalt**, **hrbrthemes**, **waffle**, **statebins**.
+Bob Rudis is a cybersecurity researcher and R afficionado presently thwartng cyber evildoers as [Master] Chief Data Scientist at Rapid7. He was formerly a Security Data Scientist & Managing Principal at Verizon, overseeing the team that produces the annual Data Breach Investigations Report. Bob is a serial tweeter (<https://twitter.com/hrbrmstr>), avid blogger (<https://rud.is/b>), author (Data-Driven Security — [<http://amzn.to/2CKvrqX>]), Stack Overflow contributor (<https://stackoverflow.com/users/1457051/hrbrmstr>), speaker, and regular contributor to the open source community (<https://github.com/hrbrmstr>). He is the author of several packages on CRAN including **ggalt**, **hrbrthemes**, **waffle**, **statebins**.
+
+Originally from Edinburgh, Scotland, Paul Campbell studied economics at the University of St Andrews and now works as a research analyst and R programmer at London based consultancy [Culture of Insight](https://cultureofinsight.com). You can follow his ramblings about the wonders of R, `shiny` and data visualization on the company blog (<https://cultureofinsight.com/blog>) and find him sporadically tweeting about music and golf (as well as R) here <https://twitter.com/paulcampbell91>. He would like to thank Bob Rudis for the opportunity to contribute to this great resource.
+
+## Contributors
+
+This is an open source effort and the goal is to have all assistance acknowledged as it is very, very, very much appreciated. The following folks have gone out of their way to make this a better resource. They. Are. Awesome.
+
+- Daniela Vazquez (<https://github.com/d4tagirl>)
+- Patrick Kennedy (<https://github.com/pkq>)
