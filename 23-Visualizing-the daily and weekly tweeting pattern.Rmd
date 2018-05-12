@@ -1,0 +1,60 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+# Visualizing a Graph of Retweet Relationships
+
+## Problem
+You want to visualize the daily and weekly activity pattern of a set of tweets.
+
+## Solution
+
+As time is cyclical as well is linear, as solution to display tweets within cyclic periods involves converting the tweet time information from a linear to a cyclic perspective.
+
+```{r 23_lib, message=FALSE, warning=FALSE}
+library(rtweet)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(scales)
+```
+
+First, we gather tweets for an account
+
+```{r 23_collect, message=FALSE, warning=FALSE, cache=TRUE}
+examplee <- "thoughtfulnz"
+twitterings <-  get_timeline(examplee, n = 3200)
+```
+
+If the tweets gathered are from the same timezone, we get a clearer picture of daily patterns by converting to local time. Twitter marks the creation time in UTC, and if a region observes Daylight Savings, then this leads twitter activity suddenly being displaced by one hour on two occasions during the year. When viewed in aggregate this blurs sharp distinctions in the data.
+
+```{r 23_localtz, message=FALSE, warning=FALSE, cache=TRUE}
+local_tz = "Pacific/Auckland"
+```
+
+To turn linear time into cyclic time, we assign the hour, minute, and second the tweet took place to the same (arbitrary) day
+
+```{r 23_cycles, message=FALSE, warning=FALSE, cache=TRUE}
+cyclic <- twitterings %>% 
+  mutate(local_at = with_tz(created_at, local_tz),
+         single_day = ISOdatetime(2018, 5, 12, 
+                                  hour(local_at), minute(local_at),
+                                  second(local_at), tz=local_tz),
+         week_day = wday(local_at, label=TRUE, abbr=TRUE, week_start = 1))
+```
+
+Note: setting the start date of the week is available in lubridate 1.7.1 (which I used) and more recent, in older versions you may need to to make sure week_day is a factor (ordered category) and set the desired order.
+
+For a graph, we are representing the patterns as a simple cloud of points through the day, each day rising as a vertical column beginning with (local) midnight.
+
+```{r 23_graph, message=FALSE, warning=FALSE, cache=TRUE, fig.width=8, fig.height=6}
+ggplot(cyclic, aes(x=week_day, y= single_day)) + 
+  geom_jitter(width = 0.1, alpha=0.3, size=0.3) + theme_minimal() +
+  scale_y_datetime(labels = date_format("%H:%M", tz=local_tz)) +
+  ylab("Time of Day") + xlab("Day of Week") + 
+  ggtitle(paste("Twitter activity,", local_tz, "timezone")) +
+  theme(legend.position="none")
+```
+
+Used for good, cyclic time can provide evidence of bots and fraudulent accounts. But, should you apply it to your own account, you will get a graphical demonstration of the amount of information you leak when small pieces are viewed in aggregate. Peaks, lulls, gaps when others do not have them, and lack of gaps when other accounts are silent are all records of how you go about your daily activities. Tiny records, but they add up.
