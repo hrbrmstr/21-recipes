@@ -36,25 +36,18 @@ The code below will try to get the whole list of followers, and their stats.
 
 ```{r followers, eval=FALSE, message=FALSE, warning=FALSE}
 users <- "hadleywickham"
-
-(follower_count <- rtweet::lookup_users(users))
-(followers <- rtweet::get_followers(users,
+follower_count <- rtweet::lookup_users(users)
+followers <- rtweet::get_followers(users,
   n = follower_count$followers_count,
   retryonratelimit = TRUE
-))
+)
 
 # Twitter's API takes 15 minutes for each 90k lookups, so this can take a while.
-(followers_data <- rtweet::lookup_users(followers$user_id))
-```
-
-
-```{r followers_already_loaded, message=FALSE, warning=FALSE}
+followers_data <- rtweet::lookup_users(followers$user_id)
 
 # If already available, we can load directly:
-followers_data <- readRDS("hadley_followers_2018-07-21.RDS")
-
-# This file's pretty big, 175 Mb when run in July 2018.
-format(object.size(followers_data), units = "auto")
+followers_data <-
+  readRDS("hadley_followers_2018-07-21_excerpt")
 ```
 
 We won't be using all that, so for this purpose we'll save a smaller file with a subset of fields. Twitter serves the followers with the most recent first, and the oldest last. 
