@@ -47,7 +47,7 @@ followers_data <- rtweet::lookup_users(followers$user_id)
 
 # If already available, we can load directly:
 followers_data <-
-  readRDS("hadley_followers_2018-07-21_excerpt")
+  readRDS("hadley_followers_2018-07-21_excerpt.RDS")
 ```
 
 We won't be using all that, so for this purpose we'll save a smaller file with a subset of fields. Twitter serves the followers with the most recent first, and the oldest last. 
