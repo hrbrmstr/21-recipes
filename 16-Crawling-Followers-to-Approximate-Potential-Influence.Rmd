@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Crawling Followers to Approximate Primary Influence
 
 ## Problem
@@ -14,7 +19,7 @@ Use the `rtweet::lookup_users()` and `rtweet::get_followers()` combination to pu
 
 _However_, once-removed (so the follower counts of those directly following the target user) has some merit. Marketing folks have varying names for this statistic, so we'll just call it "primary influence" since there is legitimate potential of reaching this once-removed audience. Ideally, the retweet- and fav-counts should be factored in, but that can be added on as an exercise.
 
-Let's create a helper function that will capture a snapshot of this _primary influence_ metric. It will take in a user id or name, pull in that user info and the details of their followers and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the "number of followers" distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overridden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the function can be modified --- as an exercise -- to test the distribution and auto-pick scales).
+Let's create a helper function that will capture a snapshot of this _primary influence_ metric. It will take in a user id or name, pull in that user info and the details of their followers (specify `TRUE` to the `all` parameter if the user has more than 5,000 followers and you want to wait even longer to get their complete influence) and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the "number of followers" distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overridden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the function can be modified --- as an exercise -- to test the distribution and auto-pick scales).
 
 ```{r 16_lib, message=FALSE, warning=FALSE}
 library(rtweet)
@@ -25,26 +30,31 @@ library(tidyverse)
 extrafont::loadfonts(quiet=TRUE)
 ```
 ```{r 16_snap, message=FALSE, warning=FALSE, cache=TRUE}
-influence_snapshot <- function(user, trans=c("log10", "identity")) {
+influence_snapshot <- function(user, all = FALSE, trans=c("log10", "identity")) {
   
   user <- user[1]
   trans <- match.arg(tolower(trimws(trans[1])), c("log10", "identity"))
   
+  scale_lab <- ""
+  if (trans == "log10") sclae_lab <- " (log scale)"
+  
   user_info <- lookup_users(user)
+  
+  n <- if (all[1]) user_info$followers_count else 5000
   
   user_followers <- get_followers(user_info$user_id)
   uf_details <- lookup_users(user_followers$user_id)
   
-  primary_influence <- scales::comma(sum(c(uf_details$followers_count, user_info$followers_count)))
+  primary_influence <- sum(c(uf_details$followers_count, user_info$followers_count))
   
   filter(uf_details, followers_count > 0) %>% 
     ggplot(aes(followers_count)) +
     geom_density(aes(y=..count..), color="lightslategray", fill="lightslategray",
                  alpha=2/3, size=1) +
-    scale_x_continuous(expand=c(0,0), trans="log10", labels=scales::comma) +
+    scale_x_continuous(expand=c(0,0), trans=trans, labels=scales::comma) +
     scale_y_comma() +
     labs(
-      x="Number of Followers of Followers (log scale)", 
+      x=sprintf("Number of Followers of Followers%s", scale_lab), 
       y="Number of Followers",
       title=sprintf("Follower chain distribution of %s (@%s)", user_info$name, user_info$screen_name),
       subtitle=sprintf("Follower count: %s; Primary influence/reach: %s", 

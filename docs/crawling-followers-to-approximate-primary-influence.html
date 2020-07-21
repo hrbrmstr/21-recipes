@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>21 Recipes for Mining Twitter Data with rtweet</title>
-  <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Recipe 16 Crawling Followers to Approximate Primary Influence | 21 Recipes for Mining Twitter Data with rtweet</title>
+  <meta name="description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="21 Recipes for Mining Twitter Data with rtweet" />
+  <meta property="og:title" content="Recipe 16 Crawling Followers to Approximate Primary Influence | 21 Recipes for Mining Twitter Data with rtweet" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://rud.is/books/21-recipes/" />
   
@@ -17,29 +16,34 @@
   <meta name="github-repo" content="hrbrmstr/21-recipes" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="21 Recipes for Mining Twitter Data with rtweet" />
+  <meta name="twitter:title" content="Recipe 16 Crawling Followers to Approximate Primary Influence | 21 Recipes for Mining Twitter Data with rtweet" />
   
   <meta name="twitter:description" content="An R/rtweet edition of Matthew A. Russell’s Python Twitter Recipes Book" />
   
 
-<meta name="author" content="Bob Rudis">
+<meta name="author" content="Bob Rudis" />
 
 
-<meta name="date" content="2018-05-09">
+<meta name="date" content="2018-05-09" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="resolving-user-profile-information.html">
-<link rel="next" href="analyzing-friendship-relationships-such-as-friends-of-friends.html">
+<link rel="prev" href="resolving-user-profile-information.html"/>
+<link rel="next" href="analyzing-friendship-relationships-such-as-friends-of-friends.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -50,28 +54,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +82,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -132,130 +134,153 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a><ul>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a>
+<ul>
 <li class="chapter" data-level="0.1" data-path="about-the-authors.html"><a href="about-the-authors.html#contributors"><i class="fa fa-check"></i><b>0.1</b> Contributors</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html"><i class="fa fa-check"></i><b>1</b> Using OAuth to Access Twitter APIs</a><ul>
+<li class="chapter" data-level="1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html"><i class="fa fa-check"></i><b>1</b> Using OAuth to Access Twitter APIs</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#problem"><i class="fa fa-check"></i><b>1.1</b> Problem</a></li>
 <li class="chapter" data-level="1.2" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#solution"><i class="fa fa-check"></i><b>1.2</b> Solution</a></li>
 <li class="chapter" data-level="1.3" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#discussion"><i class="fa fa-check"></i><b>1.3</b> Discussion</a></li>
 <li class="chapter" data-level="1.4" data-path="using-oauth-to-access-twitter-apis.html"><a href="using-oauth-to-access-twitter-apis.html#see-also"><i class="fa fa-check"></i><b>1.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html"><i class="fa fa-check"></i><b>2</b> Looking Up the Trending Topics</a><ul>
+<li class="chapter" data-level="2" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html"><i class="fa fa-check"></i><b>2</b> Looking Up the Trending Topics</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#problem-1"><i class="fa fa-check"></i><b>2.1</b> Problem</a></li>
 <li class="chapter" data-level="2.2" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#solution-1"><i class="fa fa-check"></i><b>2.2</b> Solution</a></li>
 <li class="chapter" data-level="2.3" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#discussion-1"><i class="fa fa-check"></i><b>2.3</b> Discussion</a></li>
 <li class="chapter" data-level="2.4" data-path="looking-up-the-trending-topics.html"><a href="looking-up-the-trending-topics.html#see-also-1"><i class="fa fa-check"></i><b>2.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html"><i class="fa fa-check"></i><b>3</b> Extracting Tweet Entities</a><ul>
+<li class="chapter" data-level="3" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html"><i class="fa fa-check"></i><b>3</b> Extracting Tweet Entities</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#problem-2"><i class="fa fa-check"></i><b>3.1</b> Problem</a></li>
 <li class="chapter" data-level="3.2" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#solution-2"><i class="fa fa-check"></i><b>3.2</b> Solution</a></li>
 <li class="chapter" data-level="3.3" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#discussion-2"><i class="fa fa-check"></i><b>3.3</b> Discussion</a></li>
 <li class="chapter" data-level="3.4" data-path="extracting-tweet-entities.html"><a href="extracting-tweet-entities.html#see-also-2"><i class="fa fa-check"></i><b>3.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html"><i class="fa fa-check"></i><b>4</b> Searching for Tweets</a><ul>
+<li class="chapter" data-level="4" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html"><i class="fa fa-check"></i><b>4</b> Searching for Tweets</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#problem-3"><i class="fa fa-check"></i><b>4.1</b> Problem</a></li>
 <li class="chapter" data-level="4.2" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#solution-3"><i class="fa fa-check"></i><b>4.2</b> Solution</a></li>
 <li class="chapter" data-level="4.3" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#discussion-3"><i class="fa fa-check"></i><b>4.3</b> Discussion</a></li>
 <li class="chapter" data-level="4.4" data-path="searching-for-tweets.html"><a href="searching-for-tweets.html#see-also-3"><i class="fa fa-check"></i><b>4.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html"><i class="fa fa-check"></i><b>5</b> Extracting a Retweet’s Origins</a><ul>
+<li class="chapter" data-level="5" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html"><i class="fa fa-check"></i><b>5</b> Extracting a Retweet’s Origins</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#problem-4"><i class="fa fa-check"></i><b>5.1</b> Problem</a></li>
 <li class="chapter" data-level="5.2" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#solution-4"><i class="fa fa-check"></i><b>5.2</b> Solution</a></li>
 <li class="chapter" data-level="5.3" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#discussion-4"><i class="fa fa-check"></i><b>5.3</b> Discussion</a></li>
 <li class="chapter" data-level="5.4" data-path="extracting-a-retweets-origins.html"><a href="extracting-a-retweets-origins.html#see-also-4"><i class="fa fa-check"></i><b>5.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>6</b> Creating a Graph of Retweet Relationships</a><ul>
+<li class="chapter" data-level="6" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>6</b> Creating a Graph of Retweet Relationships</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#problem-5"><i class="fa fa-check"></i><b>6.1</b> Problem</a></li>
 <li class="chapter" data-level="6.2" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#solution-5"><i class="fa fa-check"></i><b>6.2</b> Solution</a></li>
 <li class="chapter" data-level="6.3" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#discussion-5"><i class="fa fa-check"></i><b>6.3</b> Discussion</a></li>
 <li class="chapter" data-level="6.4" data-path="creating-a-graph-of-retweet-relationships.html"><a href="creating-a-graph-of-retweet-relationships.html#see-also-5"><i class="fa fa-check"></i><b>6.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>7</b> Visualizing a Graph of Retweet Relationships</a><ul>
+<li class="chapter" data-level="7" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html"><i class="fa fa-check"></i><b>7</b> Visualizing a Graph of Retweet Relationships</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#problem-6"><i class="fa fa-check"></i><b>7.1</b> Problem</a></li>
 <li class="chapter" data-level="7.2" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#solution-6"><i class="fa fa-check"></i><b>7.2</b> Solution</a></li>
 <li class="chapter" data-level="7.3" data-path="visualizing-a-graph-of-retweet-relationships.html"><a href="visualizing-a-graph-of-retweet-relationships.html#see-also-6"><i class="fa fa-check"></i><b>7.3</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html"><i class="fa fa-check"></i><b>8</b> Capturing Tweets in Real-time with the Streaming API</a><ul>
+<li class="chapter" data-level="8" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html"><i class="fa fa-check"></i><b>8</b> Capturing Tweets in Real-time with the Streaming API</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#problem-7"><i class="fa fa-check"></i><b>8.1</b> Problem</a></li>
 <li class="chapter" data-level="8.2" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#solution-7"><i class="fa fa-check"></i><b>8.2</b> Solution</a></li>
 <li class="chapter" data-level="8.3" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#discussion-6"><i class="fa fa-check"></i><b>8.3</b> Discussion</a></li>
 <li class="chapter" data-level="8.4" data-path="capturing-tweets-in-real-time-with-the-streaming-api.html"><a href="capturing-tweets-in-real-time-with-the-streaming-api.html#see-also-7"><i class="fa fa-check"></i><b>8.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html"><i class="fa fa-check"></i><b>9</b> Making Robust Twitter Requests</a><ul>
+<li class="chapter" data-level="9" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html"><i class="fa fa-check"></i><b>9</b> Making Robust Twitter Requests</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#problem-8"><i class="fa fa-check"></i><b>9.1</b> Problem</a></li>
 <li class="chapter" data-level="9.2" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#solution-8"><i class="fa fa-check"></i><b>9.2</b> Solution</a></li>
 <li class="chapter" data-level="9.3" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#discussion-7"><i class="fa fa-check"></i><b>9.3</b> Discussion</a></li>
 <li class="chapter" data-level="9.4" data-path="making-robust-twitter-requests.html"><a href="making-robust-twitter-requests.html#see-also-8"><i class="fa fa-check"></i><b>9.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html"><i class="fa fa-check"></i><b>10</b> Harvesting Tweets</a><ul>
+<li class="chapter" data-level="10" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html"><i class="fa fa-check"></i><b>10</b> Harvesting Tweets</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#problem-9"><i class="fa fa-check"></i><b>10.1</b> Problem</a></li>
 <li class="chapter" data-level="10.2" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#solution-9"><i class="fa fa-check"></i><b>10.2</b> Solution</a></li>
 <li class="chapter" data-level="10.3" data-path="harvesting-tweets.html"><a href="harvesting-tweets.html#discussion-8"><i class="fa fa-check"></i><b>10.3</b> Discussion</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html"><i class="fa fa-check"></i><b>11</b> Creating a Tag Cloud from Tweet Entities</a><ul>
+<li class="chapter" data-level="11" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html"><i class="fa fa-check"></i><b>11</b> Creating a Tag Cloud from Tweet Entities</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#problem-10"><i class="fa fa-check"></i><b>11.1</b> Problem</a></li>
 <li class="chapter" data-level="11.2" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#solution-10"><i class="fa fa-check"></i><b>11.2</b> Solution</a></li>
 <li class="chapter" data-level="11.3" data-path="creating-a-tag-cloud-from-tweet-entities.html"><a href="creating-a-tag-cloud-from-tweet-entities.html#discussion-9"><i class="fa fa-check"></i><b>11.3</b> Discussion</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html"><i class="fa fa-check"></i><b>12</b> Summarizing Link Targets</a><ul>
+<li class="chapter" data-level="12" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html"><i class="fa fa-check"></i><b>12</b> Summarizing Link Targets</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#problem-11"><i class="fa fa-check"></i><b>12.1</b> Problem</a></li>
 <li class="chapter" data-level="12.2" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#solution-11"><i class="fa fa-check"></i><b>12.2</b> Solution</a></li>
 <li class="chapter" data-level="12.3" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#discussion-10"><i class="fa fa-check"></i><b>12.3</b> Discussion</a></li>
 <li class="chapter" data-level="12.4" data-path="summarizing-link-targets.html"><a href="summarizing-link-targets.html#see-also-9"><i class="fa fa-check"></i><b>12.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html"><i class="fa fa-check"></i><b>13</b> Harvesting Friends and Followers</a><ul>
+<li class="chapter" data-level="13" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html"><i class="fa fa-check"></i><b>13</b> Harvesting Friends and Followers</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#problem-12"><i class="fa fa-check"></i><b>13.1</b> Problem</a></li>
 <li class="chapter" data-level="13.2" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#solution-12"><i class="fa fa-check"></i><b>13.2</b> Solution</a></li>
 <li class="chapter" data-level="13.3" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#discussion-11"><i class="fa fa-check"></i><b>13.3</b> Discussion</a></li>
 <li class="chapter" data-level="13.4" data-path="harvesting-friends-and-followers.html"><a href="harvesting-friends-and-followers.html#see-also-10"><i class="fa fa-check"></i><b>13.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html"><i class="fa fa-check"></i><b>14</b> Performing Setwise Operations on Friendship Data</a><ul>
+<li class="chapter" data-level="14" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html"><i class="fa fa-check"></i><b>14</b> Performing Setwise Operations on Friendship Data</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#problem-13"><i class="fa fa-check"></i><b>14.1</b> Problem</a></li>
 <li class="chapter" data-level="14.2" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#solution-13"><i class="fa fa-check"></i><b>14.2</b> Solution</a></li>
 <li class="chapter" data-level="14.3" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#discussion-12"><i class="fa fa-check"></i><b>14.3</b> Discussion</a></li>
 <li class="chapter" data-level="14.4" data-path="performing-setwise-operations-on-friendship-data.html"><a href="performing-setwise-operations-on-friendship-data.html#see-also-11"><i class="fa fa-check"></i><b>14.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html"><i class="fa fa-check"></i><b>15</b> Resolving User Profile Information</a><ul>
+<li class="chapter" data-level="15" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html"><i class="fa fa-check"></i><b>15</b> Resolving User Profile Information</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#problem-14"><i class="fa fa-check"></i><b>15.1</b> Problem</a></li>
 <li class="chapter" data-level="15.2" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#solution-14"><i class="fa fa-check"></i><b>15.2</b> Solution</a></li>
 <li class="chapter" data-level="15.3" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#discussion-13"><i class="fa fa-check"></i><b>15.3</b> Discussion</a></li>
 <li class="chapter" data-level="15.4" data-path="resolving-user-profile-information.html"><a href="resolving-user-profile-information.html#see-also-12"><i class="fa fa-check"></i><b>15.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Primary Influence</a><ul>
+<li class="chapter" data-level="16" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html"><i class="fa fa-check"></i><b>16</b> Crawling Followers to Approximate Primary Influence</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#problem-15"><i class="fa fa-check"></i><b>16.1</b> Problem</a></li>
 <li class="chapter" data-level="16.2" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#solution-15"><i class="fa fa-check"></i><b>16.2</b> Solution</a></li>
 <li class="chapter" data-level="16.3" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#discussion-14"><i class="fa fa-check"></i><b>16.3</b> Discussion</a></li>
 <li class="chapter" data-level="16.4" data-path="crawling-followers-to-approximate-primary-influence.html"><a href="crawling-followers-to-approximate-primary-influence.html#see-also-13"><i class="fa fa-check"></i><b>16.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html"><i class="fa fa-check"></i><b>17</b> Analyzing Friendship Relationships such as Friends of Friends</a><ul>
+<li class="chapter" data-level="17" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html"><i class="fa fa-check"></i><b>17</b> Analyzing Friendship Relationships such as Friends of Friends</a>
+<ul>
 <li class="chapter" data-level="17.1" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#problem-16"><i class="fa fa-check"></i><b>17.1</b> Problem</a></li>
 <li class="chapter" data-level="17.2" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#solution-16"><i class="fa fa-check"></i><b>17.2</b> Solution</a></li>
 <li class="chapter" data-level="17.3" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#discussion-15"><i class="fa fa-check"></i><b>17.3</b> Discussion</a></li>
 <li class="chapter" data-level="17.4" data-path="analyzing-friendship-relationships-such-as-friends-of-friends.html"><a href="analyzing-friendship-relationships-such-as-friends-of-friends.html#see-also-14"><i class="fa fa-check"></i><b>17.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html"><i class="fa fa-check"></i><b>18</b> Analyzing Friendship Cliques</a><ul>
+<li class="chapter" data-level="18" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html"><i class="fa fa-check"></i><b>18</b> Analyzing Friendship Cliques</a>
+<ul>
 <li class="chapter" data-level="18.1" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#problem-17"><i class="fa fa-check"></i><b>18.1</b> Problem</a></li>
 <li class="chapter" data-level="18.2" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#solution-17"><i class="fa fa-check"></i><b>18.2</b> Solution</a></li>
 <li class="chapter" data-level="18.3" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#discussion-16"><i class="fa fa-check"></i><b>18.3</b> Discussion</a></li>
 <li class="chapter" data-level="18.4" data-path="analyzing-friendship-cliques.html"><a href="analyzing-friendship-cliques.html#see-also-15"><i class="fa fa-check"></i><b>18.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><i class="fa fa-check"></i><b>19</b> Analyzing the Authors of Tweets that Appear in Search Results</a><ul>
+<li class="chapter" data-level="19" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><i class="fa fa-check"></i><b>19</b> Analyzing the Authors of Tweets that Appear in Search Results</a>
+<ul>
 <li class="chapter" data-level="19.1" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#problem-18"><i class="fa fa-check"></i><b>19.1</b> Problem</a></li>
 <li class="chapter" data-level="19.2" data-path="analyzing-the-authors-of-tweets-that-appear-in-search-results.html"><a href="analyzing-the-authors-of-tweets-that-appear-in-search-results.html#solution-18"><i class="fa fa-check"></i><b>19.2</b> Solution</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html"><i class="fa fa-check"></i><b>20</b> Visualizing Geodata with a Dorling Cartogram</a><ul>
+<li class="chapter" data-level="20" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html"><i class="fa fa-check"></i><b>20</b> Visualizing Geodata with a Dorling Cartogram</a>
+<ul>
 <li class="chapter" data-level="20.1" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#problem-19"><i class="fa fa-check"></i><b>20.1</b> Problem</a></li>
 <li class="chapter" data-level="20.2" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#solution-19"><i class="fa fa-check"></i><b>20.2</b> Solution</a></li>
 <li class="chapter" data-level="20.3" data-path="visualizing-geodata-with-a-dorling-cartogram.html"><a href="visualizing-geodata-with-a-dorling-cartogram.html#discussion-17"><i class="fa fa-check"></i><b>20.3</b> Discussion</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html"><i class="fa fa-check"></i><b>21</b> Geocoding Locations from Profiles (or Elsewhere)</a><ul>
+<li class="chapter" data-level="21" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html"><i class="fa fa-check"></i><b>21</b> Geocoding Locations from Profiles (or Elsewhere)</a>
+<ul>
 <li class="chapter" data-level="21.1" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#problem-20"><i class="fa fa-check"></i><b>21.1</b> Problem</a></li>
 <li class="chapter" data-level="21.2" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#solution-20"><i class="fa fa-check"></i><b>21.2</b> Solution</a></li>
 <li class="chapter" data-level="21.3" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#discussion-18"><i class="fa fa-check"></i><b>21.3</b> Discussion</a></li>
 <li class="chapter" data-level="21.4" data-path="geocoding-locations-from-profiles-or-elsewhere.html"><a href="geocoding-locations-from-profiles-or-elsewhere.html#see-also-16"><i class="fa fa-check"></i><b>21.4</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="visualizing-intersecting-follower-sets-with-upsetr.html"><a href="visualizing-intersecting-follower-sets-with-upsetr.html"><i class="fa fa-check"></i><b>22</b> Visualizing Intersecting Follower Sets with UpSetR</a><ul>
+<li class="chapter" data-level="22" data-path="visualizing-intersecting-follower-sets-with-upsetr.html"><a href="visualizing-intersecting-follower-sets-with-upsetr.html"><i class="fa fa-check"></i><b>22</b> Visualizing Intersecting Follower Sets with UpSetR</a>
+<ul>
 <li class="chapter" data-level="22.1" data-path="visualizing-intersecting-follower-sets-with-upsetr.html"><a href="visualizing-intersecting-follower-sets-with-upsetr.html#problem-21"><i class="fa fa-check"></i><b>22.1</b> Problem</a></li>
 <li class="chapter" data-level="22.2" data-path="visualizing-intersecting-follower-sets-with-upsetr.html"><a href="visualizing-intersecting-follower-sets-with-upsetr.html#solution-21"><i class="fa fa-check"></i><b>22.2</b> Solution</a></li>
 <li class="chapter" data-level="22.3" data-path="visualizing-intersecting-follower-sets-with-upsetr.html"><a href="visualizing-intersecting-follower-sets-with-upsetr.html#discussion-19"><i class="fa fa-check"></i><b>22.3</b> Discussion</a></li>
@@ -281,61 +306,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="crawling-followers-to-approximate-primary-influence" class="section level1">
+<div id="crawling-followers-to-approximate-primary-influence" class="section level1" number="16">
 <h1><span class="header-section-number">Recipe 16</span> Crawling Followers to Approximate Primary Influence</h1>
-<div id="problem-15" class="section level2">
+<div id="problem-15" class="section level2" number="16.1">
 <h2><span class="header-section-number">16.1</span> Problem</h2>
 <p>You want to approximate someone’s influence based upon their popularity and the popularity of their followers.</p>
 </div>
-<div id="solution-15" class="section level2">
+<div id="solution-15" class="section level2" number="16.2">
 <h2><span class="header-section-number">16.2</span> Solution</h2>
 <p>Use the <code>rtweet::lookup_users()</code> and <code>rtweet::get_followers()</code> combination to pull primary influence and derive “primary influence” based on “followers-of-followers” counts.</p>
 </div>
-<div id="discussion-14" class="section level2">
+<div id="discussion-14" class="section level2" number="16.3">
 <h2><span class="header-section-number">16.3</span> Discussion</h2>
 <p>“Influence” is <em>extremely</em> more nuanced than both what the original Python chapter delved into and what this exercise shows. Building “#-removed” total reach counts from a large tree traversal (as the Python version suggests) is worthless on face-value since it doesn’t take into account how many times any of the ‘n-depth’ of followers ever retweeted or even favorited content posted by the seminal user over the course of a certain period. Without gathering such stats, multi-depth “followers-of-followers” is nigh meaningless.</p>
 <p><em>However</em>, once-removed (so the follower counts of those directly following the target user) has some merit. Marketing folks have varying names for this statistic, so we’ll just call it “primary influence” since there is legitimate potential of reaching this once-removed audience. Ideally, the retweet- and fav-counts should be factored in, but that can be added on as an exercise.</p>
-<p>Let’s create a helper function that will capture a snapshot of this <em>primary influence</em> metric. It will take in a user id or name, pull in that user info and the details of their followers and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the “number of followers” distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overridden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the function can be modified — as an exercise – to test the distribution and auto-pick scales).</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">library</span>(rtweet)</a>
-<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">library</span>(hrbrthemes)</a>
-<a class="sourceLine" id="cb83-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">influence_snapshot &lt;-<span class="st"> </span><span class="cf">function</span>(user, <span class="dt">trans=</span><span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>)) {</a>
-<a class="sourceLine" id="cb84-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb84-3" data-line-number="3">  user &lt;-<span class="st"> </span>user[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb84-4" data-line-number="4">  trans &lt;-<span class="st"> </span><span class="kw">match.arg</span>(<span class="kw">tolower</span>(<span class="kw">trimws</span>(trans[<span class="dv">1</span>])), <span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>))</a>
-<a class="sourceLine" id="cb84-5" data-line-number="5">  </a>
-<a class="sourceLine" id="cb84-6" data-line-number="6">  user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user)</a>
-<a class="sourceLine" id="cb84-7" data-line-number="7">  </a>
-<a class="sourceLine" id="cb84-8" data-line-number="8">  user_followers &lt;-<span class="st"> </span><span class="kw">get_followers</span>(user_info<span class="op">$</span>user_id)</a>
-<a class="sourceLine" id="cb84-9" data-line-number="9">  uf_details &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user_followers<span class="op">$</span>user_id)</a>
-<a class="sourceLine" id="cb84-10" data-line-number="10">  </a>
-<a class="sourceLine" id="cb84-11" data-line-number="11">  primary_influence &lt;-<span class="st"> </span>scales<span class="op">::</span><span class="kw">comma</span>(<span class="kw">sum</span>(<span class="kw">c</span>(uf_details<span class="op">$</span>followers_count, user_info<span class="op">$</span>followers_count)))</a>
-<a class="sourceLine" id="cb84-12" data-line-number="12">  </a>
-<a class="sourceLine" id="cb84-13" data-line-number="13">  <span class="kw">filter</span>(uf_details, followers_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb84-14" data-line-number="14"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(followers_count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb84-15" data-line-number="15"><span class="st">    </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..count..), <span class="dt">color=</span><span class="st">&quot;lightslategray&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;lightslategray&quot;</span>,</a>
-<a class="sourceLine" id="cb84-16" data-line-number="16">                 <span class="dt">alpha=</span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb84-17" data-line-number="17"><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">trans=</span><span class="st">&quot;log10&quot;</span>, <span class="dt">labels=</span>scales<span class="op">::</span>comma) <span class="op">+</span></a>
-<a class="sourceLine" id="cb84-18" data-line-number="18"><span class="st">    </span><span class="kw">scale_y_comma</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb84-19" data-line-number="19"><span class="st">    </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb84-20" data-line-number="20">      <span class="dt">x=</span><span class="st">&quot;Number of Followers of Followers (log scale)&quot;</span>, </a>
-<a class="sourceLine" id="cb84-21" data-line-number="21">      <span class="dt">y=</span><span class="st">&quot;Number of Followers&quot;</span>,</a>
-<a class="sourceLine" id="cb84-22" data-line-number="22">      <span class="dt">title=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower chain distribution of %s (@%s)&quot;</span>, user_info<span class="op">$</span>name, user_info<span class="op">$</span>screen_name),</a>
-<a class="sourceLine" id="cb84-23" data-line-number="23">      <span class="dt">subtitle=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower count: %s; Primary influence/reach: %s&quot;</span>, </a>
-<a class="sourceLine" id="cb84-24" data-line-number="24">                       scales<span class="op">::</span><span class="kw">comma</span>(user_info<span class="op">$</span>followers_count),</a>
-<a class="sourceLine" id="cb84-25" data-line-number="25">                       scales<span class="op">::</span><span class="kw">comma</span>(primary_influence))</a>
-<a class="sourceLine" id="cb84-26" data-line-number="26">    ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb84-27" data-line-number="27"><span class="st">    </span><span class="kw">theme_ipsum_rc</span>(<span class="dt">grid=</span><span class="st">&quot;XY&quot;</span>) -&gt;<span class="st"> </span>gg</a>
-<a class="sourceLine" id="cb84-28" data-line-number="28">  </a>
-<a class="sourceLine" id="cb84-29" data-line-number="29">  <span class="kw">print</span>(gg)</a>
-<a class="sourceLine" id="cb84-30" data-line-number="30">  </a>
-<a class="sourceLine" id="cb84-31" data-line-number="31">  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">user_info=</span>user_info, <span class="dt">follower_details=</span>uf_details)))</a>
-<a class="sourceLine" id="cb84-32" data-line-number="32">  </a>
-<a class="sourceLine" id="cb84-33" data-line-number="33">}</a></code></pre></div>
+<p>Let’s create a helper function that will capture a snapshot of this <em>primary influence</em> metric. It will take in a user id or name, pull in that user info and the details of their followers (specify <code>TRUE</code> to the <code>all</code> parameter if the user has more than 5,000 followers and you want to wait even longer to get their complete influence) and then sum up all the follower counts to get the overall reach number. It returns this information (so it can be processed again without API calls) but also produces a graph of the “number of followers” distribution of the first-level followers. This is usually a heavily skewed distribution so the function also defaults to a log scale, but can be overridden to use a linear scale (log scale will be the correct choice the vast majority of the time, but the function can be modified — as an exercise – to test the distribution and auto-pick scales).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="crawling-followers-to-approximate-primary-influence.html#cb1-1"></a><span class="kw">library</span>(rtweet)</span>
+<span id="cb1-2"><a href="crawling-followers-to-approximate-primary-influence.html#cb1-2"></a><span class="kw">library</span>(hrbrthemes)</span>
+<span id="cb1-3"><a href="crawling-followers-to-approximate-primary-influence.html#cb1-3"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-1"></a>influence_snapshot &lt;-<span class="st"> </span><span class="cf">function</span>(user, <span class="dt">all =</span> <span class="ot">FALSE</span>, <span class="dt">trans=</span><span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>)) {</span>
+<span id="cb2-2"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-2"></a>  </span>
+<span id="cb2-3"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-3"></a>  user &lt;-<span class="st"> </span>user[<span class="dv">1</span>]</span>
+<span id="cb2-4"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-4"></a>  trans &lt;-<span class="st"> </span><span class="kw">match.arg</span>(<span class="kw">tolower</span>(<span class="kw">trimws</span>(trans[<span class="dv">1</span>])), <span class="kw">c</span>(<span class="st">&quot;log10&quot;</span>, <span class="st">&quot;identity&quot;</span>))</span>
+<span id="cb2-5"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-5"></a>  </span>
+<span id="cb2-6"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-6"></a>  scale_lab &lt;-<span class="st"> &quot;&quot;</span></span>
+<span id="cb2-7"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-7"></a>  <span class="cf">if</span> (trans <span class="op">==</span><span class="st"> &quot;log10&quot;</span>) sclae_lab &lt;-<span class="st"> &quot; (log scale)&quot;</span></span>
+<span id="cb2-8"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-8"></a>  </span>
+<span id="cb2-9"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-9"></a>  user_info &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user)</span>
+<span id="cb2-10"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-10"></a>  </span>
+<span id="cb2-11"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-11"></a>  n &lt;-<span class="st"> </span><span class="cf">if</span> (all[<span class="dv">1</span>]) user_info<span class="op">$</span>followers_count <span class="cf">else</span> <span class="dv">5000</span></span>
+<span id="cb2-12"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-12"></a>  </span>
+<span id="cb2-13"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-13"></a>  user_followers &lt;-<span class="st"> </span><span class="kw">get_followers</span>(user_info<span class="op">$</span>user_id)</span>
+<span id="cb2-14"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-14"></a>  uf_details &lt;-<span class="st"> </span><span class="kw">lookup_users</span>(user_followers<span class="op">$</span>user_id)</span>
+<span id="cb2-15"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-15"></a>  </span>
+<span id="cb2-16"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-16"></a>  primary_influence &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">c</span>(uf_details<span class="op">$</span>followers_count, user_info<span class="op">$</span>followers_count))</span>
+<span id="cb2-17"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-17"></a>  </span>
+<span id="cb2-18"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-18"></a>  <span class="kw">filter</span>(uf_details, followers_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-19"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-19"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(followers_count)) <span class="op">+</span></span>
+<span id="cb2-20"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-20"></a><span class="st">    </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..count..), <span class="dt">color=</span><span class="st">&quot;lightslategray&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;lightslategray&quot;</span>,</span>
+<span id="cb2-21"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-21"></a>                 <span class="dt">alpha=</span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb2-22"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-22"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">trans=</span>trans, <span class="dt">labels=</span>scales<span class="op">::</span>comma) <span class="op">+</span></span>
+<span id="cb2-23"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-23"></a><span class="st">    </span><span class="kw">scale_y_comma</span>() <span class="op">+</span></span>
+<span id="cb2-24"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-24"></a><span class="st">    </span><span class="kw">labs</span>(</span>
+<span id="cb2-25"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-25"></a>      <span class="dt">x=</span><span class="kw">sprintf</span>(<span class="st">&quot;Number of Followers of Followers%s&quot;</span>, scale_lab), </span>
+<span id="cb2-26"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-26"></a>      <span class="dt">y=</span><span class="st">&quot;Number of Followers&quot;</span>,</span>
+<span id="cb2-27"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-27"></a>      <span class="dt">title=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower chain distribution of %s (@%s)&quot;</span>, user_info<span class="op">$</span>name, user_info<span class="op">$</span>screen_name),</span>
+<span id="cb2-28"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-28"></a>      <span class="dt">subtitle=</span><span class="kw">sprintf</span>(<span class="st">&quot;Follower count: %s; Primary influence/reach: %s&quot;</span>, </span>
+<span id="cb2-29"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-29"></a>                       scales<span class="op">::</span><span class="kw">comma</span>(user_info<span class="op">$</span>followers_count),</span>
+<span id="cb2-30"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-30"></a>                       scales<span class="op">::</span><span class="kw">comma</span>(primary_influence))</span>
+<span id="cb2-31"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-31"></a>    ) <span class="op">+</span></span>
+<span id="cb2-32"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-32"></a><span class="st">    </span><span class="kw">theme_ipsum_rc</span>(<span class="dt">grid=</span><span class="st">&quot;XY&quot;</span>) -&gt;<span class="st"> </span>gg</span>
+<span id="cb2-33"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-33"></a>  </span>
+<span id="cb2-34"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-34"></a>  <span class="kw">print</span>(gg)</span>
+<span id="cb2-35"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-35"></a>  </span>
+<span id="cb2-36"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-36"></a>  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">user_info=</span>user_info, <span class="dt">follower_details=</span>uf_details)))</span>
+<span id="cb2-37"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-37"></a>  </span>
+<span id="cb2-38"><a href="crawling-followers-to-approximate-primary-influence.html#cb2-38"></a>}</span></code></pre></div>
 <p>Let’s run it on <a href="https://twitter.com/juliasilge">Julia Silge</a>, an incredibly talented data scientist over at Stack Overflow and co-author of <a href="https://www.tidytextmining.com/">Tidy Text Mining with R</a> — a book that should be on your shelf <em>especially</em> if you’re doing Twitter mining.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">juliasilge &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;juliasilge&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="crawling-followers-to-approximate-primary-influence.html#cb3-1"></a>juliasilge &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;juliasilge&quot;</span>)</span></code></pre></div>
 <p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html/16_js-1.png" width="960" /></p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">glimpse</span>(juliasilge)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="crawling-followers-to-approximate-primary-influence.html#cb4-1"></a><span class="kw">glimpse</span>(juliasilge)</span></code></pre></div>
 <pre><code>## List of 2
 ##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  87 variables:
 ##   ..$ user_id                : chr &quot;13074042&quot;
@@ -2231,9 +2261,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
 ##   .. .. [list output truncated]</code></pre>
 <p>You’ll see that distribution shape quite a bit given the general nature of the social structure of Twitter. Don’t believe that? Let’s do one more, this time for <a href="https://twitter.com/ma_salmon/">Maëlle Salmon</a>, another incredibly talented data scientist with a <a href="http://www.masalmon.eu/">blog</a> you <em>must</em> follow if you want to learn how to do fun and useful things with R.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">ma_salmon &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;ma_salmon&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="crawling-followers-to-approximate-primary-influence.html#cb6-1"></a>ma_salmon &lt;-<span class="st"> </span><span class="kw">influence_snapshot</span>(<span class="st">&quot;ma_salmon&quot;</span>)</span></code></pre></div>
 <p><img src="16-Crawling-Followers-to-Approximate-Potential-Influence_files/figure-html/16_ms-1.png" width="960" /></p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">glimpse</span>(ma_salmon)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="crawling-followers-to-approximate-primary-influence.html#cb7-1"></a><span class="kw">glimpse</span>(ma_salmon)</span></code></pre></div>
 <pre><code>## List of 2
 ##  $ user_info       :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1 obs. of  87 variables:
 ##   ..$ user_id                : chr &quot;2865404679&quot;
@@ -4129,7 +4159,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   .. ..$ : num [1:8] NA NA NA NA NA NA NA NA
 ##   .. .. [list output truncated]</code></pre>
 </div>
-<div id="see-also-13" class="section level2">
+<div id="see-also-13" class="section level2" number="16.4">
 <h2><span class="header-section-number">16.4</span> See Also</h2>
 <ul>
 <li>Simply Measured’s <a href="https://simplymeasured.com/blog/7-ways-to-measure-influence-on-twitter/">guide to measuring influence on Twitter</a></li>
@@ -4148,11 +4178,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -4160,12 +4192,11 @@ gitbook.start({
 "github": true,
 "facebook": false,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -4173,6 +4204,14 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
