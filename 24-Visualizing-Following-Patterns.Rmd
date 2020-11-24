@@ -1,0 +1,223 @@
+---
+output:
+  html_document: default
+  word_document: default
+---
+# Estimating the Timing of Follows
+
+## Problem
+
+You want to understand the timeline of when a user gained followers. 
+
+## Solution
+
+Twitter's API provides a chronological list of followers, but it doesn't provide the date when each following began. If the user has a large following, we can make inferences about the timing of follows using the running "most recent join."
+
+## Discussion
+
+Let's say that:
+Follower 100 joined Twitter in January 2016
+Follower 101 joined Twitter in 2010
+
+Since Follower 100 must have followed after their join date, and Follower 101 must have followed yet later, we can infer that neither join happened before January 2016.
+
+So if we track the running "most recent join," that sets a limit on the earliest time that all subsequent follows could have occured.
+
+For extremely popular accounts, where the high pace of follows results in frequent updating of the "most recent join," this approach can yield good estimates of when follows occured.
+
+For an example, let's grab all of Hadley Wickham's Twitter followers. In July 2018, he had over 67,000 followers, so it should work pretty well for this.
+
+```{r libs, message=FALSE, warning=FALSE}
+library(rtweet)
+library(tidyverse)
+```
+
+The code below will try to get the whole list of followers, and their stats.
+
+```{r followers, eval=FALSE, message=FALSE, warning=FALSE}
+users <- "hadleywickham"
+follower_count <- rtweet::lookup_users(users)
+followers <- rtweet::get_followers(users,
+  n = follower_count$followers_count,
+  retryonratelimit = TRUE
+)
+
+# Twitter's API takes 15 minutes for each 90k lookups, so this can take a while.
+followers_data <- rtweet::lookup_users(followers$user_id)
+
+# If already available, we can load directly:
+followers_data <-
+  readRDS("hadley_followers_2018-07-21_excerpt.RDS")
+```
+
+We won't be using all that, so for this purpose we'll save a smaller file with a subset of fields. Twitter serves the followers with the most recent first, and the oldest last. 
+
+```{r followers_sm, message=FALSE, warning=FALSE, cache=TRUE}
+
+follower_sm <- followers_data %>%
+  mutate(
+    row = row_number(),
+    order = max(row) - row + 1
+  ) %>%
+  arrange(order) %>%
+  select(
+    row, order, account_created_at,
+    screen_name
+  )
+
+format(object.size(follower_sm), units = "auto")
+```
+
+### NYTimes Twitter fingerprint
+
+We can replicate the kinds of charts the NYTimes used in this fascinating [article about Twitter bots] (https://www.nytimes.com/interactive/2018/01/27/technology/social-media-bots.html) by plotting the 'order' field against the 'account_created_at' field. On Twitter, @gregariouswolf has called these "Twitter fingerprints."
+
+```{r NYTimes_plot}
+theme_ipsum_nyt <- list(
+  hrbrthemes::theme_ipsum(),
+  theme(
+    axis.text = element_text(color = "gray60"),
+    axis.title.x = element_text(size = rel(1.2), face = "bold"),
+    axis.title.y = element_text(size = rel(1.2), face = "bold")
+  )
+)
+
+
+follower_sm %>%
+  ggplot(aes(account_created_at, order)) +
+  geom_point(size = 0.1, color = "#3ca5f5", alpha = 0.1) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_datetime(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%Y") +
+  coord_flip() +
+  labs(
+    title = "@hadleywickham followers",
+    subtitle = "Inspired by https://nyti.ms/2rJ8YZM",
+    y = "Followers", x = "Join date"
+  ) +
+  theme_ipsum_nyt
+```
+
+### Estimating follow timing from 'Marker' accounts
+
+An intriguing pattern is that sharp edge along the top, which represents people who followed this account right away upon joining Twitter. As such, we can use those users' join dates to define the earliest possible moment that any subsequent follower could have followed the account in question.
+
+> Follower n Join Date  <  Follower n Follow Date  <  Follower (n+1) Follow Date
+
+I think we can use the Join Dates of those accounts on the top edge as a proxy for the Follow Date. (I'm not aware of a more direct way to get this from Twitter's API - is there one?)
+
+For lack of a better term, I'll call those users on the top edge "Markers," since they can help indicate the timeline of follows. Every subsequent follow must have happened after their Join Date.
+
+```{r markers}
+library(lubridate)
+
+markers <-
+  follower_sm %>%
+  arrange(order) %>%
+  select(order, account_created_at) %>%
+  # decimal_date adds a bit of floating point error, but allows cummax...
+  mutate(noted_join = cummax(decimal_date(account_created_at))) %>%
+  filter(decimal_date(account_created_at) == noted_join) %>%
+  select(-noted_join) %>%
+  rename(
+    noted_order = order,
+    noted_join = account_created_at
+  ) %>%
+  mutate(
+    noted_order_next = lead(noted_order),
+    noted_join_next = lead(noted_join),
+    noted_avg_hr_vs_order = (noted_join_next - noted_join) / dhours(1) / (noted_order_next - noted_order)
+  )
+
+ggplot(markers, aes(noted_join, noted_avg_hr_vs_order)) +
+  geom_point(size = 0.2, color = "#3ca5f5", alpha = 0.2) +
+  geom_smooth(color = "black", se = FALSE) +
+  scale_y_log10(
+    breaks = c(1 / 60, 10 / 60, 1, 5, 24, 24 * 7), minor_breaks = NULL,
+    labels = c("1 min", "10 min", "1 hour", "5 hours", "1 day", "1 week")
+  ) +
+  scale_x_datetime(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%Y") +
+  coord_cartesian(ylim = c(0.02, 1000)) +
+  labs(
+    title = "Shrinking gaps between 'markers'",
+    y = "Gap until next 'marker'", x = "Join Dates"
+  ) +
+  theme_ipsum_nyt
+```
+  
+We can see here that this account has had many more Markers since 2016, almost all of which were within a day of the next one.
+
+I will assume, based on a hunch without real evidence, that many of these Markers followed the account very soon after joining Twitter. If so, they should act as a good proxy for when subsequent follows happened, in this case within a day or so.
+
+```{r time_between_follows}
+
+ggplot(markers, aes(noted_join, noted_avg_hr_vs_order)) +
+  geom_point(size = 0.2, color = "#3ca5f5", alpha = 0.2) +
+  geom_smooth(color = "black", se = FALSE) +
+  scale_y_log10(
+    breaks = c(1 / 60, 10 / 60, 1, 5, 24, 24 * 7), minor_breaks = NULL,
+    labels = c("1 min", "10 min", "1 hour", "5 hours", "1 day", "1 week")
+  ) +
+  scale_x_datetime(date_breaks = "1 year", minor_breaks = NULL, 
+                   date_labels = "%Y") +
+  coord_cartesian(ylim = c(0.01, 7 * 24)) +
+  labs(
+    title = "Est. avg. time between follows",
+    y = "Est. Avg. Time between follows", x = "Join Dates"
+  ) +
+  theme_ipsum_nyt
+```
+How many follows happened each week?
+
+```{r follow_pace}
+
+follower_sm_est %>%
+  group_by(week = floor_date(est_follow_date, "1 week")) %>%
+  tally() %>%
+  padr::pad(interval = "1 week") %>%
+  replace_na(list(n = 0)) %>%
+  ggplot(aes(week, n)) +
+  geom_line(alpha = 0.8, color = "#3ca5f5") +
+  geom_smooth(se = FALSE) +
+  scale_x_datetime(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%Y") +
+  labs(
+    title = "Weekly Twitter follows (est.)",
+    x = "", y = "Weekly follows"
+  ) +
+  theme_ipsum_nyt
+```
+
+
+
+### Time-adjusted Twitter fingerprint
+
+Now that we have an estimate for when each follow happened, we can adjust the "fingerprint" chart to use follow date for the x-axis.
+
+```{r est_all_follow_timing}
+
+follower_sm_est <-
+  follower_sm %>%
+  left_join(markers %>% mutate(), by = c("order" = "noted_order")) %>%
+  mutate(noted_order = if_else(!is.na(noted_join), order, NA_real_)) %>%
+  fill(
+    noted_order, noted_join, noted_order_next,
+    noted_join_next, noted_avg_hr_vs_order
+  ) %>%
+  mutate(
+    est_follow_date =
+      noted_join +
+        (order - noted_order) * 60 * 60 * noted_avg_hr_vs_order,
+    est_hr_join_to_follow =
+      (est_follow_date - account_created_at) / dhours(1)
+  )
+
+ggplot(follower_sm_est, aes(est_follow_date, account_created_at)) +
+  geom_point(size = 0.2, alpha = 0.05, color = "#3ca5f5") +
+  scale_x_datetime(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%Y") +
+  scale_y_datetime(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%Y") +
+  labs(
+    title = "Time-adjusted Twitter fingerprint",
+    x = "Follow date (est.)", y = "Join date"
+  ) +
+  theme_ipsum_nyt
+```
+
